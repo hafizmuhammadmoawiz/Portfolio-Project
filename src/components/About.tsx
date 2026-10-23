@@ -25,7 +25,7 @@ export default function About() {
               {principles.map((p, i) => (
                 <Reveal key={p.title} delay={i * 110} className="h-full">
                   <div className="card card-hover h-full p-6">
-                    <span className="mb-4 grid h-11 w-11 place-items-center rounded-xl bg-[var(--chip-bg)] text-accent"><p.icon size={22} aria-hidden /></span>
+                    <span className="mb-4 grid h-11 w-11 place-items-center rounded-xl bg-(--chip-bg) text-accent"><p.icon size={22} aria-hidden /></span>
                     <h3 className="font-display text-lg font-bold">{p.title}</h3>
                     <p className="mt-2 text-sm leading-relaxed text-muted">{p.text}</p>
                   </div>

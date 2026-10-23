@@ -127,3 +127,67 @@ dialog.modal[open] { animation: pop .35s cubic-bezier(.2,.8,.2,1); }
 }
 .nav-cta { display: none; }
 @media (min-width: 640px) { .nav-cta { display: inline-flex; } }
+
+
+.hero-separator {
+  width: min(100%, 22rem);
+}
+
+.hero-separator-line {
+  position: relative;
+  display: block;
+  height: 1px;
+  flex: 1;
+  overflow: hidden;
+  background: var(--accent-line);
+  transform-origin: left;
+  animation: separator-reveal 900ms ease-out both;
+}
+
+.hero-separator-line::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  background: var(--accent);
+  box-shadow: 0 0 10px var(--accent);
+  transform: translateX(-100%);
+  animation: separator-scan 2.8s ease-in-out infinite;
+}
+
+.hero-separator-dot {
+  width: 6px;
+  height: 6px;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 10px var(--accent);
+  animation: separator-pulse 1.8s ease-in-out infinite;
+}
+
+@keyframes separator-reveal {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+@keyframes separator-scan {
+  0% { transform: translateX(-100%); }
+  55%, 100% { transform: translateX(100%); }
+}
+
+@keyframes separator-pulse {
+  0%, 100% { opacity: 0.55; }
+  50% { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-separator-line,
+  .hero-separator-line::after,
+  .hero-separator-dot {
+    animation: none;
+  }
+
+  .hero-separator-line::after {
+    transform: translateX(0);
+  }
+}
+
