@@ -40,7 +40,7 @@ export default function Navbar({ theme, onToggle }: { theme: Theme; onToggle: ()
         </a>
         <ul className="hidden items-center gap-6 xl:flex">
           {main.map((l) => (
-            <li key={l.id}><a href={`#${l.id}`} className="nav-link" aria-current={active === l.id ? "true" : undefined}>{l.label}</a></li>
+            <li key={l.id}><a href={`#${l.id}`} className="nav-link font-bold" aria-current={active === l.id ? "true" : undefined}>{l.label}</a></li>
           ))}
         </ul>
         <div className="flex items-center gap-2.5">
@@ -56,7 +56,7 @@ export default function Navbar({ theme, onToggle }: { theme: Theme; onToggle: ()
           {navLinks.map((l) => (
             <li key={l.id}>
               <a href={`#${l.id}`} tabIndex={open ? 0 : -1} onClick={() => setOpen(false)} aria-current={active === l.id ? "true" : undefined}
-                className={`flex min-h-12 items-center rounded-xl px-4 font-medium transition ${active === l.id ? "bg-[var(--chip-bg)] text-accent" : "text-ink hover:bg-[var(--chip-bg)]"}`}>{l.label}</a>
+                className={`flex min-h-12 items-center rounded-xl px-4 font-bold transition ${active === l.id ? "bg-[var(--chip-bg)] text-accent" : "text-ink hover:bg-[var(--chip-bg)]"}`}>{l.label}</a>
             </li>
           ))}
         </ul>

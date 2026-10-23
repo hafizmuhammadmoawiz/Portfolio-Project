@@ -8,7 +8,7 @@ export default function Hero() {
   return (
     <section
       id="home"
-      className="relative flex min-h-screen items-center overflow-hidden pt-28 pb-16 lg:pt-24"
+      className="relative flex items-center overflow-hidden pt-24 pb-8 sm:pt-28 sm:pb-10 lg:min-h-screen lg:pt-24 lg:pb-12"
       aria-labelledby="hero-title"
     >
       <div className="ambient" />
