@@ -15,7 +15,7 @@ function Thumb({ c }: { c: Certification }) {
 
 export default function Certifications() {
   return (
-    <section id="certifications" className="section relative overflow-hidden !bg-[#05050675]">
+    <section id="certifications" className="section relative overflow-hidden">
       <div className="container-x">
         <SectionHead index="06" label="Certifications" title="Credentials, once earned." lead="These cards are placeholders. No certification is claimed until real details and images are added." />
         <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">

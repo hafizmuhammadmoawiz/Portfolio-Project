@@ -7,7 +7,7 @@ export default function Skills() {
   return (
     <section
       id="skills"
-      className="section relative overflow-hidden !bg-[#05050675]">
+      className="section relative overflow-hidden">
       {/* Ambient background glow */}
       <div
         aria-hidden="true"

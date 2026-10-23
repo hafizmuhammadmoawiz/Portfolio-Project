@@ -416,3 +416,20 @@ dialog.modal[open] { animation: pop .35s cubic-bezier(.2,.8,.2,1); }
     will-change: auto;
   }
 }
+
+
+/* Contact hero: stronger 3D tilt with an always-on green glow */
+.contact-hero-tilted {
+  transform: perspective(1200px) rotateX(1deg) rotateY(1deg) rotateZ(-1deg);
+  transform-origin: center center;
+  will-change: transform;
+  border-color: var(--accent-line) !important;
+  box-shadow:
+    0 0 8px var(--glow),
+    0 0 18px var(--glow),
+    0 0 30px var(--glow),
+    inset 0 0 8px var(--glow);
+  transition:
+    box-shadow 250ms ease,
+    border-color 250ms ease;
+}

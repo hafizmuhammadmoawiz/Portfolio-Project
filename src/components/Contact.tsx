@@ -190,7 +190,7 @@ export default function Contact() {
       <div className="container-x relative z-10">
         {/* Contact hero */}
         <Reveal>
-          <div className="contact-hero relative mx-auto max-w-5xl overflow-hidden rounded-3xl border border-line p-6 sm:p-10 lg:p-12">
+          <div className="contact-hero contact-hero-tilted relative mx-auto max-w-5xl overflow-hidden rounded-3xl border border-line p-6 sm:p-10 lg:p-12">
             <ContactNetworkLines />
             <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-accent/[0.06] via-transparent to-transparent" />
 
