@@ -1,0 +1,10 @@
+{
+  "name": "Hafiz Muhammad Moawiz | Cybersecurity Portfolio",
+  "short_name": "MOAWIZ.DEV",
+  "description": "Cybersecurity portfolio of Hafiz Muhammad Moawiz, a NUTECH Cybersecurity student.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#07090B",
+  "theme_color": "#07090B",
+  "icons": [{ "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml" }]
+}

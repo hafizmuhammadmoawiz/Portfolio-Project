@@ -1,0 +1,27 @@
+{
+  "alias": "portfolio-website-8c5",
+  "aliases": [
+    "portfolio-website-8c5"
+  ],
+  "backend_port": 0,
+  "built_at": "2026-10-23T12:51:03Z",
+  "kind": "vite",
+  "last_attempt_at": "2026-10-23T12:51:03Z",
+  "last_error": "",
+  "last_ok": true,
+  "last_trigger": "turn",
+  "pm2_name": "moawiz-portfolio",
+  "pm2_names": [
+    "moawiz-portfolio"
+  ],
+  "proxy_prefixes": [
+    "/api"
+  ],
+  "serve_dir": "dist",
+  "source_mtime": 1792759802862805044,
+  "version": 1,
+  "web_port": 41789,
+  "web_ports": [
+    41789
+  ]
+}

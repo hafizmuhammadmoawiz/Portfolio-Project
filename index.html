@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!--
+      Fill the {{TOKENS}} (the compliance gate fails on any left over):
+        TITLE        — product name + one-line hook, ≤60 chars
+        DESCRIPTION  — ≤155 chars
+        CANONICAL    — public origin, no trailing slash (from get-public-url.py)
+        THEME_COLOR  — hex matching --color-canvas in src/index.css
+      Sites: also drop public/og-image.jpg (1200x630). Apps: og-image optional.
+    -->
+    <title>Hafiz Muhammad Moawiz | Cybersecurity Portfolio</title>
+    <meta name="description" content="Explore the cybersecurity portfolio of Hafiz Muhammad Moawiz, a NUTECH Cybersecurity student focused on ethical hacking, penetration testing, web security, and vulnerability assessment." />
+    <meta name="theme-color" content="#07090B" />
+    <link rel="canonical" href="https://portfolio-website-8c5.app.orvisai.com/" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Hafiz Muhammad Moawiz | Cybersecurity Portfolio" />
+    <meta property="og:description" content="Explore the cybersecurity portfolio of Hafiz Muhammad Moawiz, a NUTECH Cybersecurity student focused on ethical hacking, penetration testing, web security, and vulnerability assessment." />
+    <meta property="og:url" content="https://portfolio-website-8c5.app.orvisai.com/" />
+    <meta property="og:image" content="https://portfolio-website-8c5.app.orvisai.com/og-image.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Hafiz Muhammad Moawiz | Cybersecurity Portfolio" />
+    <meta name="twitter:description" content="Explore the cybersecurity portfolio of Hafiz Muhammad Moawiz, a NUTECH Cybersecurity student focused on ethical hacking, penetration testing, web security, and vulnerability assessment." />
+    <meta name="twitter:image" content="https://portfolio-website-8c5.app.orvisai.com/og-image.jpg" />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/favicon.svg" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="preconnect" href="https://api.fontshare.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.bunny.net" crossorigin />
+    <link href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@500,700,800&f[]=satoshi@400,500,700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.bunny.net/css?family=jetbrains-mono:400,500&display=swap" rel="stylesheet" />
+    <script>(function(){try{var t=localStorage.getItem('moawiz-theme');if(t!=='dark'&&t!=='light'){t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}document.documentElement.dataset.theme=t;document.documentElement.style.colorScheme=t}catch(e){document.documentElement.dataset.theme='light'}})()</script>
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Hafiz Muhammad Moawiz","jobTitle":"Cybersecurity Student","alumniOf":"NUTECH University, Islamabad","address":{"@type":"PostalAddress","addressLocality":"Islamabad","addressCountry":"PK"}}</script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

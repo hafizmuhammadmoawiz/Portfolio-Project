@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://portfolio-website-8c5.app.orvisai.com/sitemap.xml
