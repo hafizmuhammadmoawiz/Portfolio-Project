@@ -30,10 +30,16 @@ export default function Hero() {
           <div className="float relative h-[220px] w-[220px] sm:h-[260px] sm:w-[260px] lg:h-[320px] lg:w-[320px]">
             <div className="absolute -inset-8 rounded-full blur-3xl" style={{ background: "var(--glow)" }} aria-hidden />
             <div className="avatar-ring" aria-hidden />
-            <img src={site.profileImage} alt={site.profileAlt} width={360} height={360} fetchPriority="high"
-              className="relative h-full w-full rounded-full border-2 border-[var(--accent-line)] object-cover shadow-[var(--shadow-hover)]" />
+            <img
+                src={site.profileImage}
+                alt={site.profileAlt}
+                width={360}
+                height={360}
+                fetchPriority="high"
+                className="relative h-full w-full rounded-full border-2 border-[var(--accent-line)] object-cover [object-position:center_25%] shadow-[var(--shadow-hover)]"
+              />
           </div>
-          <div className="relative z-10 -mt-6 w-full lg:-mt-10 lg:w-full"><Terminal /></div>
+          <div className="relative z-10 mt-8 w-full lg:mt-10"><Terminal /></div>
         </div>
       </div>
       <a href="#about" aria-label="Scroll to About section" className="absolute bottom-5 left-1/2 hidden -translate-x-1/2 text-muted lg:block">
