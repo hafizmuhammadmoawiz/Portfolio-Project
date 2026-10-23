@@ -1,6 +1,7 @@
+
 /**
  * Single place for personal details, contact info and external links.
- * Leave a link as "" to show it as "not linked yet" (no fake URLs).
+ * Leave a link as "" if it is not available.
  */
 export const site: Record<string, string> = {
   name: "Hafiz Muhammad Moawiz",
@@ -9,15 +10,20 @@ export const site: Record<string, string> = {
   location: "Islamabad, Pakistan",
   university: "NUTECH University, Islamabad",
 
-  // Recipient for the contact form (mailto fallback). REPLACE BEFORE PUBLISHING.
-  email: (import.meta.env.VITE_CONTACT_EMAIL as string | undefined) ?? "your.email@example.com",
-  github: "",
-  linkedin: "",
-  cv: "", // e.g. "/cv/Moawiz-CV.pdf" (place the file in public/cv/)
+  // Contact information
+  email:
+    (import.meta.env.VITE_CONTACT_EMAIL as string | undefined) ??
+    "hafizmuhammadmoawizz@gmail.com",
 
-  // Replace the file at public/images/profile.svg, or point to e.g. "/images/profile.jpg".
+  github: "https://github.com/hafizmuhammadmoawiz",
+  linkedin: "https://linkedin.com/in/muhammad-moawiz-khan",
+
+  // Add your CV to public/cv/ before setting this path.
+  cv: "",
+
+  // Profile image
   profileImage: "/images/profile2.jpeg",
-  profileAlt: "Portrait of Hafiz Muhammad Moawiz (placeholder image)",
+  profileAlt: "Portrait of Hafiz Muhammad Moawiz",
 
   learningStatus: "Currently learning: web application security",
 };

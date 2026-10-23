@@ -29,7 +29,7 @@ export default function Navbar({ theme, onToggle }: { theme: Theme; onToggle: ()
     return () => window.removeEventListener("keydown", k);
   }, [open]);
 
-  const main = navLinks.filter((l) => l.id !== "contact");
+  const main = navLinks;
 
   return (
     <header className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${scrolled || open ? "border-b border-line shadow-lg/5" : "border-b border-transparent"}`}
@@ -40,7 +40,7 @@ export default function Navbar({ theme, onToggle }: { theme: Theme; onToggle: ()
         </a>
         <ul className="hidden items-center gap-6 xl:flex">
           {main.map((l) => (
-            <li key={l.id}><a href={`#${l.id}`} className="nav-link font-bold" aria-current={active === l.id ? "true" : undefined}>{l.label}</a></li>
+            <li key={l.id}><a href={l.id === "contact" ? "#contact-form" : `#${l.id}`} className="nav-link font-bold" aria-current={active === l.id ? "true" : undefined}>{l.label}</a></li>
           ))}
         </ul>
         <div className="flex items-center gap-2.5">
@@ -55,7 +55,7 @@ export default function Navbar({ theme, onToggle }: { theme: Theme; onToggle: ()
         <ul className="container-x flex flex-col gap-1 pb-5">
           {navLinks.map((l) => (
             <li key={l.id}>
-              <a href={`#${l.id}`} tabIndex={open ? 0 : -1} onClick={() => setOpen(false)} aria-current={active === l.id ? "true" : undefined}
+              <a href={l.id === "contact" ? "#contact-form" : `#${l.id}`} tabIndex={open ? 0 : -1} onClick={() => setOpen(false)} aria-current={active === l.id ? "true" : undefined}
                 className={`flex min-h-12 items-center rounded-xl px-4 font-bold transition ${active === l.id ? "bg-[var(--chip-bg)] text-accent" : "text-ink hover:bg-[var(--chip-bg)]"}`}>{l.label}</a>
             </li>
           ))}

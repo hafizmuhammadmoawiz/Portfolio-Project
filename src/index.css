@@ -194,3 +194,225 @@ dialog.modal[open] { animation: pop .35s cubic-bezier(.2,.8,.2,1); }
   }
 }
 
+
+.contact-hero {
+  isolation: isolate;
+}
+
+.contact-network {
+  z-index: 0;
+  color: var(--accent);
+  opacity: 0.42;
+}
+
+.contact-network-line {
+  stroke-dasharray: 180;
+  stroke-dashoffset: 180;
+  animation: contact-line-draw 4s ease-in-out infinite alternate;
+}
+
+.contact-network-node {
+  opacity: 0.45;
+  filter: drop-shadow(0 0 5px currentColor);
+  animation: contact-node-pulse 2.5s ease-in-out infinite alternate;
+}
+
+@keyframes contact-line-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes contact-node-pulse {
+  from {
+    opacity: 0.3;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .contact-network-line,
+  .contact-network-node {
+    animation: none;
+    stroke-dashoffset: 0;
+    opacity: 0.8;
+  }
+}
+
+
+/* ==========================================
+   CONTACT FORM: OUTER BORDER
+   Always-on neon green glow
+========================================== */
+
+.contact-form-outer {
+  position: relative;
+  isolation: isolate;
+  border: 1px solid var(--accent-line);
+  background: var(--card);
+
+  box-shadow:
+    0 0 8px var(--glow),
+    0 0 20px var(--glow),
+    inset 0 0 8px var(--glow);
+
+  transition:
+    border-color 300ms ease,
+    box-shadow 300ms ease;
+}
+
+.contact-form-outer:hover,
+.contact-form-outer:focus-within {
+  border-color: var(--accent);
+
+  box-shadow:
+    0 0 12px var(--glow),
+    0 0 28px var(--glow),
+    inset 0 0 12px var(--glow);
+}
+
+
+
+/* ==========================================
+   INNER BORDER
+   Stronger 3D tilt + rotating neon highlight
+========================================== */
+
+.contact-form-inner {
+  --form-tilt-x: 0deg;
+  --form-tilt-y: 0deg;
+
+  transform: perspective(1200px)
+    rotateX(var(--form-tilt-x))
+    rotateY(var(--form-tilt-y));
+
+  transform-style: preserve-3d;
+
+  transition:
+    transform 140ms ease-out,
+    border-color 250ms ease,
+    box-shadow 250ms ease;
+
+  will-change: transform;
+}
+
+.contact-form-inner:hover {
+  border-color: var(--accent);
+
+  box-shadow:
+    0 0 0 1px var(--accent-line),
+    0 0 16px var(--glow),
+    var(--shadow-hover);
+}
+
+/* Rotating highlight around inner border */
+
+@property --inner-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.contact-form-inner::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  z-index: 2;
+  border-radius: inherit;
+  padding: 1.5px;
+  pointer-events: none;
+
+  background: conic-gradient(
+    from var(--inner-angle),
+    transparent 0deg,
+    transparent 225deg,
+    var(--accent) 265deg,
+    #caffdf 282deg,
+    var(--accent-2) 300deg,
+    transparent 330deg,
+    transparent 360deg
+  );
+
+  opacity: 0;
+
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+
+  transition: opacity 250ms ease;
+}
+
+.contact-form-inner:hover::after {
+  opacity: 1;
+  animation: inner-border-spin 1.8s linear infinite;
+}
+
+@keyframes inner-border-spin {
+  to {
+    --inner-angle: 360deg;
+  }
+}
+
+/* ==========================================
+   INPUTS
+========================================== */
+
+.contact-input {
+  transition:
+    border-color 200ms ease,
+    box-shadow 200ms ease;
+}
+
+.contact-input:focus {
+  outline: none;
+  border-color: var(--accent) !important;
+  box-shadow: 0 0 0 3px var(--glow);
+}
+
+.contact-input-error,
+.contact-input-error:focus {
+  border-color: #e5484d !important;
+}
+
+.contact-input-error:focus {
+  box-shadow: 0 0 0 3px rgb(229 72 77 / 12%);
+}
+
+/* ==========================================
+   MOBILE + ACCESSIBILITY
+========================================== */
+
+@media (hover: none) {
+  .contact-form-inner {
+    transform: none;
+    will-change: auto;
+  }
+
+  .contact-form-outer::before,
+  .contact-form-inner::after {
+    opacity: 0;
+    animation: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .contact-form-outer,
+  .contact-form-inner,
+  .contact-input {
+    transition: none;
+  }
+
+  .contact-form-outer::before,
+  .contact-form-inner::after {
+    animation: none !important;
+  }
+
+  .contact-form-inner {
+    transform: none;
+    will-change: auto;
+  }
+}

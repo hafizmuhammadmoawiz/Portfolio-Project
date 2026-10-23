@@ -30,7 +30,7 @@ export default function Projects() {
   const close = () => dlg.current?.close();
 
   return (
-    <section id="projects" className="section" >
+    <section id="projects" className="section section-alt relative overflow-hidden">
       <div className="container-x">
         <SectionHead index="03" label="Projects" title="Things I've built and explored." lead="Educational and lab-based work. Repository and demo links appear once they are public." />
         <div className="mt-12 grid gap-6 md:grid-cols-2">

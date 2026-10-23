@@ -1,71 +1,443 @@
-import { useState, type FormEvent } from "react";
-import { Check, Copy, Loader2, Send } from "lucide-react";
+
+import { useState, type FormEvent, type MouseEvent } from "react";
+import {
+  Check,
+  Copy,
+  Loader2,
+  Send,
+  UserRound,
+  Mail,
+  MessageSquare,
+  AtSign,
+} from "lucide-react";
 import { site } from "../config/site";
 
-const init = { name: "", email: "", subject: "", message: "" };
-type F = typeof init;
-const re = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+const init = {
+  name: "",
+  email: "",
+  subject: "",
+  message: "",
+};
 
-function validate(v: F): Partial<F> {
-  const e: Partial<F> = {};
-  if (!v.name.trim()) e.name = "Please enter your full name.";
-  if (!v.email.trim()) e.email = "Please enter your email address.";
-  else if (!re.test(v.email.trim())) e.email = "Enter a valid email, e.g. name@example.com.";
-  if (!v.subject.trim()) e.subject = "Please add a subject.";
-  if (v.message.trim().length < 10) e.message = "Please write at least 10 characters.";
-  return e;
+type FormValues = typeof init;
+type FormErrors = Partial<Record<keyof FormValues, string>>;
+
+const emailRegex =
+  /^[^\s@<>(),;:"[\]\\]+@[^\s@<>(),;:"[\]\\]+\.[a-zA-Z]{2,63}$/;
+
+const nameRegex =
+  /^[\p{L}\p{M}]+(?:[ '\u2019.-][\p{L}\p{M}]+)*$/u;
+
+const hasControlChars = (value: string) =>
+  /[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/.test(value);
+
+const hasUnsafeMarkup = (value: string) =>
+  /<\s*\/?\s*[a-z!/?]|javascript\s*:|data\s*:\s*text\/html/i.test(value);
+
+function validate(values: FormValues): FormErrors {
+  const errors: FormErrors = {};
+
+  const name = values.name.trim();
+  const email = values.email.trim();
+  const subject = values.subject.trim();
+  const message = values.message.trim();
+
+  // Name: letters and common name punctuation only
+  if (!name) {
+    errors.name = "Please enter your full name.";
+  } else if (name.length < 2 || name.length > 100) {
+    errors.name = "Name must be between 2 and 100 characters.";
+  } else if (!nameRegex.test(name)) {
+    errors.name =
+      "Use letters, spaces, hyphens, apostrophes or periods only.";
+  }
+
+  // Email: allow any provider, validate address format
+  if (!email) {
+    errors.email = "Please enter your email address.";
+  } else if (email.length > 254 || !emailRegex.test(email)) {
+    errors.email = "Please enter a valid email address.";
+  } else {
+    const [localPart, domain] = email.split("@");
+    const labels = domain.split(".");
+
+    if (
+      !localPart ||
+      localPart.length > 64 ||
+      domain.length > 253 ||
+      labels.some(
+        (label) =>
+          !label ||
+          label.length > 63 ||
+          label.startsWith("-") ||
+          label.endsWith("-")
+      )
+    ) {
+      errors.email = "Please enter a valid email address.";
+    }
+  }
+
+  // Subject: plain text only
+  if (!subject) {
+    errors.subject = "Please add a subject.";
+  } else if (subject.length < 3 || subject.length > 150) {
+    errors.subject = "Subject must be between 3 and 150 characters.";
+  } else if (
+    hasControlChars(subject) ||
+    /[<>]/.test(subject) ||
+    hasUnsafeMarkup(subject)
+  ) {
+    errors.subject = "HTML, code and invalid characters are not allowed.";
+  }
+
+  // Message: normal text and new lines allowed
+  if (!message) {
+    errors.message = "Please enter a message.";
+  } else if (message.length < 10 || message.length > 3000) {
+    errors.message = "Message must be between 10 and 3000 characters.";
+  } else if (
+    hasControlChars(message) ||
+    hasUnsafeMarkup(message)
+  ) {
+    errors.message = "HTML or executable markup is not allowed.";
+  }
+
+  return errors;
 }
 
 export default function ContactForm() {
-  const [v, setV] = useState<F>(init);
-  const [err, setErr] = useState<Partial<F>>({});
-  const [touched, setTouched] = useState<Partial<Record<keyof F, boolean>>>({});
-  const [state, setState] = useState<"idle" | "loading" | "opened">("idle");
+  const [values, setValues] = useState<FormValues>(init);
+  const [errors, setErrors] = useState<FormErrors>({});
+  const [touched, setTouched] = useState<
+    Partial<Record<keyof FormValues, boolean>>
+  >({});
+  const [status, setStatus] = useState<"idle" | "loading" | "opened">("idle");
   const [copied, setCopied] = useState(false);
 
-  const mailto = () => `mailto:${encodeURIComponent(site.email).replace("%40", "@")}?subject=${encodeURIComponent(v.subject.trim())}&body=${encodeURIComponent(`${v.message.trim()}\n\n— ${v.name.trim()}\n${v.email.trim()}`)}`;
-  const set = (k: keyof F, val: string) => { const n = { ...v, [k]: val }; setV(n); if (touched[k]) setErr(validate(n)); };
-  const blur = (k: keyof F) => { setTouched((t) => ({ ...t, [k]: true })); setErr(validate(v)); };
+  const mailto = () => {
+    const body = `${values.message.trim()}\n\n— ${values.name.trim()}\n${values.email.trim()}`;
 
-  const submit = (ev: FormEvent) => {
-    ev.preventDefault();
-    const e = validate(v); setErr(e); setTouched({ name: true, email: true, subject: true, message: true });
-    if (Object.keys(e).length) { (document.querySelector('[aria-invalid="true"]') as HTMLElement | null)?.focus(); return; }
-    setState("loading");
-    window.setTimeout(() => { window.location.href = mailto(); setState("opened"); }, 600);
+    return `mailto:${site.email}?subject=${encodeURIComponent(
+      values.subject.trim()
+    )}&body=${encodeURIComponent(body)}`;
   };
-  const copy = async () => { try { await navigator.clipboard.writeText(`To: ${site.email}\nSubject: ${v.subject}\n\n${v.message}`); setCopied(true); setTimeout(() => setCopied(false), 2000); } catch { /* clipboard blocked */ } };
 
-  const field = (k: keyof F, label: string, props: React.InputHTMLAttributes<HTMLInputElement> = {}, area = false) => {
-    const id = `cf-${k}`, bad = touched[k] && err[k];
-    const common = { id, name: k, value: v[k], required: true, "aria-invalid": bad ? true : undefined, "aria-describedby": bad ? `${id}-e` : undefined, className: "input", onBlur: () => blur(k) } as const;
+  const updateField = (key: keyof FormValues, value: string) => {
+    const updated = { ...values, [key]: value };
+
+    setValues(updated);
+
+    if (touched[key]) {
+      setErrors(validate(updated));
+    }
+
+    if (status === "opened") {
+      setStatus("idle");
+    }
+  };
+
+  const blurField = (key: keyof FormValues) => {
+    setTouched((previous) => ({ ...previous, [key]: true }));
+    setErrors(validate(values));
+  };
+
+  const handleTilt = (event: MouseEvent<HTMLFormElement>) => {
+    if (
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
+      window.matchMedia("(hover: none)").matches
+    ) {
+      return;
+    }
+
+    const rect = event.currentTarget.getBoundingClientRect();
+    const x = (event.clientX - rect.left) / rect.width;
+    const y = (event.clientY - rect.top) / rect.height;
+
+    event.currentTarget.style.setProperty(
+      "--form-tilt-x",
+      `${(0.5 - y) * 5}deg`
+    );
+
+    event.currentTarget.style.setProperty(
+      "--form-tilt-y",
+      `${(x - 0.5) * 5}deg`
+    );
+  };
+
+  const resetTilt = (event: MouseEvent<HTMLFormElement>) => {
+    event.currentTarget.style.setProperty("--form-tilt-x", "0deg");
+    event.currentTarget.style.setProperty("--form-tilt-y", "0deg");
+  };
+
+  const submit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    const validationErrors = validate(values);
+
+    setErrors(validationErrors);
+    setTouched({
+      name: true,
+      email: true,
+      subject: true,
+      message: true,
+    });
+
+    if (Object.keys(validationErrors).length > 0) {
+      const firstInvalid = event.currentTarget.querySelector(
+        '[aria-invalid="true"]'
+      ) as HTMLElement | null;
+
+      firstInvalid?.focus();
+      return;
+    }
+
+    setStatus("loading");
+
+    window.setTimeout(() => {
+      window.location.href = mailto();
+      setStatus("opened");
+    }, 500);
+  };
+
+  const copyMessage = async () => {
+    const text = `To: ${site.email}\nSubject: ${values.subject.trim()}\n\n${values.message.trim()}\n\nFrom: ${values.name.trim()}\nReply to: ${values.email.trim()}`;
+
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopied(true);
+      window.setTimeout(() => setCopied(false), 2000);
+    } catch {
+      setCopied(false);
+    }
+  };
+
+  const field = (
+    key: keyof FormValues,
+    label: string,
+    options: {
+      type?: string;
+      autoComplete?: string;
+      placeholder: string;
+      icon: typeof UserRound;
+    },
+    area = false
+  ) => {
+    const id = `cf-${key}`;
+    const error = touched[key] ? errors[key] : undefined;
+    const Icon = options.icon;
+
+    const maxLength =
+      key === "name" ? 100 :
+      key === "email" ? 254 :
+      key === "subject" ? 150 : 3000;
+
+    const shared = {
+      id,
+      name: key,
+      value: values[key],
+      required: true,
+      "aria-invalid": Boolean(error),
+      "aria-describedby": error ? `${id}-error` : undefined,
+      onBlur: () => blurField(key),
+      placeholder: options.placeholder,
+      maxLength,
+      className: `contact-input input w-full ${
+        error ? "contact-input-error" : ""
+      }`,
+    };
+
     return (
-      <div>
-        <label htmlFor={id} className="mb-1.5 block text-sm font-semibold">{label} <span className="text-accent" aria-hidden>*</span></label>
-        {area ? <textarea {...common} rows={5} maxLength={3000} onChange={(e) => set(k, e.target.value)} className="input resize-y" />
-          : <input {...common} {...props} maxLength={200} onChange={(e) => set(k, e.target.value)} />}
-        {bad && <p id={`${id}-e`} role="alert" className="mt-1.5 text-sm text-[#e5484d]">{err[k]}</p>}
+      <div className="min-w-0">
+        <label
+          htmlFor={id}
+          className="mb-2 flex items-center gap-2 text-sm font-semibold"
+        >
+          <Icon size={15} className="text-accent" aria-hidden="true" />
+          {label}
+          <span className="text-accent" aria-hidden="true">
+            *
+          </span>
+        </label>
+
+        {area ? (
+          <textarea
+            {...shared}
+            rows={5}
+            onChange={(event) => updateField(key, event.target.value)}
+            className={`${shared.className} min-h-36 resize-y`}
+          />
+        ) : (
+          <input
+            {...shared}
+            type={options.type ?? "text"}
+            autoComplete={options.autoComplete}
+            onChange={(event) => updateField(key, event.target.value)}
+          />
+        )}
+
+        <div className="mt-1.5 flex items-start justify-between gap-3">
+          {error ? (
+            <p
+              id={`${id}-error`}
+              role="alert"
+              className="text-sm text-[#e5484d]"
+            >
+              {error}
+            </p>
+          ) : (
+            <span className="text-xs text-muted">
+              {key === "message" ? "Minimum 10 characters" : "\u00A0"}
+            </span>
+          )}
+
+          {key === "message" && (
+            <span className="shrink-0 text-xs text-muted">
+              {values.message.length}/3000
+            </span>
+          )}
+        </div>
       </div>
     );
   };
 
   return (
-    <form onSubmit={submit} noValidate className="card space-y-5 p-6 sm:p-8" aria-label="Contact form">
-      <div className="grid gap-5 sm:grid-cols-2">{field("name", "Full Name", { autoComplete: "name" })}{field("email", "Email Address", { type: "email", autoComplete: "email" })}</div>
-      {field("subject", "Email Subject")}
-      {field("message", "Message", {}, true)}
-      <button type="submit" disabled={state === "loading"} className="btn btn-primary w-full sm:w-auto">
-        {state === "loading" ? <><Loader2 size={18} className="animate-spin" aria-hidden /> Preparing email…</> : <><Send size={18} aria-hidden /> Send Message</>}
-      </button>
-      <div aria-live="polite">
-        {state === "opened" && (
-          <div className="rounded-xl border border-[var(--accent-line)] bg-[var(--chip-bg)] p-4 text-sm">
-            <p className="font-semibold">Your email app should have opened with a draft.</p>
-            <p className="mt-1 text-muted">Nothing has been sent yet — please press Send in your email app. If nothing opened, copy the message and email {site.email} directly.</p>
-            <div className="mt-3 flex flex-wrap gap-2"><a className="btn btn-ghost !min-h-10 !py-2 text-sm" href={mailto()}>Open email app again</a><button type="button" onClick={copy} className="btn btn-ghost !min-h-10 !py-2 text-sm">{copied ? <Check size={16} aria-hidden /> : <Copy size={16} aria-hidden />}{copied ? "Copied" : "Copy message"}</button></div>
-          </div>
+    <div
+      id="contact-form"
+      className="contact-form-outer rounded-[1.6rem] p-2 sm:p-3">
+      <form
+        onSubmit={submit}
+        onMouseMove={handleTilt}
+        onMouseLeave={resetTilt}
+        noValidate
+        className="contact-form-inner card space-y-6 rounded-[1.25rem] p-5 sm:p-8 lg:p-10"
+        aria-label="Contact form"
+      >
+        <div className="mb-2">
+          <p className="mb-2 text-xs font-semibold uppercase tracking-[0.2em] text-accent">
+            Contact form
+          </p>
+
+          <h3 className="text-xl font-bold sm:text-2xl">
+            Send me a message
+          </h3>
+
+          <p className="mt-2 text-sm leading-6 text-muted">
+            Have a project, opportunity, or question? Fill in the details below
+            and get in touch.
+          </p>
+        </div>
+
+        <div className="grid gap-5 sm:grid-cols-2">
+          {field("name", "Full Name", {
+            placeholder: "Your full name",
+            autoComplete: "name",
+            icon: UserRound,
+          })}
+
+          {field("email", "Email Address", {
+            type: "email",
+            placeholder: "you@example.com",
+            autoComplete: "email",
+            icon: AtSign,
+          })}
+        </div>
+
+        {field("subject", "Email Subject", {
+          placeholder: "What would you like to discuss?",
+          icon: Mail,
+        })}
+
+        {field(
+          "message",
+          "Message",
+          {
+            placeholder:
+              "Tell me a little about your idea, project, or question...",
+            icon: MessageSquare,
+          },
+          true
         )}
-      </div>
-    </form>
+
+        <div className="flex flex-col items-start gap-4 border-t border-line pt-5 sm:flex-row sm:items-center sm:justify-between">
+          <p className="max-w-xs text-xs leading-5 text-muted">
+            Your email app will open with your message ready to review and send.
+          </p>
+
+          <button
+            type="submit"
+            disabled={status === "loading"}
+            className="btn btn-primary group w-full sm:w-auto"
+          >
+            {status === "loading" ? (
+              <>
+                <Loader2
+                  size={18}
+                  className="animate-spin"
+                  aria-hidden="true"
+                />
+                Preparing email...
+              </>
+            ) : (
+              <>
+                <Send
+                  size={18}
+                  className="transition-transform duration-200 group-hover:translate-x-1"
+                  aria-hidden="true"
+                />
+                Send Message
+              </>
+            )}
+          </button>
+        </div>
+
+        <div aria-live="polite" aria-atomic="true">
+          {status === "opened" && (
+            <div className="rounded-xl border border-[var(--accent-line)] bg-[var(--chip-bg)] p-4 text-sm">
+              <div className="flex items-start gap-3">
+                <Check
+                  size={20}
+                  className="mt-0.5 shrink-0 text-accent"
+                  aria-hidden="true"
+                />
+
+                <div className="min-w-0">
+                  <p className="font-semibold">
+                    Your email app should have opened with a draft.
+                  </p>
+
+                  <p className="mt-1 leading-6 text-muted">
+                    Your message has not been sent automatically. Please press
+                    Send in your email app. If nothing opened, copy the message
+                    below and email {site.email} directly.
+                  </p>
+
+                  <div className="mt-3 flex flex-wrap gap-2">
+                    <a
+                      className="btn btn-ghost !min-h-10 !py-2 text-sm"
+                      href={mailto()}
+                    >
+                      Open email app again
+                    </a>
+
+                    <button
+                      type="button"
+                      onClick={copyMessage}
+                      className="btn btn-ghost !min-h-10 !py-2 text-sm"
+                    >
+                      {copied ? (
+                        <Check size={16} aria-hidden="true" />
+                      ) : (
+                        <Copy size={16} aria-hidden="true" />
+                      )}
+                      {copied ? "Copied!" : "Copy message"}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+      </form>
+    </div>
   );
 }

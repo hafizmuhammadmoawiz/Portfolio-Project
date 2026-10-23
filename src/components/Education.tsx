@@ -3,7 +3,7 @@ import Reveal, { SectionHead } from "./Reveal";
 
 export default function Education() {
   return (
-    <section id="education" className="section section-alt" >
+    <section id="education" className="section relative overflow-hidden !bg-[#05050675]">
       <div className="container-x">
         <SectionHead index="04" label="Education" title="Academic path." />
         <ol className="relative mt-14 grid gap-8 lg:grid-cols-4 lg:gap-6">
