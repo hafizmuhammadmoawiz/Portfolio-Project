@@ -1,3 +1,9 @@
+/**
+ * Main page composition.
+ * Connects the navigation, portfolio sections, theme state, and flight transition.
+ * The "Let's Connect" actions in Navbar/Hero start FlightTransition; completion is
+ * handled here so the Contact section can receive its landing highlight.
+ */
 import { useCallback, useEffect, useState } from "react";
 import { ArrowUp } from "lucide-react";
 import { useTheme } from "./hooks/useTheme";

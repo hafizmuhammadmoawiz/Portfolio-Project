@@ -1,3 +1,8 @@
+/**
+ * Certifications section.
+ * Reads certificate entries from data/certifications.ts and uses Reveal.tsx
+ * for section entrance effects and the shared section heading.
+ */
 import { Award, ExternalLink } from "lucide-react";
 import { certifications, type Certification } from "../data/certifications";
 import Reveal, { SectionHead } from "./Reveal";

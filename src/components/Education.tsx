@@ -1,3 +1,8 @@
+/**
+ * Education section.
+ * Displays entries from data/timeline.ts and shares reveal/heading components
+ * from Reveal.tsx. The section id is "education", used by the page navigation.
+ */
 import { education } from "../data/timeline";
 import Reveal, { SectionHead } from "./Reveal";
 

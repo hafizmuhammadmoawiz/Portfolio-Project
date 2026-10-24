@@ -1,3 +1,8 @@
+/**
+ * Hero / home section.
+ * Uses site details from config/site.ts and visual components such as NetworkCanvas
+ * and Terminal. The onStartFlight prop is provided by App.tsx for the contact CTA.
+ */
 import { ArrowRight, Github, MapPin } from "lucide-react";
 import { site } from "../config/site";
 import NetworkCanvas from "./NetworkCanvas";

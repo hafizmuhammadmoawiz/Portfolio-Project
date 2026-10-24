@@ -1,3 +1,8 @@
+/**
+ * Site navigation.
+ * Reads navigation items and site links from config/site.ts, controls the theme
+ * through props from App.tsx, and calls onStartFlight for the contact CTA.
+ */
 
 import { useEffect, useState } from "react";
 import { ArrowUpRight, Menu, X } from "lucide-react";

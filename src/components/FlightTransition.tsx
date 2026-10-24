@@ -1,3 +1,8 @@
+/**
+ * Full-screen "Let's Connect" flight effect.
+ * App.tsx controls the active state and supplies onComplete. This component
+ * animates page scrolling while the plane/trail appearance is defined in index.css.
+ */
 import { useEffect } from "react";
 import { Plane } from "lucide-react";
 

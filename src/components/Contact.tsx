@@ -1,3 +1,8 @@
+/**
+ * Contact section.
+ * Uses site contact details from config/site.ts, ContactForm.tsx for form UI,
+ * NetworkCanvas.tsx for the decorative network, and Reveal.tsx for reveal effects.
+ */
 
 import {
   Download,
