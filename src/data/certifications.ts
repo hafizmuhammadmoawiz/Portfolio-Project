@@ -12,13 +12,14 @@ export interface Certification {
 
 export const certifications: Certification[] = [
   {
-    title: "Internship Certificate",
-    issuer: "NCERT / PKCERT",
-    date: "28 Aug 2026",
-    credentialId: "PKC-26-001022",
-    verifyUrl: "https://pkcert.gov.pk/certificate-issuance/cv.aspx",
-    image: "/images/internship_cert.png",
-    category: "Cybersecurity Internship",
+    title: "Networking Basics",
+    issuer: "Cisco",
+    date: "05 Sept 2026",
+    credentialId: "628f5448-480f-967c-7873be34e942",
+    verifyUrl:
+      "https://www.netacad.com/recognitions/verify/628f5448-6682-480f-967c-7873be34e942",
+    image: "/images/networking_cert.png",
+    category: "Networking",
     placeholder: false,
   },
   {
@@ -33,14 +34,13 @@ export const certifications: Certification[] = [
     placeholder: false,
   },
   {
-    title: "Networking Basics",
-    issuer: "Cisco",
-    date: "05 Sept 2026",
-    credentialId: "628f5448-480f-967c-7873be34e942",
-    verifyUrl:
-      "https://www.netacad.com/recognitions/verify/628f5448-6682-480f-967c-7873be34e942",
-    image: "/images/networking_cert.png",
-    category: "Networking",
+    title: "Internship Certificate",
+    issuer: "NCERT / PKCERT",
+    date: "28 Aug 2026",
+    credentialId: "PKC-26-001022",
+    verifyUrl: "https://pkcert.gov.pk/certificate-issuance/cv.aspx",
+    image: "/images/internship_cert.png",
+    category: "Cybersecurity Internship",
     placeholder: false,
   },
   {

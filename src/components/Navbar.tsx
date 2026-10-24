@@ -1,9 +1,9 @@
+
 /**
  * Site navigation.
- * Reads navigation items and site links from config/site.ts, controls the theme
- * through props from App.tsx, and calls onStartFlight for the contact CTA.
+ * Responsive desktop navigation and mobile menu.
+ * Preserves site links, theme controls, and contact CTA.
  */
-
 import { useEffect, useState } from "react";
 import { ArrowUpRight, Menu, X } from "lucide-react";
 import { navLinks, site } from "../config/site";
@@ -27,9 +27,10 @@ export default function Navbar({
 
   useEffect(() => {
     const on = () => setScrolled(window.scrollY > 16);
-    on();
 
+    on();
     window.addEventListener("scroll", on, { passive: true });
+
     return () => window.removeEventListener("scroll", on);
   }, []);
 
@@ -78,11 +79,11 @@ export default function Navbar({
     >
       <nav
         aria-label="Primary"
-        className="container-x flex h-16 items-center justify-between gap-4"
+        className="container-x flex h-14 items-center justify-between gap-3 sm:h-16 sm:gap-4"
       >
         <a
           href="#home"
-          className="font-mono text-[1.05rem] font-medium tracking-tight text-ink"
+          className="shrink-0 font-mono text-base font-medium tracking-tight text-ink sm:text-[1.05rem]"
           aria-label={`${site.brand} – back to top`}
         >
           <span className="text-accent">&lt;</span>
@@ -90,12 +91,12 @@ export default function Navbar({
           <span className="text-accent">/&gt;</span>
         </a>
 
-        <ul className="hidden items-center gap-6 xl:flex">
+        <ul className="hidden items-center gap-3 lg:flex xl:gap-5 2xl:gap-6">
           {main.map((l) => (
             <li key={l.id}>
               <a
                 href={l.id === "contact" ? "#contact-form" : `#${l.id}`}
-                className="nav-link font-bold"
+                className="nav-link whitespace-nowrap text-sm font-bold xl:text-base"
                 aria-current={active === l.id ? "true" : undefined}
               >
                 {l.label}
@@ -104,13 +105,13 @@ export default function Navbar({
           ))}
         </ul>
 
-        <div className="flex items-center gap-2.5">
+        <div className="flex shrink-0 items-center gap-2 sm:gap-2.5">
           <button
             type="button"
             onClick={onStartFlight}
-            className="btn btn-primary nav-cta !min-h-11 !py-2"
+            className="btn btn-primary nav-cta !min-h-9 !px-3 !py-1.5 text-sm sm:!min-h-11 sm:!px-5 sm:!py-2 sm:text-base"
           >
-            Let's Connect
+            <span className="whitespace-nowrap">Let's Connect</span>
             <ArrowUpRight size={17} aria-hidden="true" />
           </button>
 
@@ -118,7 +119,7 @@ export default function Navbar({
 
           <button
             type="button"
-            className="grid h-11 w-11 place-items-center rounded-full border border-line bg-card text-ink xl:hidden"
+            className="grid h-10 w-10 shrink-0 place-items-center rounded-full border border-line bg-card text-ink lg:hidden sm:h-11 sm:w-11"
             aria-label={open ? "Close menu" : "Open menu"}
             aria-expanded={open}
             aria-controls="mobile-menu"
@@ -135,7 +136,7 @@ export default function Navbar({
 
       <div
         id="mobile-menu"
-        className={`xl:hidden overflow-hidden transition-[max-height] duration-500 ${
+        className={`lg:hidden overflow-hidden transition-[max-height] duration-500 ${
           open ? "max-h-[32rem]" : "max-h-0"
         }`}
         aria-hidden={!open}
