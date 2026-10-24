@@ -114,7 +114,7 @@ export default function FlightTransition({
     <div className="flight-overlay" aria-hidden="true">
       {/* Plane enters from the left and exits on the right via CSS. */}
       <div className="flight-plane">
-        <Plane size={42} strokeWidth={1.7} />
+        <Plane size={46} strokeWidth={3} absoluteStrokeWidth />
       </div>
 
       {/* Glowing trail follows the plane's flight animation. */}

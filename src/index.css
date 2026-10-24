@@ -551,6 +551,7 @@ dialog.modal[open] { animation: pop .35s cubic-bezier(.2,.8,.2,1); }
 }
 
 /* Plane starts just outside the left edge and exits beyond the right edge. */
+
 .flight-plane {
   position: absolute;
   top: 42%;
@@ -561,12 +562,13 @@ dialog.modal[open] { animation: pop .35s cubic-bezier(.2,.8,.2,1); }
   color: var(--accent-2);
   filter: drop-shadow(0 0 12px var(--glow))
     drop-shadow(0 0 24px var(--glow));
-  animation: flight-plane-exit 1800ms
-    cubic-bezier(0.45, 0.05, 0.55, 0.95) both;
+  animation: flight-plane-exit 1800ms linear both;
+  opacity: 1;
   will-change: transform, opacity;
 }
 
-/* Angle the Lucide plane icon so it looks like it is flying forward. */
+
+/* Point the plane to the right on desktop; movement stays perfectly horizontal. */
 .flight-plane svg {
   width: clamp(32px, 4vw, 48px);
   height: auto;
@@ -595,30 +597,20 @@ dialog.modal[open] { animation: pop .35s cubic-bezier(.2,.8,.2,1); }
   animation: flight-trail-exit 1800ms ease-out both;
 }
 
-/* Main plane motion: left -> across screen -> off-screen right. */
+
+/* Desktop: plane flies straight from left to right */
 @keyframes flight-plane-exit {
   0% {
-    opacity: 0;
-    transform: translate(-80px, 35px) rotate(-10deg);
-  }
-
-  10% {
     opacity: 1;
-  }
-
-  45% {
-    transform: translate(45vw, -10px) rotate(0deg);
-  }
-
-  75% {
-    transform: translate(80vw, 20px) rotate(4deg);
+    transform: translate3d(-60px, 0, 0);
   }
 
   100% {
-    opacity: 0;
-    transform: translate(110vw, -20px) rotate(0deg);
+    opacity: 1;
+    transform: translate3d(calc(100vw + 60px), 0, 0);
   }
 }
+
 
 /* Trail reveal and fade timing matches the plane flight. */
 @keyframes flight-trail-exit {
@@ -673,22 +665,25 @@ dialog.modal[open] { animation: pop .35s cubic-bezier(.2,.8,.2,1); }
   }
 }
 
-/* Smaller plane and lighter blur on phones. */
 
-/* Mobile: plane flies from bottom to top */
+/* Mobile: plane flies straight from bottom to top */
 @media (max-width: 640px) {
   .flight-plane {
     top: auto;
     bottom: 0;
-    left: calc(50% - 16px);
-    animation-name: flight-plane-mobile;
+    left: calc(50% - 23px);
+    animation: flight-plane-mobile 1800ms linear both;
+    opacity: 1;
   }
 
+
   .flight-plane svg {
-    width: 32px;
-    height: 32px;
-    transform: rotate(0deg);
+    width: 46px;
+    height: 46px;
+    /* Point the plane upward on mobile; movement stays perfectly vertical. */
+    transform: rotate(-45deg);
   }
+
 
   .flight-trail {
     top: 0;
@@ -697,35 +692,30 @@ dialog.modal[open] { animation: pop .35s cubic-bezier(.2,.8,.2,1); }
     height: 100%;
     transform: scaleY(0);
     transform-origin: center bottom;
-    animation-name: flight-trail-mobile;
+    animation: flight-trail-mobile 1800ms linear both;
   }
 
   .flight-blur {
     filter: blur(2px);
-    /* Remove scale so the page wrapper does not shift visually. */
   }
 }
 
 
+
+
+/* Mobile: plane flies straight from bottom to top */
 @keyframes flight-plane-mobile {
   0% {
-    opacity: 0;
-    transform: translateY(80px);
-  }
-  10% {
     opacity: 1;
+    transform: translate3d(0, 80px, 0);
   }
-  45% {
-    transform: translateY(-45vh);
-  }
-  75% {
-    transform: translateY(-80vh);
-  }
+
   100% {
-    opacity: 0;
-    transform: translateY(-110vh);
+    opacity: 1;
+    transform: translate3d(0, -110vh, 0);
   }
 }
+
 
 @keyframes flight-trail-mobile {
   0% {
