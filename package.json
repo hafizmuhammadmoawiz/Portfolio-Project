@@ -5,10 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite --host 127.0.0.1 --port ${WEB_PORT:-5173}",
-    "dev:server": "cd server && uvicorn main:app --host 127.0.0.1 --port ${BACKEND_PORT:-8000} --reload",
-    "dev:all": "concurrently -k -n web,api -c blue,green \"pnpm dev\" \"pnpm dev:server\"",
     "build": "tsc -b && vite build",
-    "start": "cd server && uvicorn main:app --host 127.0.0.1 --port ${BACKEND_PORT:-8000}",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -26,7 +23,6 @@
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
     "@vitejs/plugin-react": "^4.3.4",
-    "concurrently": "^9.1.0",
     "tailwindcss": "^4.0.0",
     "typescript": "~5.7.2",
     "vite": "^6.0.3"
