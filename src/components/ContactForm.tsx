@@ -1,5 +1,7 @@
 
 import { useState, type FormEvent, type MouseEvent } from "react";
+import emailjs from "@emailjs/browser";
+
 import {
   Check,
   Copy,
@@ -9,7 +11,9 @@ import {
   Mail,
   MessageSquare,
   AtSign,
+  AlertCircle,
 } from "lucide-react";
+
 import { site } from "../config/site";
 
 const init = {
@@ -21,6 +25,7 @@ const init = {
 
 type FormValues = typeof init;
 type FormErrors = Partial<Record<keyof FormValues, string>>;
+type Status = "idle" | "loading" | "success" | "error";
 
 const emailRegex =
   /^[^\s@<>(),;:"[\]\\]+@[^\s@<>(),;:"[\]\\]+\.[a-zA-Z]{2,63}$/;
@@ -42,7 +47,6 @@ function validate(values: FormValues): FormErrors {
   const subject = values.subject.trim();
   const message = values.message.trim();
 
-  // Name: letters and common name punctuation only
   if (!name) {
     errors.name = "Please enter your full name.";
   } else if (name.length < 2 || name.length > 100) {
@@ -52,7 +56,6 @@ function validate(values: FormValues): FormErrors {
       "Use letters, spaces, hyphens, apostrophes or periods only.";
   }
 
-  // Email: allow any provider, validate address format
   if (!email) {
     errors.email = "Please enter your email address.";
   } else if (email.length > 254 || !emailRegex.test(email)) {
@@ -77,7 +80,6 @@ function validate(values: FormValues): FormErrors {
     }
   }
 
-  // Subject: plain text only
   if (!subject) {
     errors.subject = "Please add a subject.";
   } else if (subject.length < 3 || subject.length > 150) {
@@ -90,7 +92,6 @@ function validate(values: FormValues): FormErrors {
     errors.subject = "HTML, code and invalid characters are not allowed.";
   }
 
-  // Message: normal text and new lines allowed
   if (!message) {
     errors.message = "Please enter a message.";
   } else if (message.length < 10 || message.length > 3000) {
@@ -111,16 +112,8 @@ export default function ContactForm() {
   const [touched, setTouched] = useState<
     Partial<Record<keyof FormValues, boolean>>
   >({});
-  const [status, setStatus] = useState<"idle" | "loading" | "opened">("idle");
+  const [status, setStatus] = useState<Status>("idle");
   const [copied, setCopied] = useState(false);
-
-  const mailto = () => {
-    const body = `${values.message.trim()}\n\n— ${values.name.trim()}\n${values.email.trim()}`;
-
-    return `mailto:${site.email}?subject=${encodeURIComponent(
-      values.subject.trim()
-    )}&body=${encodeURIComponent(body)}`;
-  };
 
   const updateField = (key: keyof FormValues, value: string) => {
     const updated = { ...values, [key]: value };
@@ -131,7 +124,7 @@ export default function ContactForm() {
       setErrors(validate(updated));
     }
 
-    if (status === "opened") {
+    if (status !== "idle") {
       setStatus("idle");
     }
   };
@@ -169,8 +162,10 @@ export default function ContactForm() {
     event.currentTarget.style.setProperty("--form-tilt-y", "0deg");
   };
 
-  const submit = (event: FormEvent<HTMLFormElement>) => {
+  const submit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    if (status === "loading") return;
 
     const validationErrors = validate(values);
 
@@ -191,16 +186,52 @@ export default function ContactForm() {
       return;
     }
 
+    const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+    const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+    const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+
+    if (!serviceId || !templateId || !publicKey) {
+      console.error(
+        "EmailJS configuration is missing. Check your .env.local file."
+      );
+      setStatus("error");
+      return;
+    }
+
     setStatus("loading");
 
-    window.setTimeout(() => {
-      window.location.href = mailto();
-      setStatus("opened");
-    }, 500);
+    try {
+      await emailjs.send(
+        serviceId,
+        templateId,
+        {
+          name: values.name.trim(),
+          email: values.email.trim(),
+          subject: values.subject.trim(),
+          message: values.message.trim(),
+          time: new Date().toLocaleString(),
+          title: values.subject.trim(),
+        },
+        { publicKey }
+      );
+
+      setStatus("success");
+      setValues(init);
+      setErrors({});
+      setTouched({});
+    } catch (error) {
+      console.error("EmailJS send failed:", error);
+      setStatus("error");
+    }
   };
 
   const copyMessage = async () => {
-    const text = `To: ${site.email}\nSubject: ${values.subject.trim()}\n\n${values.message.trim()}\n\nFrom: ${values.name.trim()}\nReply to: ${values.email.trim()}`;
+    const text =
+      `To: ${site.email}\n` +
+      `Subject: ${values.subject.trim()}\n\n` +
+      `${values.message.trim()}\n\n` +
+      `From: ${values.name.trim()}\n` +
+      `Reply to: ${values.email.trim()}`;
 
     try {
       await navigator.clipboard.writeText(text);
@@ -303,7 +334,8 @@ export default function ContactForm() {
   return (
     <div
       id="contact-form"
-      className="contact-form-outer rounded-[1.6rem] p-2 sm:p-3">
+      className="contact-form-outer rounded-[1.6rem] p-2 sm:p-3"
+    >
       <form
         onSubmit={submit}
         onMouseMove={handleTilt}
@@ -360,7 +392,7 @@ export default function ContactForm() {
 
         <div className="flex flex-col items-start gap-4 border-t border-line pt-5 sm:flex-row sm:items-center sm:justify-between">
           <p className="max-w-xs text-xs leading-5 text-muted">
-            Your email app will open with your message ready to review and send.
+            Your message will be sent directly to my inbox.
           </p>
 
           <button
@@ -375,7 +407,12 @@ export default function ContactForm() {
                   className="animate-spin"
                   aria-hidden="true"
                 />
-                Preparing email...
+                Sending...
+              </>
+            ) : status === "success" ? (
+              <>
+                <Check size={18} aria-hidden="true" />
+                Message Sent
               </>
             ) : (
               <>
@@ -391,7 +428,7 @@ export default function ContactForm() {
         </div>
 
         <div aria-live="polite" aria-atomic="true">
-          {status === "opened" && (
+          {status === "success" && (
             <div className="rounded-xl border border-[var(--accent-line)] bg-[var(--chip-bg)] p-4 text-sm">
               <div className="flex items-start gap-3">
                 <Check
@@ -399,39 +436,51 @@ export default function ContactForm() {
                   className="mt-0.5 shrink-0 text-accent"
                   aria-hidden="true"
                 />
-
                 <div className="min-w-0">
                   <p className="font-semibold">
-                    Your email app should have opened with a draft.
+                    Your message was sent successfully!
                   </p>
-
                   <p className="mt-1 leading-6 text-muted">
-                    Your message has not been sent automatically. Please press
-                    Send in your email app. If nothing opened, copy the message
-                    below and email {site.email} directly.
+                    Thank you for contacting me. I&apos;ll get back to you as
+                    soon as possible.
+                  </p>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {status === "error" && (
+            <div
+              className="rounded-xl border border-[#e5484d]/40 bg-[var(--chip-bg)] p-4 text-sm"
+              role="alert"
+            >
+              <div className="flex items-start gap-3">
+                <AlertCircle
+                  size={20}
+                  className="mt-0.5 shrink-0 text-[#e5484d]"
+                  aria-hidden="true"
+                />
+                <div className="min-w-0">
+                  <p className="font-semibold">
+                    We couldn&apos;t send your message.
+                  </p>
+                  <p className="mt-1 leading-6 text-muted">
+                    Please check your connection and try again. If the problem
+                    continues, copy your message and email {site.email} directly.
                   </p>
 
-                  <div className="mt-3 flex flex-wrap gap-2">
-                    <a
-                      className="btn btn-ghost !min-h-10 !py-2 text-sm"
-                      href={mailto()}
-                    >
-                      Open email app again
-                    </a>
-
-                    <button
-                      type="button"
-                      onClick={copyMessage}
-                      className="btn btn-ghost !min-h-10 !py-2 text-sm"
-                    >
-                      {copied ? (
-                        <Check size={16} aria-hidden="true" />
-                      ) : (
-                        <Copy size={16} aria-hidden="true" />
-                      )}
-                      {copied ? "Copied!" : "Copy message"}
-                    </button>
-                  </div>
+                  <button
+                    type="button"
+                    onClick={copyMessage}
+                    className="btn btn-ghost !mt-3 !min-h-10 !py-2 text-sm"
+                  >
+                    {copied ? (
+                      <Check size={16} aria-hidden="true" />
+                    ) : (
+                      <Copy size={16} aria-hidden="true" />
+                    )}
+                    {copied ? "Copied!" : "Copy message"}
+                  </button>
                 </div>
               </div>
             </div>

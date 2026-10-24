@@ -1,3 +1,4 @@
+
 /**
  * Contact section.
  * Uses site contact details from config/site.ts, ContactForm.tsx for form UI,
@@ -12,11 +13,10 @@ import {
   ArrowUpRight,
 } from "lucide-react";
 
-import { emailConfigured, site } from "../config/site";
+import { site } from "../config/site";
 import ContactForm from "./ContactForm";
 import NetworkCanvas from "./NetworkCanvas";
 import Reveal from "./Reveal";
-
 
 function ContactNetworkLines() {
   const nodes = [
@@ -59,9 +59,21 @@ function ContactNetworkLines() {
     >
       <defs>
         <linearGradient id="contactLineGradient">
-          <stop offset="0%" stopColor="currentColor" stopOpacity="0.05" />
-          <stop offset="50%" stopColor="currentColor" stopOpacity="0.8" />
-          <stop offset="100%" stopColor="currentColor" stopOpacity="0.1" />
+          <stop
+            offset="0%"
+            stopColor="currentColor"
+            stopOpacity="0.05"
+          />
+          <stop
+            offset="50%"
+            stopColor="currentColor"
+            stopOpacity="0.8"
+          />
+          <stop
+            offset="100%"
+            stopColor="currentColor"
+            stopOpacity="0.1"
+          />
         </linearGradient>
       </defs>
 
@@ -106,7 +118,6 @@ function ContactNetworkLines() {
   );
 }
 
-
 type LinkCardProps = {
   icon: typeof Mail;
   label: string;
@@ -143,7 +154,9 @@ function LinkCard({
         </span>
 
         {note && (
-          <span className="mt-1 block text-xs text-muted">{note}</span>
+          <span className="mt-1 block text-xs text-muted">
+            {note}
+          </span>
         )}
       </span>
 
@@ -189,7 +202,10 @@ export default function Contact() {
       aria-labelledby="contact-heading"
     >
       {/* Background effects */}
-      <div className="ambient pointer-events-none" aria-hidden="true" />
+      <div
+        className="ambient pointer-events-none"
+        aria-hidden="true"
+      />
       <NetworkCanvas className="pointer-events-none opacity-40" />
 
       <div className="container-x relative z-10">
@@ -197,6 +213,7 @@ export default function Contact() {
         <Reveal>
           <div className="contact-hero contact-hero-tilted relative mx-auto max-w-5xl overflow-hidden rounded-3xl border border-line p-6 sm:p-10 lg:p-12">
             <ContactNetworkLines />
+
             <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-accent/[0.06] via-transparent to-transparent" />
 
             <div className="relative z-10 grid items-center gap-10 lg:grid-cols-[1.1fr_0.9fr]">
@@ -242,7 +259,6 @@ export default function Contact() {
 
               {/* Contact links */}
               <div className="grid gap-3">
-                
                 <LinkCard
                   icon={Mail}
                   label="Email"
@@ -252,8 +268,6 @@ export default function Contact() {
                   note="Get in touch with me"
                 />
 
-
-                
                 <LinkCard
                   icon={Github}
                   label="GitHub"
@@ -262,8 +276,6 @@ export default function Contact() {
                   note="Explore my work and code"
                 />
 
-
-                
                 <LinkCard
                   icon={Linkedin}
                   label="LinkedIn"
@@ -271,7 +283,6 @@ export default function Contact() {
                   href={site.linkedin || undefined}
                   note="Connect with me professionally"
                 />
-
               </div>
             </div>
 

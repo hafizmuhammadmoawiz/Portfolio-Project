@@ -12,22 +12,23 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "motion": "^11.15.0",
-    "lucide-react": "^0.469.0",
-    "lenis": "^1.1.20",
+    "@emailjs/browser": "^5.0.3",
+    "@use-gesture/react": "^10.3.1",
     "gsap": "^3.12.5",
-    "@use-gesture/react": "^10.3.1"
+    "lenis": "^1.1.20",
+    "lucide-react": "^0.469.0",
+    "motion": "^11.15.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
   },
   "devDependencies": {
+    "@tailwindcss/vite": "^4.0.0",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
     "@vitejs/plugin-react": "^4.3.4",
-    "typescript": "~5.7.2",
-    "vite": "^6.0.3",
+    "concurrently": "^9.1.0",
     "tailwindcss": "^4.0.0",
-    "@tailwindcss/vite": "^4.0.0",
-    "concurrently": "^9.1.0"
+    "typescript": "~5.7.2",
+    "vite": "^6.0.3"
   }
 }
