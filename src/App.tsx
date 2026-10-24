@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { ArrowUp } from "lucide-react";
 import { useTheme } from "./hooks/useTheme";
 
+// Page sections
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import About from "./components/About";
@@ -13,6 +14,13 @@ import Certifications from "./components/Certifications";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 
+// Flight animation overlay
+import FlightTransition from "./components/FlightTransition";
+
+/**
+ * ScrollUI
+ * Displays the top scroll-progress bar and back-to-top button.
+ */
 function ScrollUI() {
   const [p, setP] = useState(0);
   const [show, setShow] = useState(false);
@@ -43,6 +51,7 @@ function ScrollUI() {
 
   return (
     <>
+      {/* Top scroll-progress indicator */}
       <div
         className="fixed inset-x-0 top-0 z-[60] h-0.5 origin-left bg-accent"
         style={{
@@ -52,6 +61,7 @@ function ScrollUI() {
         aria-hidden="true"
       />
 
+      {/* Back-to-top button */}
       <a
         href="#home"
         aria-label="Back to top"
@@ -68,34 +78,84 @@ function ScrollUI() {
   );
 }
 
+/**
+ * App
+ * Connects the website sections, theme controls, and flight transition.
+ */
 export default function App() {
   const { theme, toggle } = useTheme();
 
+  // Controls whether the flight animation is running
+  const [flightActive, setFlightActive] = useState(false);
+
+  // Start the flight animation from the Navbar or Hero CTA
+  const startFlight = useCallback(() => {
+    if (flightActive) return;
+
+    setFlightActive(true);
+  }, [flightActive]);
+
+  // Called by FlightTransition after its animation finishes
+  const finishFlight = useCallback(() => {
+    setFlightActive(false);
+
+    // Briefly highlight the Contact card after the flight
+    const card = document.querySelector<HTMLElement>(
+      "#contact .contact-hero"
+    );
+
+    if (!card) return;
+
+    card.classList.add("flight-landed");
+
+    window.setTimeout(() => {
+      card.classList.remove("flight-landed");
+    }, 1800);
+  }, []);
+
   return (
     <>
-      <a
-        href="#main"
-        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[70] focus:rounded-lg focus:bg-card focus:px-4 focus:py-2"
-      >
-        Skip to content
-      </a>
+      {/* Blur the website content while the plane is flying */}
+      <div className={flightActive ? "flight-blur" : ""}>
+        {/* Keyboard accessibility: skip directly to main content */}
+        <a
+          href="#main"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[70] focus:rounded-lg focus:bg-card focus:px-4 focus:py-2"
+        >
+          Skip to content
+        </a>
 
-      <ScrollUI />
+        {/* Scroll progress and back-to-top controls */}
+        <ScrollUI />
 
-      <Navbar theme={theme} onToggle={toggle} />
+        {/* Navbar with theme toggle and flight CTA */}
+        <Navbar
+          theme={theme}
+          onToggle={toggle}
+          onStartFlight={startFlight}
+        />
 
-      <main id="main">
-        <Hero />
-        <About />
-        <Skills />
-        <Projects />
-        <Education />
-        <Experience />
-        <Certifications />
-        <Contact />
-      </main>
+        {/* Main website sections */}
+        <main id="main">
+          <Hero onStartFlight={startFlight} />
+          <About />
+          <Skills />
+          <Projects />
+          <Education />
+          <Experience />
+          <Certifications />
+          <Contact />
+        </main>
 
-      <Footer />
+        {/* Website footer */}
+        <Footer />
+      </div>
+
+      {/* Keep the flight overlay outside the blurred website wrapper */}
+      <FlightTransition
+        active={flightActive}
+        onComplete={finishFlight}
+      />
     </>
   );
 }
