@@ -1,3 +1,4 @@
+
 import {
   GraduationCap,
   School,
@@ -50,6 +51,16 @@ export const education: EducationEntry[] = [
     description:
       "Completed Matriculation with Science and Computer Science, achieving 86% marks.",
   },
+  {
+    institution: "Jamia Hafsa Mosque",
+    qualification: "Hafiz-e-Quran",
+    start: "2015",
+    end: "2017",
+    status: "Completed",
+    icon: Award,
+    description:
+      "Completed memorization of the Holy Quran, developing discipline, consistency, and a strong foundation in Quranic learning.",
+  },
 ];
 
 export interface ExperienceEntry {
@@ -63,7 +74,6 @@ export interface ExperienceEntry {
 }
 
 export const experience: ExperienceEntry[] = [
-
   {
     title: "FBISE Administrator",
     organization: "Pakistan Sweet Home AFP · Islamabad",
@@ -94,5 +104,34 @@ export const experience: ExperienceEntry[] = [
       "OpenVAS",
     ],
   },
-  
+  {
+    title: "Networking Labs Learner",
+    organization: "Cisco Networking Academy",
+    dates: "Ongoing",
+    status: "In Progress",
+    icon: GraduationCap,
+    description:
+      "Developing practical networking skills through coursework and hands-on labs covering network fundamentals, IP addressing, routing, switching, and network troubleshooting.",
+    tools: [
+      "Cisco Networking Academy",
+      "Networking",
+      "IP Addressing",
+      "Routing & Switching",
+    ],
+  },
+  {
+    title: "Cybersecurity Labs Learner",
+    organization: "TryHackMe",
+    dates: "Ongoing",
+    status: "In Progress",
+    icon: ShieldCheck,
+    description:
+      "Practicing cybersecurity through hands-on labs and guided learning rooms, strengthening skills in Linux, networking, reconnaissance, vulnerability assessment, and security fundamentals.",
+    tools: [
+      "TryHackMe",
+      "Linux",
+      "Reconnaissance",
+      "Security Labs",
+    ],
+  },
 ];

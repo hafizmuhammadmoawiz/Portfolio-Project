@@ -1,9 +1,10 @@
+
 /**
  * Hero / home section.
  * Uses site details from config/site.ts and visual components such as NetworkCanvas
  * and Terminal. The onStartFlight prop is provided by App.tsx for the contact CTA.
  */
-import { ArrowRight, Github, MapPin } from "lucide-react";
+import { ArrowRight, MapPin } from "lucide-react";
 import { site } from "../config/site";
 import NetworkCanvas from "./NetworkCanvas";
 import Terminal from "./Terminal";
@@ -128,18 +129,16 @@ export default function Hero({ onStartFlight }: HeroProps) {
               Let's Connect
             </button>
 
-            {/* External GitHub profile */}
-            {site.github && (
-              <a
-                href={site.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn btn-ghost"
-                aria-label="GitHub profile (opens in new tab)"
-              >
-                <Github size={18} aria-hidden="true" /> GitHub
-              </a>
-            )}
+            {/* External TryHackMe profile */}
+            <a
+              href="https://tryhackme.com/p/hafizmuhammadmoawizz"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn btn-ghost"
+              aria-label="TryHackMe profile (opens in new tab)"
+            >
+              TryHackMe
+            </a>
           </div>
 
           {/* Location information */}
