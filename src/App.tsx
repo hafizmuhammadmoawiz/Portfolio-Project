@@ -1,3 +1,4 @@
+
 /**
  * Main page composition.
  * Connects the navigation, portfolio sections, theme state, and flight transition.
@@ -141,14 +142,14 @@ export default function App() {
           onStartFlight={startFlight}
         />
 
-        {/* Main website sections */}
+        {/* Main website sections in the requested order */}
         <main id="main">
           <Hero onStartFlight={startFlight} />
           <About />
-          <Skills />
-          <Projects />
           <Education />
+          <Skills />
           <Experience />
+          <Projects />
           <Certifications />
           <Contact />
         </main>

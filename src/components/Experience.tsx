@@ -5,11 +5,10 @@ export default function Experience() {
   return (
     <section
       id="experience"
-      className="section section-alt relative overflow-hidden"
-    >
+      className="section relative overflow-hidden">
       <div className="container-x">
         <SectionHead
-          index="05"
+          index="04"
           label="Experience"
           title="Practical learning."
           lead="Hands-on cybersecurity experience through professional training, security labs, and self-directed practice."

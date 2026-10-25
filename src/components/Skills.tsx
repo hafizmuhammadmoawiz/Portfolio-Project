@@ -7,7 +7,7 @@ export default function Skills() {
   return (
     <section
       id="skills"
-      className="section relative overflow-hidden">
+      className="section section-alt relative overflow-hidden">
       {/* Ambient background glow */}
       <div
         aria-hidden="true"
@@ -16,7 +16,7 @@ export default function Skills() {
 
       <div className="container-x relative">
         <SectionHead
-          index="02"
+          index="03"
           label="Skills"
           title="Tools and fundamentals I work with."
           lead="Grouped by area. No inflated percentages — just what I actively learn and practise."

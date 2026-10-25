@@ -12,7 +12,7 @@ export default function Education() {
     <section id="education" className="section relative overflow-hidden">
       <div className="container-x">
         <SectionHead
-          index="04"
+          index="02"
           label="Education"
           title="Academic path."
         />

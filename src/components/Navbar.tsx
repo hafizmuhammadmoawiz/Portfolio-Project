@@ -25,6 +25,7 @@ export default function Navbar({
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
 
+  // Update navbar background on scroll
   useEffect(() => {
     const on = () => setScrolled(window.scrollY > 16);
 
@@ -34,35 +35,59 @@ export default function Navbar({
     return () => window.removeEventListener("scroll", on);
   }, []);
 
+  // Keep the active navigation link synchronized with page scrolling
   useEffect(() => {
-    const io = new IntersectionObserver(
-      (entries) =>
-        entries.forEach((e) => {
-          if (e.isIntersecting) setActive(e.target.id);
-        }),
-      { rootMargin: "-45% 0px -50% 0px" }
-    );
+    const sectionIds = navLinks.map((link) => link.id);
 
-    navLinks.forEach((l) => {
-      const el = document.getElementById(l.id);
-      if (el) io.observe(el);
+    const updateActiveSection = () => {
+      const marker = window.scrollY + window.innerHeight * 0.35;
+      let currentSection = "home";
+
+      for (const id of sectionIds) {
+        const section = document.getElementById(id);
+
+        if (section && section.getBoundingClientRect().top + window.scrollY <= marker) {
+          currentSection = id;
+        }
+      }
+
+      // At the bottom of the page, activate the final navigation section.
+      const atBottom =
+        window.innerHeight + window.scrollY >=
+        document.documentElement.scrollHeight - 2;
+
+      if (atBottom) {
+        currentSection = sectionIds[sectionIds.length - 1] ?? "home";
+      }
+
+      setActive(currentSection);
+    };
+
+    updateActiveSection();
+
+    window.addEventListener("scroll", updateActiveSection, {
+      passive: true,
     });
+    window.addEventListener("resize", updateActiveSection);
 
-    return () => io.disconnect();
+    return () => {
+      window.removeEventListener("scroll", updateActiveSection);
+      window.removeEventListener("resize", updateActiveSection);
+    };
   }, []);
 
+  // Close mobile menu with Escape
   useEffect(() => {
     if (!open) return;
 
-    const k = (e: KeyboardEvent) => {
+    const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") setOpen(false);
     };
 
-    window.addEventListener("keydown", k);
-    return () => window.removeEventListener("keydown", k);
-  }, [open]);
+    window.addEventListener("keydown", handleKeyDown);
 
-  const main = navLinks;
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [open]);
 
   return (
     <header
@@ -92,7 +117,7 @@ export default function Navbar({
         </a>
 
         <ul className="hidden items-center gap-3 lg:flex xl:gap-5 2xl:gap-6">
-          {main.map((l) => (
+          {navLinks.map((l) => (
             <li key={l.id}>
               <a
                 href={l.id === "contact" ? "#contact-form" : `#${l.id}`}

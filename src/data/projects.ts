@@ -1,34 +1,110 @@
-import { ScanSearch, FolderLock, HeartPulse, FlaskConical, type LucideIcon } from "lucide-react";
+
+import {
+  ScanSearch,
+  FolderLock,
+  ShieldCheck,
+  Globe,
+  type LucideIcon,
+} from "lucide-react";
 
 export interface Project {
-  id: string; number: string; title: string; description: string; details: string;
-  highlights: string[]; tech: string[]; icon: LucideIcon;
-  /** Optional screenshot, e.g. "/images/projects/scanner.png" */
+  id: string;
+  number: string;
+  title: string;
+  description: string;
+  details: string;
+  highlights: string[];
+  tech: string[];
+  icon: LucideIcon;
   image?: string;
-  /** Leave empty until the repository / demo is public */
-  github?: string; demo?: string;
+  github?: string;
+  demo?: string;
   techEditable?: boolean;
 }
 
 export const projects: Project[] = [
-  { id: "scanner", number: "01", title: "Simple Web Vulnerability Scanner", icon: ScanSearch,
-    description: "An educational Python and Flask application designed to explore web security checks and common application weaknesses.",
-    details: "A learning project that explores how basic web security checks work and how common application weaknesses show up in HTTP behaviour. Intended for use only against systems that are owned or explicitly authorized for testing.",
-    highlights: ["Explores common web application weaknesses", "Built with Python and Flask", "Educational use on authorized targets only"],
-    tech: ["Python", "Flask", "HTTP", "Web Security"] },
-  { id: "vault", number: "02", title: "Secure File Vault", icon: FolderLock,
-    description: "A file-protection application focused on authentication, access control, secure file handling, and security-conscious design.",
-    details: "A desktop application that practises security-conscious design: authenticating users, controlling access to files, and handling stored files carefully.",
-    highlights: ["Password hashing with bcrypt", "Access control and secure file handling", "Desktop interface built with CustomTkinter"],
-    tech: ["Python", "SQLite", "bcrypt", "CustomTkinter"] },
-  { id: "hospital", number: "03", title: "Hospital Management System", icon: HeartPulse,
-    description: "A software development project focused on hospital workflows, application structure, data management, and access control.",
-    details: "A software development project modelling hospital workflows. It focuses on application structure, managing data and restricting access by role.",
-    highlights: ["Hospital workflow modelling", "Structured data management", "Role-based access control"],
-    tech: ["Editable: add actual stack"], techEditable: true },
-  { id: "lab", number: "04", title: "Cybersecurity Lab Portfolio", icon: FlaskConical,
-    description: "A collection of authorized practical exercises involving reconnaissance, static code analysis, web application testing, Linux security, and network analysis.",
-    details: "A collection of practical exercises carried out in authorized lab environments, covering reconnaissance, static code analysis, web application testing, Linux security and network analysis.",
-    highlights: ["Reconnaissance with Nmap", "Static analysis with Bandit", "Packet analysis with Wireshark"],
-    tech: ["Kali Linux", "Nmap", "OWASP ZAP", "Bandit", "Wireshark"] },
+  {
+    id: "portfolio",
+    number: "01",
+    title: "Personal Portfolio Website",
+    icon: Globe,
+    image: "/images/web_proj.png",
+    github: "https://github.com/hafizmuhammadmoawiz/Portfolio-Project",
+    description:
+      "A personal portfolio showcasing my cybersecurity journey, technical skills, education, experience, and projects.",
+    details:
+      "This responsive portfolio website presents my background as a cybersecurity student and aspiring penetration tester. It brings together my skills, education, experience, certifications, and practical work in one place.",
+    highlights: [
+      "Responsive personal portfolio",
+      "Cybersecurity-focused visual design",
+      "Dedicated sections for projects and experience",
+    ],
+    tech: ["React", "Vite", "TypeScript", "Tailwind CSS"],
+  },
+  {
+    id: "cryptvault",
+    number: "02",
+    title: "CryptVault",
+    icon: FolderLock,
+    image: "/images/CryptVault_proj.png",
+    github: "https://github.com/hafizmuhammadmoawiz/CryptVault",
+    description:
+      "A desktop file vault that encrypts private files and gives the encryption key only to the user.",
+    details:
+      "CryptVault is a Python desktop application focused on file encryption and secure authentication. Its core features include registration and login, email OTP verification, password recovery, per-file Fernet encryption, and built-in security utilities. Encryption keys are provided to the user rather than retained by the application.",
+    highlights: [
+      "Fernet encryption with AES-128-CBC and HMAC-SHA256",
+      "bcrypt password hashing and email OTP verification",
+      "File integrity verification using SHA-256",
+      "Password generator, hash identifier, and password attack simulator",
+    ],
+    tech: ["Python", "CustomTkinter", "SQLite", "Fernet", "bcrypt"],
+  },
+  {
+    id: "security-assessments",
+    number: "03",
+    title: "Security Assessment Portfolio",
+    icon: ShieldCheck,
+    image: "/images/internship_proj.png",
+    github:
+      "https://github.com/hafizmuhammadmoawiz/Security-Assessments-Portfolio",
+    description:
+      "Documented hands-on security testing completed during an eight-week Software Security Testing internship at Pakistan's National CERT.",
+    details:
+      "This portfolio documents security assessments across web applications, network infrastructure, mobile applications, and APIs. Work was performed in intentionally vulnerable training applications and isolated lab environments, with findings, proof-of-concept evidence, and remediation guidance.",
+    highlights: [
+      "Web security testing with DVWA and OWASP Juice Shop",
+      "Network and infrastructure assessment using Metasploitable2",
+      "Mobile application analysis using DIVA and mobile security tools",
+      "API security testing using VAmPI",
+      "Security findings, evidence, and remediation reporting",
+    ],
+    tech: [
+      "Nmap",
+      "OpenVAS",
+      "Burp Suite",
+      "OWASP ZAP",
+      "MobSF",
+      "JADX",
+      "Postman",
+      "Kali Linux",
+    ],
+  },
+  {
+    id: "vulnerability-scanner",
+    number: "04 (Coming Soon)",
+    title: "Web Vulnerability Scanner",
+    icon: ScanSearch,
+    image: "/images/vulnScan_proj.png",
+    description:
+      "An upcoming project to explore automated web security checks and vulnerability reporting.",
+    details:
+      "This planned project will focus on building an educational web vulnerability scanner. The implementation, supported checks, and reporting features will be defined during development. Testing will be limited to systems owned by the developer or explicitly authorized for assessment.",
+    highlights: [
+      "Planned web security scanning capabilities",
+      "Common vulnerability detection research",
+      "Future findings and report generation",
+    ],
+    tech: ["Python", "Flask", "Web Security", ],
+  },
 ];

@@ -30,13 +30,15 @@ export const site: Record<string, string> = {
 
 export const emailConfigured = !site.email.endsWith("@example.com");
 
+
 export const navLinks = [
   { id: "home", label: "Home" },
   { id: "about", label: "About" },
-  { id: "skills", label: "Skills" },
-  { id: "projects", label: "Projects" },
   { id: "education", label: "Education" },
+  { id: "skills", label: "Skills" },
   { id: "experience", label: "Experience" },
-  { id: "certifications", label: "Certifications" },
+  { id: "projects", label: "Projects" },
+  { id: "certifications", label: "Certification" },
   { id: "contact", label: "Contact" },
 ] as const;
+

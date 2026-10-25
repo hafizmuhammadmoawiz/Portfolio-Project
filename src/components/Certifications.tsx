@@ -65,11 +65,14 @@ function Thumb({ c }: { c: Certification }) {
 
 export default function Certifications() {
   return (
-    <section id="certifications" className="section relative overflow-hidden">
+    <section
+      id="certifications"
+      className="section relative overflow-hidden"
+    >
       <div className="container-x">
         <SectionHead
           index="06"
-          label="Certifications"
+          label="Certification"
           title="Credentials & Learning."
           lead="Professional training and certifications in cybersecurity, networking, and security fundamentals."
         />
