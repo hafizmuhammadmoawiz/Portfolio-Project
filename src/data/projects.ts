@@ -29,6 +29,7 @@ export const projects: Project[] = [
     title: "Personal Portfolio Website",
     icon: Globe,
     image: "/images/web_proj.png",
+    demo: "/Video/web_demo.mov",
     github: "https://github.com/hafizmuhammadmoawiz/Portfolio-Project",
     description:
       "A personal portfolio showcasing my cybersecurity journey, technical skills, education, experience, and projects.",
@@ -47,6 +48,7 @@ export const projects: Project[] = [
     title: "CryptVault",
     icon: FolderLock,
     image: "/images/CryptVault_proj.png",
+    demo: "/Video/CryptVault_demo.mov",
     github: "https://github.com/hafizmuhammadmoawiz/CryptVault",
     description:
       "A desktop file vault that encrypts private files and gives the encryption key only to the user.",
@@ -92,7 +94,7 @@ export const projects: Project[] = [
   },
   {
     id: "vulnerability-scanner",
-    number: "04 (Coming Soon)",
+    number: "04 (Upcoming)",
     title: "Web Vulnerability Scanner",
     icon: ScanSearch,
     image: "/images/vulnScan_proj.png",

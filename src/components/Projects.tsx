@@ -1,6 +1,6 @@
 
 import { useRef, useState } from "react";
-import { ArrowUpRight, Github, X } from "lucide-react";
+import { ArrowUpRight, Github, ExternalLink, X } from "lucide-react";
 import { projects, type Project } from "../data/projects";
 import Reveal, { SectionHead } from "./Reveal";
 
@@ -43,11 +43,15 @@ function LinkBtn({
   href,
   label,
   missing,
+  icon = "github",
 }: {
   href?: string;
   label: string;
   missing: string;
+  icon?: "github" | "demo";
 }) {
+  const Icon = icon === "demo" ? ExternalLink : Github;
+
   return href ? (
     <a
       href={href}
@@ -55,7 +59,7 @@ function LinkBtn({
       rel="noopener noreferrer"
       className="btn btn-ghost !min-h-10 !px-4 !py-2 text-sm"
     >
-      <Github size={16} aria-hidden="true" />
+      <Icon size={16} aria-hidden="true" />
       {label}
       <span className="sr-only"> (opens in new tab)</span>
     </a>
@@ -65,7 +69,7 @@ function LinkBtn({
       aria-disabled="true"
       title={missing}
     >
-      <Github size={16} aria-hidden="true" />
+      <Icon size={16} aria-hidden="true" />
       {label}
       <span className="sr-only"> — {missing}</span>
     </span>
@@ -133,7 +137,6 @@ export default function Projects() {
                   ))}
                 </ul>
 
-                {/* Separate divider with space above and below */}
                 <div className="mt-auto">
                   <div className="mb-5 border-t border-line" />
 
@@ -152,6 +155,13 @@ export default function Projects() {
                       href={p.github}
                       label="Code"
                       missing="Repository not published yet"
+                    />
+
+                    <LinkBtn
+                      href={p.demo}
+                      label="Demo"
+                      missing="Live demo not available yet"
+                      icon="demo"
                     />
                   </div>
                 </div>
@@ -225,11 +235,20 @@ export default function Projects() {
             </div>
 
             <div className="mt-6 border-t border-line pt-5">
-              <LinkBtn
-                href={sel.github}
-                label="Code"
-                missing="Repository not published yet"
-              />
+              <div className="flex flex-wrap items-center gap-3">
+                <LinkBtn
+                  href={sel.github}
+                  label="Code"
+                  missing="Repository not published yet"
+                />
+
+                <LinkBtn
+                  href={sel.demo}
+                  label="Demo"
+                  missing="Live demo not available yet"
+                  icon="demo"
+                />
+              </div>
             </div>
           </div>
         )}
