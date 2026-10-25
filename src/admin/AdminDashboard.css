@@ -1,0 +1,38 @@
+/* Admin dashboard glassmorphism theme. Layout utilities remain in Tailwind classes. */
+.glass-admin {
+  background: #080a16;
+  background-image: radial-gradient(ellipse at 15% 8%, rgba(103,80,255,.22), transparent 34%), radial-gradient(ellipse at 85% 16%, rgba(25,190,255,.16), transparent 31%), radial-gradient(ellipse at 70% 92%, rgba(193,70,255,.12), transparent 32%);
+  isolation: isolate;
+}
+.glass-admin::before {
+  content: ""; position: fixed; inset: 0; pointer-events: none; z-index: -1; opacity: .12;
+  background-image: linear-gradient(rgba(255,255,255,.08) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.08) 1px, transparent 1px);
+  background-size: 44px 44px; mask-image: linear-gradient(to bottom, black, transparent 90%);
+}
+.glass-panel {
+  background: linear-gradient(135deg, rgba(255,255,255,.105), rgba(255,255,255,.035));
+  border: 1px solid rgba(255,255,255,.13); box-shadow: 0 20px 80px rgba(0,0,0,.24), inset 0 1px 0 rgba(255,255,255,.08);
+  backdrop-filter: blur(26px); -webkit-backdrop-filter: blur(26px);
+}
+.glass-soft { background: linear-gradient(135deg, rgba(255,255,255,.075), rgba(255,255,255,.025)); border: 1px solid rgba(255,255,255,.09); backdrop-filter: blur(22px); }
+.glass-nav { position: relative; transition: background .22s ease, border-color .22s ease, color .22s ease; }
+.glass-nav:hover { background: rgba(255,255,255,.07); border-color: rgba(255,255,255,.1); }
+.glass-nav::after { content: ""; position: absolute; left: 3.5rem; right: 1rem; bottom: 5px; height: 2px; border-radius: 999px; background: linear-gradient(90deg, #a78bfa, #67e8f9); transform: scaleX(0); transform-origin: left; transition: transform .24s ease; }
+.glass-nav-active { background: linear-gradient(100deg, rgba(139,92,246,.25), rgba(34,211,238,.09)); border-color: rgba(167,139,250,.32); }
+.glass-nav-active::after { transform: scaleX(1); }
+.glass-metric { transition: transform .25s ease, border-color .25s ease; }
+.glass-metric:hover { transform: translateY(-3px); border-color: rgba(167,139,250,.35); }
+.article-editor .tiptap { min-height: 250px; outline: none; }
+.article-editor .tiptap p { margin: .65rem 0; }
+.article-editor .tiptap h1 { font-size: 1.8rem; font-weight: 700; }
+.article-editor .tiptap h2 { font-size: 1.35rem; font-weight: 650; }
+.article-editor .tiptap ul { list-style: disc; padding-left: 1.5rem; }
+.article-editor .tiptap ol { list-style: decimal; padding-left: 1.5rem; }
+.article-editor .tiptap blockquote { border-left: 3px solid #a78bfa; padding-left: 1rem; color: #d4d4e8; }
+.article-editor .tiptap a { color: #67e8f9; text-decoration: underline; }
+.article-editor .tiptap img { max-width: 100%; border-radius: 12px; }
+.glass-admin button:focus-visible, .glass-admin input:focus-visible, .glass-admin textarea:focus-visible { outline: 2px solid rgba(103,232,249,.8); outline-offset: 3px; }
+.admin-avatar { width: 38px; height: 38px; object-fit: cover; border-radius: 50%; border: 1px solid rgba(255,255,255,.28); box-shadow: 0 0 0 3px rgba(167,139,250,.09); }
+.admin-topbar { min-width: 0; }
+@media (max-width: 767px) { .admin-topbar { grid-template-columns: minmax(0,1fr) auto; } }
+@media (prefers-reduced-motion: reduce) { .glass-nav, .glass-nav::after, .glass-metric { transition: none; } }
