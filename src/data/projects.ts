@@ -29,7 +29,7 @@ export const projects: Project[] = [
     title: "Personal Portfolio Website",
     icon: Globe,
     image: "/images/web_proj.png",
-    demo: "/Video/web_demo.mov",
+    demo: "/Video/web_demo.mp4",
     github: "https://github.com/hafizmuhammadmoawiz/Portfolio-Project",
     description:
       "A personal portfolio showcasing my cybersecurity journey, technical skills, education, experience, and projects.",
@@ -48,7 +48,7 @@ export const projects: Project[] = [
     title: "CryptVault",
     icon: FolderLock,
     image: "/images/CryptVault_proj.png",
-    demo: "/Video/CryptVault_demo.mov",
+    demo: "/Video/CryptVault_demo.mp4",
     github: "https://github.com/hafizmuhammadmoawiz/CryptVault",
     description:
       "A desktop file vault that encrypts private files and gives the encryption key only to the user.",
