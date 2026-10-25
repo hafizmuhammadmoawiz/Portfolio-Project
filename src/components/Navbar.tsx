@@ -46,7 +46,10 @@ export default function Navbar({
       for (const id of sectionIds) {
         const section = document.getElementById(id);
 
-        if (section && section.getBoundingClientRect().top + window.scrollY <= marker) {
+        if (
+          section &&
+          section.getBoundingClientRect().top + window.scrollY <= marker
+        ) {
           currentSection = id;
         }
       }
@@ -109,11 +112,19 @@ export default function Navbar({
         <a
           href="#home"
           className="shrink-0 font-mono text-base font-medium tracking-tight text-ink sm:text-[1.05rem]"
-          aria-label={`${site.brand} – back to top`}
+          aria-label={`${site.brand} – ${site.tagline} – back to top`}
         >
-          <span className="text-accent">&lt;</span>
-          {site.brand}
-          <span className="text-accent">/&gt;</span>
+          <span className="flex flex-col items-start leading-tight">
+            <span>
+              <span className="text-accent">&lt;</span>
+              {site.brand}
+              <span className="text-accent">/&gt;</span>
+            </span>
+
+            <span className="mt-0.5 font-sans text-[9px] font-normal tracking-wide text-muted sm:text-[10px]">
+              {site.tagline}
+            </span>
+          </span>
         </a>
 
         <ul className="hidden items-center gap-3 lg:flex xl:gap-5 2xl:gap-6">

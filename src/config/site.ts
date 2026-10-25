@@ -5,7 +5,8 @@
  */
 export const site: Record<string, string> = {
   name: "Hafiz Muhammad Moawiz",
-  brand: "MOAWIZ.DEV",
+  brand: "Dev2Sec",
+  tagline: "Develop to Secure",
   role: "Cybersecurity Student | Aspiring Penetration Tester",
   location: "Islamabad, Pakistan",
   university: "NUTECH University, Islamabad",
