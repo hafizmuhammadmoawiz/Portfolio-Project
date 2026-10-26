@@ -5,6 +5,8 @@ const allowedOrigins = new Set([
   "http://127.0.0.1:5173",
   "http://localhost:5173",
   "https://portfolio-project-nine-dusky.vercel.app",
+  "https://portfolio-project-5nxcphxkr-moawiz-portfolio.vercel.app",
+  "https://portfolio-project-298v8nnie-moawiz-portfolio.vercel.app",
 ]);
 
 function getCorsHeaders(origin: string | null) {
