@@ -15,8 +15,22 @@
   backdrop-filter: blur(26px); -webkit-backdrop-filter: blur(26px);
 }
 .glass-soft { background: linear-gradient(135deg, rgba(255,255,255,.075), rgba(255,255,255,.025)); border: 1px solid rgba(255,255,255,.09); backdrop-filter: blur(22px); }
-.glass-nav { position: relative; transition: background .22s ease, border-color .22s ease, color .22s ease; }
-.glass-nav:hover { background: rgba(255,255,255,.07); border-color: rgba(255,255,255,.1); }
+.glass-nav {
+  position: relative;
+  transform: translateY(0);
+  transition: transform 250ms cubic-bezier(0.22, 1, 0.36, 1),
+    background 250ms ease,
+    border-color 250ms ease,
+    box-shadow 250ms ease,
+    color 250ms ease;
+}
+
+.glass-nav:hover {
+  transform: translateY(-3px);
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(167, 139, 250, 0.3);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
 .glass-nav::after { content: ""; position: absolute; left: 3.5rem; right: 1rem; bottom: 5px; height: 2px; border-radius: 999px; background: linear-gradient(90deg, #a78bfa, #67e8f9); transform: scaleX(0); transform-origin: left; transition: transform .24s ease; }
 .glass-nav-active { background: linear-gradient(100deg, rgba(139,92,246,.25), rgba(34,211,238,.09)); border-color: rgba(167,139,250,.32); }
 .glass-nav-active::after { transform: scaleX(1); }
@@ -32,7 +46,136 @@
 .article-editor .tiptap a { color: #67e8f9; text-decoration: underline; }
 .article-editor .tiptap img { max-width: 100%; border-radius: 12px; }
 .glass-admin button:focus-visible, .glass-admin input:focus-visible, .glass-admin textarea:focus-visible { outline: 2px solid rgba(103,232,249,.8); outline-offset: 3px; }
-.admin-avatar { width: 38px; height: 38px; object-fit: cover; border-radius: 50%; border: 1px solid rgba(255,255,255,.28); box-shadow: 0 0 0 3px rgba(167,139,250,.09); }
+/* Soft hover animation for the admin logo */
+.admin-avatar {
+  width: 48px;
+  height: 48px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  box-shadow: 0 0 0 3px rgba(167, 139, 250, 0.09);
+  transition:
+    transform 350ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 350ms ease,
+    border-color 350ms ease;
+}
+
+.admin-avatar:hover {
+  transform: translateY(-3px) scale(1.08);
+  border-color: rgba(103, 232, 249, 0.8);
+  box-shadow:
+    0 0 0 4px rgba(167, 139, 250, 0.16),
+    0 0 22px rgba(103, 232, 249, 0.3);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .admin-avatar {
+    transition: none;
+  }
+
+  .admin-avatar:hover {
+    transform: none;
+  }
+}
 .admin-topbar { min-width: 0; }
-@media (max-width: 767px) { .admin-topbar { grid-template-columns: minmax(0,1fr) auto; } }
+@media (max-width: 767px) {
+  .admin-topbar {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+  }
+}
 @media (prefers-reduced-motion: reduce) { .glass-nav, .glass-nav::after, .glass-metric { transition: none; } }
+
+/* Soft lift animation for the complete admin header */
+.admin-topbar {
+  min-width: 0;
+  transition:
+    transform 350ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 350ms ease,
+    border-color 350ms ease;
+  transform: translateY(0) scale(1);
+}
+
+.admin-topbar:hover {
+  transform: translateY(-3px) scale(1.003);
+  box-shadow:
+    0 16px 40px rgba(0, 0, 0, 0.22),
+    0 0 24px rgba(103, 232, 249, 0.07);
+  border-color: rgba(103, 232, 249, 0.22);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .admin-topbar {
+    transition: none;
+  }
+
+  .admin-topbar:hover {
+    transform: none;
+  }
+}
+
+/* Smooth hover animation for notification and logout buttons */
+.admin-topbar button[aria-label="Notifications"],
+.admin-topbar button[aria-label="Sign out"] {
+  transition:
+    transform 300ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 300ms ease,
+    border-color 300ms ease,
+    background-color 300ms ease;
+}
+
+.admin-topbar button[aria-label="Notifications"]:hover,
+.admin-topbar button[aria-label="Sign out"]:hover {
+  transform: translateY(-3px) scale(1.06);
+  border-color: rgba(103, 232, 249, 0.45);
+  box-shadow: 0 0 18px rgba(103, 232, 249, 0.16);
+}
+
+.admin-topbar button[aria-label="Notifications"]:active,
+.admin-topbar button[aria-label="Sign out"]:active {
+  transform: translateY(-1px) scale(0.98);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .admin-topbar button[aria-label="Notifications"],
+  .admin-topbar button[aria-label="Sign out"] {
+    transition: none;
+  }
+
+  .admin-topbar button[aria-label="Notifications"]:hover,
+  .admin-topbar button[aria-label="Sign out"]:hover,
+  .admin-topbar button[aria-label="Notifications"]:active,
+  .admin-topbar button[aria-label="Sign out"]:active {
+    transform: none;
+  }
+}
+
+.header-welcome-text {
+  overflow: hidden;
+  text-overflow: clip;
+  animation: welcome-glow 3s ease-in-out infinite alternate;
+  transform-origin: left center;
+}
+
+@keyframes welcome-glow {
+  from {
+    text-shadow: 0 0 2px rgba(255, 255, 255, 0.12);
+  }
+  to {
+    text-shadow:
+      0 0 8px rgba(103, 232, 249, 0.3),
+      0 0 16px rgba(167, 139, 250, 0.2);
+  }
+}
+
+@media (max-width: 640px) {
+  .header-welcome-text {
+    font-size: 12px;
+    font-weight: 900;
+    letter-spacing: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .header-welcome-text {
+    animation: none;
+  }
+}

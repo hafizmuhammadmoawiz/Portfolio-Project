@@ -228,26 +228,67 @@ export default function AdminDashboard() {
       <div className="relative mx-auto min-h-screen max-w-[1800px] p-3 sm:p-5 lg:p-7">
         <aside className={`glass-panel fixed inset-y-3 left-3 z-50 flex w-[min(300px,calc(100vw-24px))] flex-col overflow-y-auto rounded-[28px] p-4 transition-transform duration-300 sm:inset-y-5 sm:left-5 sm:w-[300px] ${sidebarOpen ? "translate-x-0" : "-translate-x-[115%]"}`}>
           <div className="flex items-center justify-between px-2 pb-7 pt-2">
-            <button onClick={() => selectSection("Overview")} className="flex items-center gap-3 text-left"><span className="flex h-11 w-11 items-center justify-center rounded-2xl border border-white/15 bg-gradient-to-br from-violet-400/30 to-cyan-300/15"><Command size={21} className="text-cyan-100"/></span><span><span className="block text-sm font-bold tracking-[.16em]">MOAWIZ<span className="text-cyan-300">.</span></span><span className="mt-1 block text-[9px] uppercase tracking-[.24em] text-white/40">Creative OS</span></span></button>
+            <button onClick={() => selectSection("Overview")} className="flex items-center gap-3 text-left"><span className="flex h-11 w-11 items-center justify-center rounded-2xl border border-white/15 bg-gradient-to-br from-violet-400/30 to-cyan-300/15"><Command size={21} className="text-cyan-100"/></span><span><span className="block text-sm font-extrabold tracking-[.16em]">Dev2Sec<span className="text-cyan-300">.</span></span><span className="mt-1 block text-[9px] font-semibold uppercase tracking-[.24em] text-white/40">BLOG SECTION</span></span></button>
             <button onClick={() => setSidebarOpen(false)} aria-label="Close menu" className="rounded-xl p-2 text-white/60 hover:bg-white/10"><X size={17}/></button>
           </div>
           <div className="mb-3 px-3 text-[9px] font-semibold uppercase tracking-[.24em] text-white/35">Workspace</div>
-          <nav className="space-y-1.5">{navigation.map(({ label, icon: Icon }) => <button key={label} onClick={() => selectSection(label)} className={`glass-nav flex w-full items-center gap-3 rounded-2xl border border-transparent px-3.5 py-3.5 text-left text-xs ${section === label ? "glass-nav-active text-white" : "text-white/55"}`}><span className="flex h-8 w-8 items-center justify-center rounded-xl"><Icon size={17}/></span><span className="flex-1">{label}</span>{section === label && <ChevronRight size={15} className="text-cyan-200"/>}</button>)}</nav>
+          <nav className="space-y-2">{navigation.map(({ label, icon: Icon }) => <button key={label} onClick={() => selectSection(label)} className={`glass-nav flex min-h-[68px] w-full items-center gap-3 rounded-2xl border px-4 py-4 text-left text-base font-bold ${section === label ? "glass-nav-active border-violet-300/30 text-white" : "border-white/10 text-white/70"}`}><span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl"><Icon size={21}/></span><span className="flex-1">{label}</span>{section === label && <ChevronRight size={19} className="text-cyan-200"/>}</button>)}</nav>
           <div className="mb-3 mt-8 px-3 text-[9px] font-semibold uppercase tracking-[.24em] text-white/35">Preferences</div>
-          <button onClick={() => selectSection("Settings")} className={`glass-nav flex w-full items-center gap-3 rounded-2xl border border-transparent px-3.5 py-3 text-left text-xs ${section === "Settings" ? "glass-nav-active text-white" : "text-white/55"}`}><Settings2 size={17}/>Settings</button>
-          <div className="mt-auto pt-6"><div className="glass-soft rounded-[22px] p-4"><Sparkles size={20} className="mb-3 text-violet-100"/><p className="text-xs font-semibold">Your creative universe</p><p className="mt-2 text-[11px] leading-5 text-white/45">A refined home for your ideas, stories and next big thing.</p><div className="mt-4 flex items-center justify-between border-t border-white/10 pt-3 text-[10px]"><span className="text-white/40">Security status</span><span className="text-emerald-200">● Protected</span></div></div><button onClick={logout} className="mt-3 flex w-full items-center gap-3 rounded-2xl px-4 py-3 text-xs text-white/50 hover:bg-rose-400/10 hover:text-rose-200"><LogOut size={16}/> Sign out securely</button><p className="px-3 pb-1 pt-2 text-[9px] tracking-wider text-white/25">MOAWIZ STUDIO · ADMIN ONLY</p></div>
+          <button onClick={() => selectSection("Settings")} className={`glass-nav flex min-h-[68px] w-full items-center gap-3 rounded-2xl border px-4 py-4 text-left text-base font-bold ${section === "Settings" ? "glass-nav-active border-violet-300/30 text-white" : "border-white/10 text-white/70"}`}><Settings2 size={21}/>Settings</button>
+          <div className="mt-auto pt-6"><button onClick={logout} className="glass-nav mt-3 flex min-h-[60px] w-full items-center gap-3 rounded-2xl border border-white/10 px-4 py-4 text-left text-base font-bold text-white/70 hover:border-rose-300/30 hover:text-rose-200"><LogOut size={22}/> Sign out securely</button><p className="px-3 pb-1 pt-2 text-[9px] tracking-wider text-white/25">Moawiz's Private Space</p></div>
         </aside>
 
         <div className="min-w-0 w-full">
-          <header className="glass-panel admin-topbar sticky top-3 z-30 mb-5 grid min-h-[76px] grid-cols-[1fr_auto_1fr] items-center gap-3 rounded-[24px] px-3 py-3 sm:top-4 sm:px-5 lg:px-6">
-            <div className="flex min-w-0 items-center gap-3">
-              <button onClick={() => setSidebarOpen(true)} aria-label="Open navigation" title="Open menu" className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-white/15 bg-white/[.07] text-white/80 hover:bg-violet-300/10"><Menu size={19}/></button>
-              <img src="/moawiz.png" alt="Moawiz logo" className="admin-avatar hidden sm:block" />
-              <div className="min-w-0"><p className="truncate text-xs font-semibold text-white">Your Private Space</p><p className="mt-1 truncate text-[10px] text-white/40">{editorOpen ? (editingId ? "Edit article" : "New article") : section}</p></div>
+
+
+          <header className="glass-panel admin-topbar sticky top-3 z-30 mb-5 grid min-h-[76px] grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-2 rounded-[24px] px-3 py-3 sm:top-4 sm:gap-3 sm:px-5 lg:px-6">
+            {/* Left: Menu and logo */}
+            <div className="flex min-w-0 items-center gap-2 sm:gap-3">
+              <button
+                onClick={() => setSidebarOpen(true)}
+                aria-label="Open navigation"
+                title="Open menu"
+                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-white/15 bg-white/[.07] text-white/80 transition hover:bg-violet-300/10"
+              >
+                <Menu size={19} />
+              </button>
+
+              <img
+                src="/images/moawiz.png"
+                alt="Moawiz logo"
+                className="admin-avatar shrink-0 !h-8 !w-8 sm:!h-12 sm:!w-12 lg:!h-14 lg:!w-14"
+              />
             </div>
-            <div className="admin-welcome hidden text-center md:block"><p className="text-sm font-semibold tracking-wide text-white">Welcome Admin!</p><p className="mt-1 text-[10px] text-white/45">Hafiz Muhammad Moawiz</p></div>
-            <div className="flex min-w-0 items-center justify-end gap-2"><div className="hidden items-center gap-2 rounded-full border border-emerald-200/15 bg-emerald-300/[.07] px-3 py-2 text-[10px] text-emerald-100 sm:flex"><ShieldCheck size={13}/> MFA protected</div><button aria-label="Notifications" title="Notifications" className="rounded-xl border border-white/10 bg-white/[.04] p-2 text-white/55 transition hover:bg-white/10"><Bell size={16}/></button><button onClick={logout} aria-label="Sign out" title="Sign out" className="rounded-xl border border-white/10 bg-white/[.04] p-2 text-white/55 transition hover:bg-rose-400/10 hover:text-rose-200"><LogOut size={16}/></button></div>
+
+            {/* Center: Welcome message */}
+            <div className="min-w-0 text-center">
+              <p className="header-welcome-text min-w-0 break-words text-center text-[12px] font-black tracking-tight text-white sm:text-sm sm:tracking-wide lg:text-xl">Admin's Private Space</p>
+            </div>
+
+            {/* Right: Security and action buttons */}
+            <div className="flex shrink-0 items-center justify-end gap-1.5 sm:gap-2">
+              
+
+              <button
+                aria-label="Notifications"
+                title="Notifications"
+                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-white/10 bg-white/[.04] text-white/65 transition hover:bg-white/10 sm:h-12 sm:w-12"
+              >
+                <Bell size={20} />
+              </button>
+
+              <button
+                onClick={logout}
+                aria-label="Sign out"
+                title="Sign out"
+                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-white/10 bg-white/[.04] text-white/65 transition hover:bg-rose-400/10 hover:text-rose-200 sm:h-12 sm:w-12"
+              >
+                <LogOut size={20} />
+              </button>
+            </div>
           </header>
+
+
 
           {notice && <div role="status" className={`mb-4 flex items-start justify-between gap-3 rounded-2xl border px-4 py-3 text-xs ${notice.type === "success" ? "border-emerald-200/20 bg-emerald-300/10 text-emerald-100" : "border-rose-200/20 bg-rose-300/10 text-rose-100"}`}><span>{notice.text}</span><button onClick={() => setNotice(null)} aria-label="Dismiss notification"><X size={15}/></button></div>}
 
