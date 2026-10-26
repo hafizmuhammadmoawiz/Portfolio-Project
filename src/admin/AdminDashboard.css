@@ -34,8 +34,32 @@
 .glass-nav::after { content: ""; position: absolute; left: 3.5rem; right: 1rem; bottom: 5px; height: 2px; border-radius: 999px; background: linear-gradient(90deg, #a78bfa, #67e8f9); transform: scaleX(0); transform-origin: left; transition: transform .24s ease; }
 .glass-nav-active { background: linear-gradient(100deg, rgba(139,92,246,.25), rgba(34,211,238,.09)); border-color: rgba(167,139,250,.32); }
 .glass-nav-active::after { transform: scaleX(1); }
-.glass-metric { transition: transform .25s ease, border-color .25s ease; }
-.glass-metric:hover { transform: translateY(-3px); border-color: rgba(167,139,250,.35); }
+.glass-metric {
+  transform: translateY(0);
+  border-color: rgba(255, 255, 255, 0.1);
+  transition: transform 280ms cubic-bezier(0.22, 1, 0.36, 1), border-color 280ms ease, box-shadow 280ms ease;
+}
+
+.glass-metric:hover {
+  transform: translateY(-4px);
+  border-color: rgba(167, 139, 250, 0.4);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.16);
+}
+
+.glass-metric:active {
+  transform: translateY(-1px) scale(0.99);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .glass-metric {
+    transition: none;
+  }
+
+  .glass-metric:hover,
+  .glass-metric:active {
+    transform: none;
+  }
+}
 .article-editor .tiptap { min-height: 250px; outline: none; }
 .article-editor .tiptap p { margin: .65rem 0; }
 .article-editor .tiptap h1 { font-size: 1.8rem; font-weight: 700; }
@@ -46,6 +70,83 @@
 .article-editor .tiptap a { color: #67e8f9; text-decoration: underline; }
 .article-editor .tiptap img { max-width: 100%; border-radius: 12px; }
 .glass-admin button:focus-visible, .glass-admin input:focus-visible, .glass-admin textarea:focus-visible { outline: 2px solid rgba(103,232,249,.8); outline-offset: 3px; }
+
+/* Hamburger menu animation — no glow */
+.sidebar-toggle-button {
+  transition: transform 220ms ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .sidebar-toggle-button:hover {
+    transform: scale(1.06);
+  }
+}
+
+.sidebar-toggle-button:active {
+  transform: scale(0.94);
+}
+
+.hamburger-icon {
+  position: relative;
+  display: flex;
+  width: 19px;
+  height: 19px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.hamburger-icon span {
+  position: absolute;
+  display: block;
+  width: 17px;
+  height: 1.7px;
+  border-radius: 2px;
+  background: currentColor;
+  transition:
+    transform 280ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 180ms ease;
+}
+
+.hamburger-icon span:nth-child(1) {
+  transform: translateY(-5px);
+}
+
+.hamburger-icon span:nth-child(2) {
+  transform: translateY(0);
+}
+
+.hamburger-icon span:nth-child(3) {
+  transform: translateY(5px);
+}
+
+.hamburger-icon.is-open span:nth-child(1) {
+  transform: rotate(45deg);
+}
+
+.hamburger-icon.is-open span:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0.3);
+}
+
+.hamburger-icon.is-open span:nth-child(3) {
+  transform: rotate(-45deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sidebar-toggle-button,
+  .hamburger-icon span {
+    transition: none;
+  }
+}
+
+.glass-admin input[placeholder="Search articles…"]:focus,
+.glass-admin input[placeholder="Search articles…"]:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+  border-color: transparent !important;
+}
 /* Soft hover animation for the admin logo */
 .admin-avatar {
   width: 48px;
@@ -179,3 +280,816 @@
     animation: none;
   }
 }
+
+
+/* Smooth lift animation for New Article buttons */
+.glass-admin button.new-article-animated {
+  position: relative;
+  transform: translateY(0);
+  transition: transform 300ms cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 300ms ease,
+              filter 300ms ease;
+}
+
+.glass-admin button.new-article-animated:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 26px rgba(103, 232, 249, 0.25);
+  filter: brightness(1.1);
+}
+
+.glass-admin button.new-article-animated:active {
+  transform: translateY(-1px) scale(0.98);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .glass-admin button.new-article-animated {
+    transition: none;
+  }
+
+  .glass-admin button.new-article-animated:hover,
+  .glass-admin button.new-article-animated:active {
+    transform: none;
+  }
+}
+
+/* Publishing universe: smooth upward lift */
+.glass-admin .publishing-universe-card {
+  transform: translateY(0);
+  transition:
+    transform 350ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 350ms ease,
+    border-color 350ms ease;
+  will-change: transform;
+}
+
+.glass-admin .publishing-universe-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 35px rgba(0, 0, 0, 0.2);
+  border-color: rgba(167, 139, 250, 0.3);
+}
+
+/* Content Studio badge animation */
+.glass-admin .content-studio-badge {
+  display: inline-flex;
+  transition:
+    transform 300ms cubic-bezier(0.22, 1, 0.36, 1),
+    background 300ms ease,
+    box-shadow 300ms ease;
+}
+
+.glass-admin .content-studio-badge:hover {
+  transform: translateY(-3px) scale(1.03);
+  background: rgba(167, 139, 250, 0.16);
+  box-shadow: 0 6px 18px rgba(167, 139, 250, 0.15);
+}
+
+/* Inner cards: lift, glow and smooth hover */
+.glass-admin .publishing-subcards > div {
+  transform: translateY(0);
+  transition:
+    transform 300ms cubic-bezier(0.22, 1, 0.36, 1),
+    background 300ms ease,
+    border-color 300ms ease,
+    box-shadow 300ms ease;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-admin .publishing-subcards > div:hover {
+  transform: translateY(-5px);
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(103, 232, 249, 0.25);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.16);
+}
+
+/* Mobile touch feedback */
+.glass-admin .publishing-subcards > div:active {
+  transform: translateY(-1px) scale(0.99);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .glass-admin .publishing-universe-card,
+  .glass-admin .content-studio-badge,
+  .glass-admin .publishing-subcards > div {
+    transition: none;
+  }
+
+  .glass-admin .publishing-universe-card:hover,
+  .glass-admin .content-studio-badge:hover,
+  .glass-admin .publishing-subcards > div:hover,
+  .glass-admin .publishing-subcards > div:active {
+    transform: none;
+  }
+}
+
+/* UPDATED: Entire Articles card smooth upward lift */
+.glass-admin .articles-main-card {
+  position: relative;
+  transform: translateY(0);
+  transition:
+    transform 350ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 350ms ease,
+    border-color 350ms ease;
+}
+
+.glass-admin .articles-main-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 16px 35px rgba(0, 0, 0, 0.22);
+  border-color: rgba(167, 139, 250, 0.35);
+}
+
+/* Articles header subtle animation */
+.glass-admin .articles-section-header {
+  transition: background 300ms ease;
+}
+
+.glass-admin .articles-section-header:hover {
+  background: rgba(255, 255, 255, 0.025);
+}
+
+/* View article library button */
+.glass-admin .articles-library-button {
+  position: relative;
+  transform: translateY(0);
+  transition:
+    transform 300ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 300ms ease,
+    border-color 300ms ease,
+    background 300ms ease;
+}
+
+.glass-admin .articles-library-button:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 24px rgba(103, 232, 249, 0.18);
+  border-color: rgba(103, 232, 249, 0.3);
+}
+
+.glass-admin .articles-library-button:active {
+  transform: translateY(-1px) scale(0.98);
+}
+
+/* Accessibility: respect reduced-motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .glass-admin .articles-main-card,
+  .glass-admin .articles-section-header,
+  .glass-admin .articles-library-button {
+    transition: none;
+  }
+
+  .glass-admin .articles-main-card:hover,
+  .glass-admin .articles-library-button:hover,
+  .glass-admin .articles-library-button:active {
+    transform: none;
+  }
+}
+
+
+/* Outer Article Library card lift */
+.glass-admin .article-library-outer-card {
+  transform: translateY(0);
+  transition:
+    transform 350ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 350ms ease;
+}
+
+.glass-admin .article-library-outer-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 35px rgba(0, 0, 0, 0.18);
+}
+
+/* Refresh button: smooth lift without border glow */
+.glass-admin .refresh-lift-button {
+  transform: translateY(0);
+  transition:
+    transform 300ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 300ms ease,
+    background 300ms ease;
+}
+
+.glass-admin .refresh-lift-button:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.16);
+}
+
+.glass-admin .refresh-lift-button:active {
+  transform: translateY(-1px) scale(0.98);
+}
+
+/* Respect reduced-motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .glass-admin .article-library-outer-card,
+  .glass-admin .refresh-lift-button {
+    transition: none;
+  }
+
+  .glass-admin .article-library-outer-card:hover,
+  .glass-admin .refresh-lift-button:hover,
+  .glass-admin .refresh-lift-button:active {
+    transform: none;
+  }
+}
+
+/* Analytics card smooth upward lift */
+.glass-admin .analytics-main-card {
+  transform: translateY(0);
+  transition:
+    transform 350ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 350ms ease;
+}
+
+.glass-admin .analytics-main-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 16px 35px rgba(0, 0, 0, 0.2);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .glass-admin .analytics-main-card {
+    transition: none;
+  }
+
+  .glass-admin .analytics-main-card:hover {
+    transform: none;
+  }
+}
+
+/* Workspace Settings: main card animation */
+.glass-admin .settings-main-card {
+  transform: translateY(0);
+  transition:
+    transform 350ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 350ms ease;
+}
+
+.glass-admin .settings-main-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 35px rgba(0, 0, 0, 0.2);
+}
+
+/* Settings heading */
+.glass-admin .settings-heading {
+  transition: opacity 250ms ease;
+}
+
+/* Individual settings rows */
+.glass-admin .settings-item {
+  background: rgba(255, 255, 255, 0.025);
+  border-color: rgba(255, 255, 255, 0.1);
+  transform: translateY(0);
+  transition:
+    transform 300ms cubic-bezier(0.22, 1, 0.36, 1),
+    background 300ms ease,
+    border-color 300ms ease,
+    box-shadow 300ms ease;
+}
+
+.glass-admin .settings-item:hover {
+  transform: translateY(-3px);
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(167, 139, 250, 0.35);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+.glass-admin .settings-item:active {
+  transform: translateY(-1px) scale(0.99);
+}
+
+/* Reduced-motion accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .glass-admin .settings-main-card,
+  .glass-admin .settings-item,
+  .glass-admin .settings-heading {
+    transition: none;
+  }
+
+  .glass-admin .settings-main-card:hover,
+  .glass-admin .settings-item:hover,
+  .glass-admin .settings-item:active {
+    transform: none;
+  }
+}
+
+/* Final Settings spacing and typography */
+.glass-admin .settings-main-card {
+  padding-bottom: 2.25rem;
+}
+
+.glass-admin .settings-item {
+  position: relative;
+  z-index: 0;
+  padding: 1.25rem 1rem;
+}
+
+.glass-admin .settings-item:hover {
+  z-index: 1;
+}
+
+.glass-admin .settings-item > span:first-child {
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.glass-admin .settings-item > span:last-child {
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+@media (max-width: 640px) {
+  .glass-admin .settings-item {
+    gap: 0.5rem;
+    padding: 1rem;
+  }
+
+  .glass-admin .settings-item > span:first-child {
+    font-size: 0.9375rem;
+  }
+
+  .glass-admin .settings-item > span:last-child {
+    font-size: 0.8125rem;
+    overflow-wrap: anywhere;
+  }
+}
+
+/* FINAL: Larger and more readable article editor */
+.glass-admin .article-editor-card label > span:first-child {
+  font-size: 1.05rem !important;
+  font-weight: 700 !important;
+  margin-bottom: 0.65rem;
+}
+
+.glass-admin .article-editor-card input,
+.glass-admin .article-editor-card textarea,
+.glass-admin .article-editor-card select {
+  font-size: 1.05rem !important;
+  line-height: 1.7 !important;
+  min-height: 54px;
+  padding: 0.9rem 1rem !important;
+}
+
+.glass-admin .article-editor-card input::placeholder,
+.glass-admin .article-editor-card textarea::placeholder {
+  font-size: 1rem !important;
+  opacity: 0.85;
+}
+
+.glass-admin .article-editor-card label > span:not(:first-child) {
+  font-size: 0.95rem !important;
+  line-height: 1.6;
+}
+
+/* Larger right-side panel text */
+.glass-admin .article-editor-card h2,
+.glass-admin .article-editor-card h3 {
+  font-size: 1.15rem !important;
+  font-weight: 700 !important;
+}
+
+.glass-admin .article-editor-card .glass-soft,
+.glass-admin .article-editor-card aside > div {
+  padding: 1.25rem !important;
+}
+
+.glass-admin .article-editor-card .article-editor .tiptap {
+  font-size: 1.125rem !important;
+  line-height: 1.9 !important;
+  min-height: 320px !important;
+  padding: 1.25rem !important;
+}
+
+/* Toolbar and action buttons */
+.glass-admin .article-editor-card button {
+  font-size: 1rem !important;
+  min-height: 42px;
+  padding: 0.65rem 0.9rem;
+}
+
+.glass-admin .article-editor-card button svg {
+  width: 17px;
+  height: 17px;
+}
+
+/* Make editor labels and fields readable on phones too */
+@media (max-width: 640px) {
+  .glass-admin .article-editor-card input,
+  .glass-admin .article-editor-card textarea,
+  .glass-admin .article-editor-card select {
+    font-size: 1rem !important;
+    min-height: 50px;
+  }
+
+  .glass-admin .article-editor-card .article-editor .tiptap {
+    font-size: 1.05rem !important;
+    min-height: 260px !important;
+    padding: 1rem !important;
+  }
+
+  .glass-admin .article-editor-card button {
+    font-size: 0.9375rem !important;
+  }
+}
+
+/* Choose image button sizing */
+.glass-admin .choose-image-button {
+  min-height: 54px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  font-weight: 700;
+  transition: transform 280ms ease, background 280ms ease, box-shadow 280ms ease;
+}
+
+.glass-admin .choose-image-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.14);
+}
+
+/* Status label and value */
+.glass-admin .status-field > span {
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.glass-admin .status-field > div {
+  min-height: 50px;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+@media (max-width: 640px) {
+  .glass-admin .choose-image-button,
+  .glass-admin .status-field > div {
+    min-height: 52px;
+    font-size: 1rem;
+  }
+}
+
+
+/* Smooth lift for the complete article editor */
+.article-editor-main-card {
+  animation: editorCardEnter 0.55s ease-out both;
+  transition: transform 0.3s ease;
+}
+
+.article-editor-main-card:hover {
+  transform: translateY(-3px);
+}
+
+@keyframes editorCardEnter {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Soft lift when a field is focused or tapped — no border glow */
+.article-editor-card input,
+.article-editor-card textarea,
+.article-editor-card select {
+  transition: transform 0.22s ease, box-shadow 0.22s ease;
+}
+
+.article-editor-card input:focus,
+.article-editor-card textarea:focus,
+.article-editor-card select:focus {
+  transform: translateY(-2px);
+  box-shadow: none !important;
+  outline: none;
+}
+
+/* Publishing details card */
+.publishing-details-card {
+  transition: transform 0.28s ease, background-color 0.28s ease;
+}
+
+.publishing-details-card:hover {
+  transform: translateY(-3px);
+  background-color: rgba(255, 255, 255, 0.04);
+}
+
+/* Cover image card — leave its buttons untouched */
+.cover-image-animated {
+  transition: transform 0.28s ease, background-color 0.28s ease;
+}
+
+.cover-image-animated:hover {
+  transform: translateY(-3px);
+}
+
+/* Save draft button only */
+.save-draft-animated {
+  transition: transform 0.22s ease, box-shadow 0.22s ease;
+}
+
+.save-draft-animated:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.18);
+}
+
+.save-draft-animated:active {
+  transform: translateY(0);
+}
+
+
+
+/* Whole article editor card */
+.glass-admin .article-editor-main-card {
+  animation: editorCardEnter 0.55s ease-out both;
+  transition: transform 0.3s ease;
+}
+
+.glass-admin .article-editor-main-card:hover {
+  transform: translateY(-3px);
+}
+
+/* Whole Publishing details and Cover image cards */
+.glass-admin .publishing-details-card,
+.glass-admin .cover-image-animated {
+  position: relative;
+  transition:
+    transform 0.3s ease,
+    background-color 0.3s ease,
+    box-shadow 0.3s ease;
+  will-change: transform;
+}
+
+.glass-admin .publishing-details-card:hover,
+.glass-admin .cover-image-animated:hover {
+  transform: translateY(-4px);
+  background-color: rgba(255, 255, 255, 0.045);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+}
+
+/* Article content editor box */
+.glass-admin .article-editor-card [contenteditable="true"],
+.glass-admin .article-editor-card .ProseMirror,
+.glass-admin .article-editor-card .tiptap {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.glass-admin .article-editor-card [contenteditable="true"]:focus,
+.glass-admin .article-editor-card .ProseMirror:focus,
+.glass-admin .article-editor-card .tiptap:focus {
+  transform: translateY(-2px);
+  box-shadow: none !important;
+  outline: none;
+}
+
+/* Respect reduced-motion settings */
+@media (prefers-reduced-motion: reduce) {
+  .glass-admin .article-editor-main-card,
+  .glass-admin .publishing-details-card,
+  .glass-admin .cover-image-animated,
+  .glass-admin .article-editor-card [contenteditable="true"],
+  .glass-admin .article-editor-card .ProseMirror,
+  .glass-admin .article-editor-card .tiptap {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+  }
+}
+
+
+/* Whole editor card: smooth entrance and lift */
+.glass-admin .article-editor-main-card {
+  animation: editorCardEnter 0.55s ease-out both;
+  transition: transform 0.3s ease;
+}
+
+.glass-admin .article-editor-main-card:hover {
+  transform: translateY(-3px);
+}
+
+/* Entire side cards */
+.glass-admin .publishing-details-card,
+.glass-admin .cover-image-animated {
+  transition: transform 0.3s ease, background-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.glass-admin .publishing-details-card:hover,
+.glass-admin .cover-image-animated:hover {
+  transform: translateY(-4px);
+  background-color: rgba(255, 255, 255, 0.045);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+}
+
+/* Actual Tiptap content editor wrapper */
+.glass-admin .article-editor {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  border-radius: 14px;
+}
+
+.glass-admin .article-editor:focus-within {
+  transform: translateY(-3px);
+  box-shadow: none;
+}
+
+/* Tiptap editable content */
+.glass-admin .article-editor .tiptap {
+  min-height: 240px;
+  transition: transform 0.25s ease;
+}
+
+.glass-admin .article-editor:focus-within .tiptap {
+  transform: translateY(-1px);
+}
+
+@keyframes editorCardEnter {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Save draft only */
+.glass-admin .save-draft-animated {
+  transition: transform 0.22s ease, box-shadow 0.22s ease;
+}
+
+.glass-admin .save-draft-animated:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.18);
+}
+
+
+
+/* =========================================
+   MAIN ARTICLE EDITOR — WHOLE CARD
+========================================= */
+
+.glass-admin .article-editor-main-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transform-origin: center;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .glass-admin .article-editor-main-card:hover {
+    transform: translateY(-3px);
+  }
+}
+
+/* =========================================
+   LEFT SIDE — ALL FORM FIELDS
+========================================= */
+
+.glass-admin .article-editor-card input:not([type="file"]),
+.glass-admin .article-editor-card textarea,
+.glass-admin .article-editor-card select,
+.glass-admin .article-editor-card .article-editor {
+  transition: transform 0.22s ease, box-shadow 0.22s ease;
+  border-radius: 12px;
+}
+
+/* PC: lift on hover */
+@media (hover: hover) and (pointer: fine) {
+  .glass-admin .article-editor-card input:not([type="file"]):hover,
+  .glass-admin .article-editor-card textarea:hover,
+  .glass-admin .article-editor-card select:hover,
+  .glass-admin .article-editor-card .article-editor:hover {
+    transform: translateY(-2px);
+  }
+}
+
+/* PC and mobile: lift when focused or tapped */
+.glass-admin .article-editor-card input:not([type="file"]):focus,
+.glass-admin .article-editor-card textarea:focus,
+.glass-admin .article-editor-card select:focus {
+  transform: translateY(-2px);
+  box-shadow: none !important;
+  outline: none;
+}
+
+/* Tiptap article content editor */
+.glass-admin .article-editor-card .article-editor:focus-within {
+  transform: translateY(-3px);
+  box-shadow: none;
+}
+
+.glass-admin .article-editor-card .article-editor .tiptap {
+  transition: transform 0.22s ease;
+}
+
+.glass-admin .article-editor-card .article-editor:focus-within .tiptap {
+  transform: translateY(-1px);
+}
+
+/* Publishing details fields */
+.glass-admin .publishing-details-card input:hover,
+.glass-admin .publishing-details-card input:focus {
+  transform: translateY(-2px);
+  transition: transform 0.22s ease;
+  box-shadow: none !important;
+}
+
+/* Cover image URL field */
+.glass-admin .cover-image-animated input:not([type="file"]):hover,
+.glass-admin .cover-image-animated input:not([type="file"]):focus {
+  transform: translateY(-2px);
+  transition: transform 0.22s ease;
+  box-shadow: none !important;
+}
+
+/* Respect reduced-motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .glass-admin .article-editor-main-card,
+  .glass-admin .article-editor-card input,
+  .glass-admin .article-editor-card textarea,
+  .glass-admin .article-editor-card select,
+  .glass-admin .article-editor-card .article-editor,
+  .glass-admin .article-editor-card .article-editor .tiptap {
+    transition: none !important;
+    transform: none !important;
+  }
+}
+
+
+/* Main article editor: full-card lift */
+.glass-admin .article-editor-main-card {
+  transition: translate 0.28s ease, box-shadow 0.28s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .glass-admin .article-editor-main-card:hover {
+    translate: 0 -4px;
+    box-shadow: 0 16px 35px rgba(0, 0, 0, 0.16);
+  }
+}
+
+/* Left-side form fields */
+.glass-admin .article-editor-main-card input:not([type="file"]),
+.glass-admin .article-editor-main-card textarea,
+.glass-admin .article-editor-main-card select {
+  transition: translate 0.22s ease, box-shadow 0.22s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .glass-admin .article-editor-main-card input:not([type="file"]):hover,
+  .glass-admin .article-editor-main-card textarea:hover,
+  .glass-admin .article-editor-main-card select:hover {
+    translate: 0 -2px;
+  }
+}
+
+.glass-admin .article-editor-main-card input:not([type="file"]):focus,
+.glass-admin .article-editor-main-card textarea:focus,
+.glass-admin .article-editor-main-card select:focus {
+  translate: 0 -2px;
+  box-shadow: none !important;
+  outline: none;
+}
+
+/* Entire Tiptap content box */
+.glass-admin .article-editor-main-card .article-editor {
+  transition: translate 0.25s ease, box-shadow 0.25s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .glass-admin .article-editor-main-card .article-editor:hover {
+    translate: 0 -3px;
+  }
+}
+
+.glass-admin .article-editor-main-card .article-editor:focus-within {
+  translate: 0 -3px;
+  box-shadow: none;
+}
+
+/* Save draft button */
+.glass-admin .save-draft-animated {
+  transition: translate 0.22s ease, box-shadow 0.22s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .glass-admin .save-draft-animated:hover {
+    translate: 0 -3px;
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.18);
+  }
+}
+
+.glass-admin .save-draft-animated:active {
+  translate: 0 0;
+}
+
+/* Close editor button */
+.glass-admin .close-editor-animated {
+  transition: translate 0.22s ease, box-shadow 0.22s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .glass-admin .close-editor-animated:hover {
+    translate: 0 -3px;
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.16);
+  }
+}
+
+.glass-admin .close-editor-animated:active {
+  translate: 0 0;
+}
+
