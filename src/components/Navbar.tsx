@@ -25,17 +25,13 @@ export default function Navbar({
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
 
-  // Update navbar background on scroll
   useEffect(() => {
     const on = () => setScrolled(window.scrollY > 16);
-
     on();
     window.addEventListener("scroll", on, { passive: true });
-
     return () => window.removeEventListener("scroll", on);
   }, []);
 
-  // Keep the active navigation link synchronized with page scrolling
   useEffect(() => {
     const sectionIds = navLinks.map((link) => link.id);
 
@@ -54,7 +50,6 @@ export default function Navbar({
         }
       }
 
-      // At the bottom of the page, activate the final navigation section.
       const atBottom =
         window.innerHeight + window.scrollY >=
         document.documentElement.scrollHeight - 2;
@@ -67,10 +62,7 @@ export default function Navbar({
     };
 
     updateActiveSection();
-
-    window.addEventListener("scroll", updateActiveSection, {
-      passive: true,
-    });
+    window.addEventListener("scroll", updateActiveSection, { passive: true });
     window.addEventListener("resize", updateActiveSection);
 
     return () => {
@@ -79,7 +71,6 @@ export default function Navbar({
     };
   }, []);
 
-  // Close mobile menu with Escape
   useEffect(() => {
     if (!open) return;
 
@@ -88,7 +79,6 @@ export default function Navbar({
     };
 
     window.addEventListener("keydown", handleKeyDown);
-
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [open]);
 
@@ -107,7 +97,7 @@ export default function Navbar({
     >
       <nav
         aria-label="Primary"
-        className="container-x flex h-14 items-center justify-between gap-3 sm:h-16 sm:gap-4"
+        className="container-x flex h-14 items-center justify-between gap-2 sm:h-16 sm:gap-4"
       >
         <a
           href="#home"
@@ -120,7 +110,6 @@ export default function Navbar({
               {site.brand}
               <span className="text-accent">/&gt;</span>
             </span>
-
             <span className="mt-0.5 font-sans text-[9px] font-normal tracking-wide text-muted sm:text-[10px]">
               {site.tagline}
             </span>
@@ -141,21 +130,21 @@ export default function Navbar({
           ))}
         </ul>
 
-        <div className="flex shrink-0 items-center gap-2 sm:gap-2.5">
-          <button
-            type="button"
-            onClick={onStartFlight}
-            className="btn btn-primary nav-cta !min-h-9 !px-3 !py-1.5 text-sm sm:!min-h-11 sm:!px-5 sm:!py-2 sm:text-base"
+        {/* Header Write-ups button: visible on mobile and desktop */}
+        <div className="ml-auto flex shrink-0 items-center gap-1.5 sm:gap-2.5">
+          <a
+            href="/blog"
+            className="btn btn-primary nav-cta !flex !min-h-9 !shrink-0 !items-center !gap-1 !px-2 !py-1.5 text-xs sm:!min-h-11 sm:!gap-2 sm:!px-5 sm:!py-2 sm:text-base"
           >
-            <span className="whitespace-nowrap">Let's Connect</span>
-            <ArrowUpRight size={17} aria-hidden="true" />
-          </button>
+            <span className="whitespace-nowrap">Write-ups</span>
+            <ArrowUpRight size={16} aria-hidden="true" />
+          </a>
 
           <ThemeToggle theme={theme} onToggle={onToggle} />
 
           <button
             type="button"
-            className="grid h-10 w-10 shrink-0 place-items-center rounded-full border border-line bg-card text-ink lg:hidden sm:h-11 sm:w-11"
+            className="grid h-9 w-9 shrink-0 place-items-center rounded-full border border-line bg-card text-ink lg:hidden sm:h-11 sm:w-11"
             aria-label={open ? "Close menu" : "Open menu"}
             aria-expanded={open}
             aria-controls="mobile-menu"
@@ -170,10 +159,11 @@ export default function Navbar({
         </div>
       </nav>
 
+      {/* Mobile hamburger menu */}
       <div
         id="mobile-menu"
         className={`lg:hidden overflow-hidden transition-[max-height] duration-500 ${
-          open ? "max-h-[32rem]" : "max-h-0"
+          open ? "max-h-[36rem]" : "max-h-0"
         }`}
         aria-hidden={!open}
         inert={!open}
@@ -196,6 +186,19 @@ export default function Navbar({
               </a>
             </li>
           ))}
+
+          {/* Write-ups link inside the hamburger menu */}
+          <li>
+            <a
+              href="/blog"
+              tabIndex={open ? 0 : -1}
+              onClick={() => setOpen(false)}
+              className="flex min-h-12 items-center justify-between rounded-xl px-4 font-bold text-ink transition hover:bg-[var(--chip-bg)] hover:text-accent"
+            >
+              Write-ups
+              <ArrowUpRight size={17} aria-hidden="true" />
+            </a>
+          </li>
         </ul>
       </div>
     </header>

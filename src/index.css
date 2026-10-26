@@ -752,3 +752,373 @@ dialog.modal[open] { animation: pop .35s cubic-bezier(.2,.8,.2,1); }
     animation-duration: 1ms !important;
   }
 }
+
+
+
+/* Dev2Sec article code blocks */
+.article-code-block {
+  margin: 1.75rem 0;
+  overflow: hidden;
+  border: 1px solid var(--accent-line);
+  border-radius: 1rem;
+  background: var(--bg-2);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.article-code-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--line);
+  background: var(--card);
+}
+
+.article-code-label {
+  font-family: monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  color: var(--accent);
+}
+
+.article-copy-button {
+  border: 1px solid var(--line);
+  border-radius: 0.55rem;
+  padding: 0.35rem 0.7rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text);
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.article-copy-button:hover {
+  border-color: var(--accent-line);
+  color: var(--accent);
+}
+
+.article-content pre {
+  max-width: 100%;
+  overflow-x: auto;
+  margin: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  padding: 1.15rem !important;
+  background: transparent !important;
+  color: var(--text) !important;
+  font-size: 0.85rem;
+  line-height: 1.8;
+  tab-size: 2;
+  -webkit-overflow-scrolling: touch;
+}
+
+.article-content pre code {
+  white-space: pre;
+  overflow-wrap: normal;
+  color: inherit;
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  background: transparent !important;
+  padding: 0 !important;
+}
+
+.article-content :not(pre) > code {
+  overflow-wrap: anywhere;
+  border: 1px solid var(--line);
+  border-radius: 0.35rem;
+  padding: 0.12rem 0.35rem;
+  color: var(--accent);
+  background: var(--bg-2);
+  font-size: 0.88em;
+}
+
+.article-content table {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+  border-collapse: collapse;
+}
+
+.article-content th,
+.article-content td {
+  border: 1px solid var(--line);
+  padding: 0.65rem 0.8rem;
+  text-align: left;
+}
+
+.article-content th {
+  color: var(--text);
+  background: var(--bg-2);
+}
+
+.article-content td {
+  color: var(--muted);
+}
+
+
+/* ==========================================
+   DEV2SEC — OUTER ARTICLE CARDS ONLY
+   Inner content stays completely still
+========================================== */
+
+/* Smooth animation on outer article panels only */
+article header.relative.overflow-hidden,
+article .article-content,
+article aside > div,
+article aside > a {
+  transition:
+    transform 280ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    border-color 280ms ease,
+    box-shadow 280ms ease;
+}
+
+/* Main article header / cover card */
+article header.relative.overflow-hidden {
+  position: relative;
+  border-color: var(--line);
+  will-change: transform, box-shadow;
+}
+
+article header.relative.overflow-hidden:hover {
+  transform: translateY(-5px);
+  border-color: var(--accent-line);
+  box-shadow:
+    0 16px 40px rgba(0, 0, 0, 0.12),
+    0 0 24px var(--glow);
+}
+
+/* Outer article content card */
+article .article-content {
+  position: relative;
+  padding: 1.5rem;
+  border: 1px solid var(--line);
+  border-radius: 1rem;
+  background: var(--card);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.06);
+  will-change: transform, box-shadow;
+}
+
+/* Lift the whole content card, not individual elements */
+article .article-content:hover {
+  transform: translateY(-5px);
+  border-color: var(--accent-line);
+  box-shadow:
+    0 16px 36px rgba(0, 0, 0, 0.12),
+    0 0 24px var(--glow);
+}
+
+/* Sidebar outer cards */
+article aside > div {
+  will-change: transform, box-shadow;
+}
+
+article aside > div:hover {
+  transform: translateY(-4px);
+  border-color: var(--accent-line);
+  box-shadow:
+    0 12px 28px rgba(0, 0, 0, 0.1),
+    0 0 18px var(--glow);
+}
+
+/* Sidebar CTA remains independently interactive */
+article aside > a:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 26px var(--glow);
+}
+
+/* No animation on inner code blocks or text */
+.article-code-block,
+.article-content pre,
+.article-content code,
+.article-content p,
+.article-content h1,
+.article-content h2,
+.article-content h3,
+.article-content ul,
+.article-content ol,
+.article-content img {
+  transform: none;
+}
+
+/* Keep article images stationary */
+article header img {
+  transition: none;
+}
+
+/* Respect reduced-motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  article header.relative.overflow-hidden,
+  article .article-content,
+  article aside > div,
+  article aside > a {
+    transition: none !important;
+    transform: none !important;
+  }
+}
+
+/* Phones and touch screens: prevent sticky hover */
+@media (hover: none) {
+  article header.relative.overflow-hidden:hover,
+  article .article-content:hover,
+  article aside > div:hover,
+  article aside > a:hover {
+    transform: none;
+    box-shadow: none;
+  }
+}
+
+/* Responsive inner padding */
+@media (min-width: 640px) {
+  article .article-content {
+    padding: 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  article .article-content {
+    padding: 2.5rem;
+  }
+}
+
+
+/* Topics Covered: lift the entire outer card */
+.topics-covered-card {
+  position: relative;
+  transition:
+    transform 280ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    border-color 280ms ease,
+    box-shadow 280ms ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .topics-covered-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--accent-line);
+    box-shadow:
+      0 14px 32px rgba(0, 0, 0, 0.14),
+      0 0 22px var(--glow);
+  }
+}
+
+/* Back and Home buttons */
+.article-nav-button {
+  border: 1px solid transparent;
+  border-radius: 12px;
+  padding: 10px 12px;
+  transition:
+    transform 240ms ease,
+    color 240ms ease,
+    border-color 240ms ease,
+    box-shadow 240ms ease,
+    background-color 240ms ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .article-nav-button:hover {
+    transform: translateY(-4px);
+    color: var(--accent);
+    border-color: var(--accent-line);
+    background: var(--card);
+    box-shadow: 0 0 18px var(--glow);
+  }
+}
+
+.article-nav-button:active {
+  transform: scale(0.97);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .topics-covered-card,
+  .article-nav-button {
+    transition: none !important;
+  }
+
+  .topics-covered-card:hover,
+  .article-nav-button:hover,
+  .article-nav-button:active {
+    transform: none !important;
+  }
+}
+
+@media (hover: none) {
+  .topics-covered-card:hover,
+  .article-nav-button:hover {
+    transform: none;
+    box-shadow: none;
+  }
+}
+
+/* Article cover image — smooth hover lift */
+article header img {
+  display: block;
+  transition:
+    transform 400ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    box-shadow 400ms ease;
+  will-change: transform;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  article header img:hover {
+    transform: translateY(-5px) scale(1.01);
+    box-shadow: 0 10px 24px var(--glow);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  article header img {
+    transition: none;
+    will-change: auto;
+  }
+
+  article header img:hover {
+    transform: none;
+    box-shadow: none;
+  }
+}
+
+/* Copy button: smooth hover and copied feedback */
+.article-copy-button {
+  transition:
+    transform 220ms ease,
+    border-color 220ms ease,
+    color 220ms ease,
+    background-color 220ms ease,
+    box-shadow 220ms ease;
+}
+
+@media (hover: hover) {
+  .article-copy-button:hover {
+    transform: translateY(-2px);
+    border-color: var(--accent-line);
+    color: var(--accent);
+    box-shadow: 0 0 14px var(--glow);
+  }
+}
+
+.article-copy-button.is-copied {
+  color: var(--accent);
+  border-color: var(--accent-line);
+  background-color: var(--bg-2);
+  box-shadow: 0 0 16px var(--glow);
+  animation: copySuccess 280ms ease-out;
+}
+
+@keyframes copySuccess {
+  0% {
+    transform: scale(0.94);
+  }
+  65% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .article-copy-button,
+  .article-copy-button.is-copied {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+  }
+}
