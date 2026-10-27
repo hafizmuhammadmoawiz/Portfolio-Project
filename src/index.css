@@ -1122,3 +1122,27 @@ article header img {
     transform: none !important;
   }
 }
+
+/* Neat alignment for published blog paragraphs */
+.article-content p {
+  text-align: justify;
+  text-justify: inter-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+
+/* Keep headings and lists natural */
+.article-content h1,
+.article-content h2,
+.article-content h3,
+.article-content li {
+  text-align: left;
+}
+
+.article-content img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 1.5rem auto;
+}
+

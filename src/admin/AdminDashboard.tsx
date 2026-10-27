@@ -120,6 +120,64 @@ export default function AdminDashboard() {
     if (editor && editorOpen) editor.commands.setContent(form.content || "", { emitUpdate: false });
   }, [editor, editorOpen]);
 
+
+  async function uploadInlineImage(file?: File) {
+    if (!file || !editor) return;
+
+    const allowedTypes = [
+      "image/jpeg",
+      "image/png",
+      "image/webp",
+      "image/avif",
+    ];
+
+    if (!allowedTypes.includes(file.type)) {
+      notify("error", "Choose a JPG, PNG, WebP or AVIF image.");
+      return;
+    }
+
+    if (file.size > 5 * 1024 * 1024) {
+      notify("error", "Image must be 5 MB or smaller.");
+      return;
+    }
+
+    setUploading(true);
+
+    try {
+      const ext = file.name.split(".").pop()?.toLowerCase() || "png";
+      const path = `inline/${crypto.randomUUID()}.${ext}`;
+
+      const { error } = await supabase.storage
+        .from("blog-covers")
+        .upload(path, file, {
+          cacheControl: "3600",
+          upsert: false,
+          contentType: file.type,
+        });
+
+      if (error) throw error;
+
+      const { data } = supabase.storage
+        .from("blog-covers")
+        .getPublicUrl(path);
+
+      editor.chain().focus().setImage({
+        src: data.publicUrl,
+        alt: file.name.replace(/\.[^/.]+$/, ""),
+      }).run();
+
+      notify("success", "Image inserted into article.");
+    } catch (error) {
+      notify(
+        "error",
+        error instanceof Error ? error.message : "Image upload failed."
+      );
+    } finally {
+      setUploading(false);
+    }
+  }
+
+
   async function uploadCover(file?: File) {
     if (!file) return;
     if (!["image/jpeg", "image/png", "image/webp", "image/avif"].includes(file.type)) {
@@ -326,6 +384,22 @@ export default function AdminDashboard() {
                       <button type="button" title="Numbered list" onClick={() => editor?.chain().focus().toggleOrderedList().run()} className={buttonClass}><ListOrdered size={15}/></button>
                       <button type="button" title="Block quote" onClick={() => editor?.chain().focus().toggleBlockquote().run()} className={buttonClass}><Quote size={15}/></button>
                       <button type="button" title="Add link" onClick={() => { const url = window.prompt("Enter link URL (https://…)"); if (url) editor?.chain().focus().extendMarkRange("link").setLink({ href: url }).run(); }} className={buttonClass}><LinkIcon size={15}/></button>
+                      <label
+                        title="Insert image into article"
+                        className={`${buttonClass} cursor-pointer`}
+                      >
+                        <ImagePlus size={15} />
+                        <input
+                          type="file"
+                          accept="image/jpeg,image/png,image/webp,image/avif"
+                          className="hidden"
+                          disabled={uploading}
+                          onChange={(e) => {
+                            void uploadInlineImage(e.currentTarget.files?.[0]);
+                            e.currentTarget.value = "";
+                          }}
+                        />
+                      </label>
                       <button type="button" title="Undo" onClick={() => editor?.chain().focus().undo().run()} className={buttonClass}><RotateCcw size={15}/></button>
                     </div><div className="article-editor"><EditorContent editor={editor}/></div></div><p className="mt-3 text-sm font-medium leading-6 text-white/50">Use the toolbar to format headings, text, lists, quotes and links.</p></div>
                     <div className="flex flex-wrap gap-2">

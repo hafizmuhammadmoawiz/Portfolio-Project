@@ -1093,3 +1093,62 @@
   translate: 0 0;
 }
 
+
+/* Mobile-friendly article content formatting */
+.article-content,
+.article-editor .tiptap {
+  width: 100%;
+  max-width: 100%;
+  text-align: left;
+  overflow-wrap: break-word;
+  word-break: normal;
+  line-height: 1.8;
+}
+
+.article-content p,
+.article-editor .tiptap p {
+  text-align: left;
+  margin: 0 0 1rem;
+}
+
+.article-content h1,
+.article-content h2,
+.article-content h3,
+.article-editor .tiptap h1,
+.article-editor .tiptap h2,
+.article-editor .tiptap h3 {
+  text-align: left;
+  line-height: 1.4;
+  margin: 1.75rem 0 0.75rem;
+  overflow-wrap: break-word;
+}
+
+.article-content img,
+.article-editor .tiptap img {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+  margin: 1.25rem auto;
+  border-radius: 12px;
+}
+
+@media (max-width: 640px) {
+  .article-content,
+  .article-editor .tiptap {
+    font-size: 15px;
+    line-height: 1.8;
+  }
+
+  .article-content h2,
+  .article-editor .tiptap h2 {
+    font-size: 1.25rem;
+    margin-top: 1.5rem;
+  }
+
+  .article-content p,
+  .article-editor .tiptap p {
+    margin-bottom: 1rem;
+  }
+}

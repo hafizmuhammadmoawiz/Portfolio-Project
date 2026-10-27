@@ -3,7 +3,6 @@ import { useEffect, useMemo, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import {
   ArrowLeft,
-  ArrowUpRight,
   CalendarDays,
   Check,
   Copy,
@@ -93,8 +92,7 @@ function ArticleHeader({
 
         <div className="col-span-2 row-start-2 pb-1 text-center sm:col-span-1 sm:col-start-2 sm:row-start-1 sm:pb-0">
           <p className="font-mono text-[10px] tracking-wide text-muted sm:text-xs md:text-sm lg:text-base">
-            Here is{" "}
-            <span className="font-bold text-accent">Moawiz's</span>{" "}
+            Here is <span className="font-bold text-accent">Moawiz's</span>{" "}
             Write-up Centre
           </p>
         </div>
@@ -102,9 +100,6 @@ function ArticleHeader({
     </header>
   );
 }
-
-
-
 
 function ArticleCodeTools() {
   useEffect(() => {
@@ -182,9 +177,7 @@ function ArticleCodeTools() {
 
       const onClick = async () => {
         const code =
-          pre.querySelector("code")?.textContent ??
-          pre.textContent ??
-          "";
+          pre.querySelector("code")?.textContent ?? pre.textContent ?? "";
 
         if (!code.trim()) {
           button.textContent = "No code found";
@@ -242,8 +235,6 @@ function ArticleCodeTools() {
 
   return null;
 }
-
-
 
 export default function BlogPost() {
   const { slug } = useParams<{ slug: string }>();
@@ -344,7 +335,7 @@ export default function BlogPost() {
 
         <article className="container-x relative z-10 pb-16 pt-32 sm:pb-24 sm:pt-36">
           {loading ? (
-            <div className="mx-auto max-w-4xl animate-pulse">
+            <div className="mx-auto w-full max-w-6xl animate-pulse">
               <div className="h-4 w-40 rounded bg-[var(--bg-2)]" />
               <div className="mt-8 h-12 rounded bg-[var(--bg-2)] sm:h-16" />
               <div className="mt-4 h-5 w-3/4 rounded bg-[var(--bg-2)]" />
@@ -355,7 +346,9 @@ export default function BlogPost() {
           ) : error ? (
             <div className="card mx-auto max-w-2xl px-6 py-14 text-center">
               <Terminal size={32} className="mx-auto text-accent" />
-              <h1 className="mt-5 text-2xl font-bold">Write-up unavailable</h1>
+              <h1 className="mt-5 text-2xl font-bold">
+                Write-up unavailable
+              </h1>
               <p className="mt-3 text-sm leading-7 text-muted">{error}</p>
               <Link
                 to="/blog"
@@ -365,7 +358,7 @@ export default function BlogPost() {
               </Link>
             </div>
           ) : article ? (
-            <div className="mx-auto max-w-5xl">
+            <div className="mx-auto w-full max-w-6xl">
               <div className="mb-6 flex flex-wrap items-center justify-between gap-3 sm:mb-8">
                 <Link
                   to="/blog"
@@ -385,132 +378,99 @@ export default function BlogPost() {
                 </button>
               </div>
 
-              <header className="article-main-card relative overflow-hidden rounded-3xl border border-line bg-card/90 p-5 shadow-[0_18px_60px_rgba(0,0,0,0.08)] backdrop-blur-md sm:p-8 lg:p-12">
+              {/* One outer card for the cover and complete article */}
+              <section className="article-main-card relative w-full min-w-0 overflow-hidden rounded-3xl border border-line bg-card/90 p-5 text-left shadow-[0_18px_60px_rgba(0,0,0,0.08)] backdrop-blur-md sm:p-8 lg:p-12">
                 <div
                   className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full opacity-50 blur-[90px]"
                   style={{ background: "var(--glow)" }}
                   aria-hidden="true"
                 />
 
-                <div className="eyebrow relative">
-                  <Terminal size={15} />
-                  Dev2Sec / {article.category || "Security Research"}
-                </div>
-
-                <h1 className="relative mt-5 max-w-4xl break-words text-3xl font-extrabold leading-tight tracking-tight sm:text-4xl lg:text-6xl">
-                  {article.title}
-                </h1>
-
-                {article.excerpt && (
-                  <p className="lead relative mt-5 max-w-3xl text-base sm:text-lg">
-                    {article.excerpt}
-                  </p>
-                )}
-
-                <div className="relative mt-7 flex flex-wrap items-center gap-x-5 gap-y-3 text-sm text-muted">
-                  {formattedDate && (
-                    <span className="inline-flex items-center gap-2">
-                      <CalendarDays size={16} className="text-accent" />
-                      {formattedDate}
-                    </span>
-                  )}
-
-                  {article.category && (
-                    <span className="inline-flex items-center gap-2">
-                      <Tag size={16} className="text-accent" />
-                      {article.category}
-                    </span>
-                  )}
-                </div>
-
-                {article.cover_image_url && (
-                  <div className="relative mt-8 overflow-hidden rounded-2xl border border-line bg-[var(--bg-2)]">
-                    <img
-                      src={article.cover_image_url}
-                      alt={article.title}
-                      loading="eager"
-                      className="max-h-[560px] w-full object-contain sm:object-cover"
-                    />
+                <header className="relative min-w-0">
+                  <div className="eyebrow">
+                    <Terminal size={15} />
+                    Dev2Sec / {article.category || "Security Research"}
                   </div>
-                )}
-              </header>
 
-              <div className="mx-auto mt-8 grid max-w-5xl grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1fr)_250px] lg:gap-10">
-                <section className="min-w-0 rounded-2xl border border-line bg-card/80 p-5 backdrop-blur-sm sm:p-8 lg:p-10">
+                  <h1 className="mt-5 max-w-4xl break-words text-left text-3xl font-extrabold leading-tight tracking-tight sm:text-4xl lg:text-6xl">
+                    {article.title}
+                  </h1>
+
+                  {article.excerpt && (
+                    <p className="lead mt-5 max-w-4xl text-left text-base sm:text-lg">
+                      {article.excerpt}
+                    </p>
+                  )}
+
+                  <div className="mt-7 flex flex-wrap items-center gap-x-5 gap-y-3 text-sm text-muted">
+                    {formattedDate && (
+                      <span className="inline-flex items-center gap-2">
+                        <CalendarDays size={16} className="text-accent" />
+                        {formattedDate}
+                      </span>
+                    )}
+
+                    {article.category && (
+                      <span className="inline-flex items-center gap-2">
+                        <Tag size={16} className="text-accent" />
+                        {article.category}
+                      </span>
+                    )}
+                  </div>
+
+                  {article.cover_image_url && (
+                    <div className="mt-8 w-full min-w-0 overflow-hidden rounded-2xl border border-line bg-[var(--bg-2)]">
+                      <img
+                        src={article.cover_image_url}
+                        alt={article.title}
+                        loading="eager"
+                        className="block max-h-[560px] w-full object-contain sm:object-cover"
+                      />
+                    </div>
+                  )}
+                </header>
+
+                {/* Article content sits directly in the outer card */}
+                <div className="relative mt-8 min-w-0 border-t border-line pt-6 text-left sm:mt-10 sm:pt-8">
                   <ArticleCodeTools />
 
                   <div
-                    className="article-content prose prose-sm max-w-none break-words leading-8 sm:prose-base
-                      prose-headings:scroll-mt-24 prose-headings:font-bold prose-headings:tracking-tight prose-headings:text-ink
+                    className="article-content prose prose-sm max-w-none break-words text-justify leading-8 sm:prose-base
+                      prose-headings:scroll-mt-24 prose-headings:text-left prose-headings:font-bold prose-headings:tracking-tight prose-headings:text-ink
                       prose-h1:mb-5 prose-h1:mt-8 prose-h1:text-3xl
                       prose-h2:mb-4 prose-h2:mt-10 prose-h2:border-b prose-h2:border-line prose-h2:pb-3 prose-h2:text-2xl
                       prose-h3:mb-3 prose-h3:mt-8 prose-h3:text-xl
-                      prose-p:my-5 prose-p:text-muted
+                      prose-p:my-5 prose-p:text-left prose-p:text-muted
                       prose-a:font-semibold prose-a:text-accent prose-a:underline-offset-4
                       prose-strong:font-bold prose-strong:text-ink
                       prose-li:my-2 prose-li:text-muted
                       prose-ul:my-5 prose-ol:my-5
                       prose-blockquote:rounded-r-xl prose-blockquote:border-l-[var(--accent)] prose-blockquote:bg-[var(--bg-2)] prose-blockquote:px-4 prose-blockquote:py-2 prose-blockquote:text-muted
                       prose-img:my-8 prose-img:max-h-[560px] prose-img:w-full prose-img:rounded-2xl prose-img:border prose-img:border-line prose-img:object-contain
-                      prose-hr:border-line"
-                    dangerouslySetInnerHTML={{ __html: article.content || "" }}
+                      prose-hr:border-line
+                      [&_table]:block [&_table]:max-w-full [&_table]:overflow-x-auto
+                      [&_pre]:max-w-full [&_pre]:overflow-x-auto"
+                    dangerouslySetInnerHTML={{
+                      __html: article.content || "",
+                    }}
                   />
-                </section>
+                </div>
 
-                <aside className="flex flex-col gap-5 lg:sticky lg:top-8 lg:self-start">
-                  <div className="rounded-2xl border border-line bg-card/85 p-5 backdrop-blur-sm">
-                    <p className="eyebrow">Article details</p>
-                    <h2 className="mt-3 text-lg font-bold">In this write-up</h2>
-
-                    <div className="mt-4 space-y-3 text-sm text-muted">
-                      {article.category && (
-                        <p className="flex items-start gap-2">
-                          <Tag size={16} className="mt-0.5 shrink-0 text-accent" />
-                          <span>{article.category}</span>
-                        </p>
-                      )}
-                      {formattedDate && (
-                        <p className="flex items-start gap-2">
-                          <CalendarDays size={16} className="mt-0.5 shrink-0 text-accent" />
-                          <span>{formattedDate}</span>
-                        </p>
-                      )}
+                {article.tags?.length > 0 && (
+                  <div className="relative mt-10 border-t border-line pt-6 text-left sm:pt-8">
+                    <p className="eyebrow">Topics covered</p>
+                    <div className="mt-4 flex flex-wrap gap-2">
+                      {article.tags.map((tag) => (
+                        <span key={tag} className="chip">
+                          #{tag}
+                        </span>
+                      ))}
                     </div>
                   </div>
+                )}
+              </section>
 
-                  <div className="rounded-2xl border border-[var(--accent-line)] bg-card/85 p-5 backdrop-blur-sm">
-                    <Terminal size={22} className="text-accent" />
-                    <h2 className="mt-3 font-bold">Security mindset</h2>
-                    <p className="mt-2 text-sm leading-6 text-muted">
-                      Practice responsibly. Test only systems you own or have
-                      explicit permission to assess.
-                    </p>
-                  </div>
-
-                  <Link
-                    to="/blog"
-                    className="btn btn-primary inline-flex items-center justify-center gap-2"
-                  >
-                    Explore Write-ups
-                    <ArrowUpRight size={17} />
-                  </Link>
-                </aside>
-              </div>
-
-              {article.tags?.length > 0 && (
-                <div className="topics-covered-card mt-8 rounded-2xl border border-line bg-card/80 p-5 sm:p-7">
-                  <p className="eyebrow">Topics covered</p>
-                  <div className="mt-4 flex flex-wrap gap-2">
-                    {article.tags.map((tag) => (
-                      <span key={tag} className="chip">
-                        #{tag}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              <footer className="mt-10 flex items-center justify-between gap-3 border-t border-line pt-7">
+              <footer className="mt-8 flex items-center justify-between gap-3 border-t border-line pt-7">
                 <Link
                   to="/blog"
                   aria-label="Back to Write-ups"
