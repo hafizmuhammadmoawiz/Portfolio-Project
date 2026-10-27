@@ -95,10 +95,56 @@ export default function AdminDashboard() {
   }, [navigate, loadArticles]);
 
   async function logout() {
-    await supabase.auth.signOut();
-    navigate("/admin/login", { replace: true });
+  await supabase.auth.signOut();
+  navigate("/admin/login", { replace: true });
   }
-  function selectSection(value: Section) { setSection(value); setSidebarOpen(false); setEditorOpen(false); }
+
+  useEffect(() => {
+    if (!authorized) return;
+
+    const INACTIVITY_LIMIT = 4 * 60 * 1000;
+    let timeoutId: number;
+
+    const logoutForInactivity = async () => {
+      await supabase.auth.signOut();
+      navigate("/admin/login", {
+        replace: true,
+        state: { reason: "inactivity" },
+      });
+    };
+
+    const resetTimer = () => {
+      window.clearTimeout(timeoutId);
+      timeoutId = window.setTimeout(() => {
+        void logoutForInactivity();
+      }, INACTIVITY_LIMIT);
+    };
+
+    const events = [
+      "mousemove", "mousedown", "keydown",
+      "scroll", "touchstart", "click",
+    ] as const;
+
+    events.forEach((event) =>
+      window.addEventListener(event, resetTimer, { passive: true })
+    );
+
+    resetTimer();
+
+    return () => {
+      window.clearTimeout(timeoutId);
+      events.forEach((event) =>
+        window.removeEventListener(event, resetTimer)
+      );
+    };
+  }, [authorized, navigate]);
+
+  function selectSection(value: Section) {
+    setSection(value);
+    setSidebarOpen(false);
+    setEditorOpen(false);
+  }
+  
   function updateForm<K extends keyof ArticleForm>(key: K, value: ArticleForm[K]) {
     setForm((old) => ({ ...old, [key]: value }));
   }
