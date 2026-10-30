@@ -1,4 +1,3 @@
-
 /**
  * Certifications section.
  * Displays real certificate images, details, and accessible previews.
@@ -65,10 +64,7 @@ function Thumb({ c }: { c: Certification }) {
 
 export default function Certifications() {
   return (
-    <section
-      id="certifications"
-      className="section relative overflow-hidden"
-    >
+    <section id="certifications" className="section relative overflow-hidden">
       <div className="container-x">
         <SectionHead
           index="06"
@@ -79,11 +75,7 @@ export default function Certifications() {
 
         <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {certifications.map((c, i) => (
-            <Reveal
-              key={c.title}
-              delay={i * 100}
-              className="h-full"
-            >
+            <Reveal key={c.title} delay={i * 100} className="h-full">
               <article className="card card-hover flex h-full flex-col p-5">
                 <Thumb c={c} />
 
@@ -122,9 +114,7 @@ export default function Certifications() {
                     <dt className="inline font-semibold text-[var(--text)]">
                       ID:{" "}
                     </dt>
-                    <dd className="inline font-normal">
-                      {c.credentialId}
-                    </dd>
+                    <dd className="inline font-normal">{c.credentialId}</dd>
                   </div>
                 </dl>
 
@@ -138,9 +128,7 @@ export default function Certifications() {
                     >
                       <ExternalLink size={15} aria-hidden="true" />
                       Verify Certificate
-                      <span className="sr-only">
-                        (opens in new tab)
-                      </span>
+                      <span className="sr-only">(opens in new tab)</span>
                     </a>
                   ) : (
                     <span

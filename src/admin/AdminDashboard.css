@@ -1,24 +1,64 @@
 /* Admin dashboard glassmorphism theme. Layout utilities remain in Tailwind classes. */
 .glass-admin {
   background: #080a16;
-  background-image: radial-gradient(ellipse at 15% 8%, rgba(103,80,255,.22), transparent 34%), radial-gradient(ellipse at 85% 16%, rgba(25,190,255,.16), transparent 31%), radial-gradient(ellipse at 70% 92%, rgba(193,70,255,.12), transparent 32%);
+  background-image:
+    radial-gradient(
+      ellipse at 15% 8%,
+      rgba(103, 80, 255, 0.22),
+      transparent 34%
+    ),
+    radial-gradient(
+      ellipse at 85% 16%,
+      rgba(25, 190, 255, 0.16),
+      transparent 31%
+    ),
+    radial-gradient(
+      ellipse at 70% 92%,
+      rgba(193, 70, 255, 0.12),
+      transparent 32%
+    );
   isolation: isolate;
 }
 .glass-admin::before {
-  content: ""; position: fixed; inset: 0; pointer-events: none; z-index: -1; opacity: .12;
-  background-image: linear-gradient(rgba(255,255,255,.08) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.08) 1px, transparent 1px);
-  background-size: 44px 44px; mask-image: linear-gradient(to bottom, black, transparent 90%);
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  opacity: 0.12;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: linear-gradient(to bottom, black, transparent 90%);
 }
 .glass-panel {
-  background: linear-gradient(135deg, rgba(255,255,255,.105), rgba(255,255,255,.035));
-  border: 1px solid rgba(255,255,255,.13); box-shadow: 0 20px 80px rgba(0,0,0,.24), inset 0 1px 0 rgba(255,255,255,.08);
-  backdrop-filter: blur(26px); -webkit-backdrop-filter: blur(26px);
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.105),
+    rgba(255, 255, 255, 0.035)
+  );
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  box-shadow:
+    0 20px 80px rgba(0, 0, 0, 0.24),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(26px);
+  -webkit-backdrop-filter: blur(26px);
 }
-.glass-soft { background: linear-gradient(135deg, rgba(255,255,255,.075), rgba(255,255,255,.025)); border: 1px solid rgba(255,255,255,.09); backdrop-filter: blur(22px); }
+.glass-soft {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.075),
+    rgba(255, 255, 255, 0.025)
+  );
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  backdrop-filter: blur(22px);
+}
 .glass-nav {
   position: relative;
   transform: translateY(0);
-  transition: transform 250ms cubic-bezier(0.22, 1, 0.36, 1),
+  transition:
+    transform 250ms cubic-bezier(0.22, 1, 0.36, 1),
     background 250ms ease,
     border-color 250ms ease,
     box-shadow 250ms ease,
@@ -31,13 +71,37 @@
   border-color: rgba(167, 139, 250, 0.3);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
 }
-.glass-nav::after { content: ""; position: absolute; left: 3.5rem; right: 1rem; bottom: 5px; height: 2px; border-radius: 999px; background: linear-gradient(90deg, #a78bfa, #67e8f9); transform: scaleX(0); transform-origin: left; transition: transform .24s ease; }
-.glass-nav-active { background: linear-gradient(100deg, rgba(139,92,246,.25), rgba(34,211,238,.09)); border-color: rgba(167,139,250,.32); }
-.glass-nav-active::after { transform: scaleX(1); }
+.glass-nav::after {
+  content: "";
+  position: absolute;
+  left: 3.5rem;
+  right: 1rem;
+  bottom: 5px;
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #a78bfa, #67e8f9);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.24s ease;
+}
+.glass-nav-active {
+  background: linear-gradient(
+    100deg,
+    rgba(139, 92, 246, 0.25),
+    rgba(34, 211, 238, 0.09)
+  );
+  border-color: rgba(167, 139, 250, 0.32);
+}
+.glass-nav-active::after {
+  transform: scaleX(1);
+}
 .glass-metric {
   transform: translateY(0);
   border-color: rgba(255, 255, 255, 0.1);
-  transition: transform 280ms cubic-bezier(0.22, 1, 0.36, 1), border-color 280ms ease, box-shadow 280ms ease;
+  transition:
+    transform 280ms cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 280ms ease,
+    box-shadow 280ms ease;
 }
 
 .glass-metric:hover {
@@ -60,16 +124,48 @@
     transform: none;
   }
 }
-.article-editor .tiptap { min-height: 250px; outline: none; }
-.article-editor .tiptap p { margin: .65rem 0; }
-.article-editor .tiptap h1 { font-size: 1.8rem; font-weight: 700; }
-.article-editor .tiptap h2 { font-size: 1.35rem; font-weight: 650; }
-.article-editor .tiptap ul { list-style: disc; padding-left: 1.5rem; }
-.article-editor .tiptap ol { list-style: decimal; padding-left: 1.5rem; }
-.article-editor .tiptap blockquote { border-left: 3px solid #a78bfa; padding-left: 1rem; color: #d4d4e8; }
-.article-editor .tiptap a { color: #67e8f9; text-decoration: underline; }
-.article-editor .tiptap img { max-width: 100%; border-radius: 12px; }
-.glass-admin button:focus-visible, .glass-admin input:focus-visible, .glass-admin textarea:focus-visible { outline: 2px solid rgba(103,232,249,.8); outline-offset: 3px; }
+.article-editor .tiptap {
+  min-height: 250px;
+  outline: none;
+}
+.article-editor .tiptap p {
+  margin: 0.65rem 0;
+}
+.article-editor .tiptap h1 {
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+.article-editor .tiptap h2 {
+  font-size: 1.35rem;
+  font-weight: 650;
+}
+.article-editor .tiptap ul {
+  list-style: disc;
+  padding-left: 1.5rem;
+}
+.article-editor .tiptap ol {
+  list-style: decimal;
+  padding-left: 1.5rem;
+}
+.article-editor .tiptap blockquote {
+  border-left: 3px solid #a78bfa;
+  padding-left: 1rem;
+  color: #d4d4e8;
+}
+.article-editor .tiptap a {
+  color: #67e8f9;
+  text-decoration: underline;
+}
+.article-editor .tiptap img {
+  max-width: 100%;
+  border-radius: 12px;
+}
+.glass-admin button:focus-visible,
+.glass-admin input:focus-visible,
+.glass-admin textarea:focus-visible {
+  outline: 2px solid rgba(103, 232, 249, 0.8);
+  outline-offset: 3px;
+}
 
 /* Hamburger menu animation — no glow */
 .sidebar-toggle-button {
@@ -178,13 +274,21 @@
     transform: none;
   }
 }
-.admin-topbar { min-width: 0; }
+.admin-topbar {
+  min-width: 0;
+}
 @media (max-width: 767px) {
   .admin-topbar {
     grid-template-columns: auto minmax(0, 1fr) auto;
   }
 }
-@media (prefers-reduced-motion: reduce) { .glass-nav, .glass-nav::after, .glass-metric { transition: none; } }
+@media (prefers-reduced-motion: reduce) {
+  .glass-nav,
+  .glass-nav::after,
+  .glass-metric {
+    transition: none;
+  }
+}
 
 /* Soft lift animation for the complete admin header */
 .admin-topbar {
@@ -281,14 +385,14 @@
   }
 }
 
-
 /* Smooth lift animation for New Article buttons */
 .glass-admin button.new-article-animated {
   position: relative;
   transform: translateY(0);
-  transition: transform 300ms cubic-bezier(0.22, 1, 0.36, 1),
-              box-shadow 300ms ease,
-              filter 300ms ease;
+  transition:
+    transform 300ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 300ms ease,
+    filter 300ms ease;
 }
 
 .glass-admin button.new-article-animated:hover {
@@ -441,7 +545,6 @@
     transform: none;
   }
 }
-
 
 /* Outer Article Library card lift */
 .glass-admin .article-library-outer-card {
@@ -694,7 +797,10 @@
   justify-content: center;
   font-size: 1rem;
   font-weight: 700;
-  transition: transform 280ms ease, background 280ms ease, box-shadow 280ms ease;
+  transition:
+    transform 280ms ease,
+    background 280ms ease,
+    box-shadow 280ms ease;
 }
 
 .glass-admin .choose-image-button:hover {
@@ -722,7 +828,6 @@
   }
 }
 
-
 /* Smooth lift for the complete article editor */
 .article-editor-main-card {
   animation: editorCardEnter 0.55s ease-out both;
@@ -748,7 +853,9 @@
 .article-editor-card input,
 .article-editor-card textarea,
 .article-editor-card select {
-  transition: transform 0.22s ease, box-shadow 0.22s ease;
+  transition:
+    transform 0.22s ease,
+    box-shadow 0.22s ease;
 }
 
 .article-editor-card input:focus,
@@ -761,7 +868,9 @@
 
 /* Publishing details card */
 .publishing-details-card {
-  transition: transform 0.28s ease, background-color 0.28s ease;
+  transition:
+    transform 0.28s ease,
+    background-color 0.28s ease;
 }
 
 .publishing-details-card:hover {
@@ -771,7 +880,9 @@
 
 /* Cover image card — leave its buttons untouched */
 .cover-image-animated {
-  transition: transform 0.28s ease, background-color 0.28s ease;
+  transition:
+    transform 0.28s ease,
+    background-color 0.28s ease;
 }
 
 .cover-image-animated:hover {
@@ -780,7 +891,9 @@
 
 /* Save draft button only */
 .save-draft-animated {
-  transition: transform 0.22s ease, box-shadow 0.22s ease;
+  transition:
+    transform 0.22s ease,
+    box-shadow 0.22s ease;
 }
 
 .save-draft-animated:hover {
@@ -791,8 +904,6 @@
 .save-draft-animated:active {
   transform: translateY(0);
 }
-
-
 
 /* Whole article editor card */
 .glass-admin .article-editor-main-card {
@@ -826,7 +937,9 @@
 .glass-admin .article-editor-card [contenteditable="true"],
 .glass-admin .article-editor-card .ProseMirror,
 .glass-admin .article-editor-card .tiptap {
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
 }
 
 .glass-admin .article-editor-card [contenteditable="true"]:focus,
@@ -851,7 +964,6 @@
   }
 }
 
-
 /* Whole editor card: smooth entrance and lift */
 .glass-admin .article-editor-main-card {
   animation: editorCardEnter 0.55s ease-out both;
@@ -865,7 +977,9 @@
 /* Entire side cards */
 .glass-admin .publishing-details-card,
 .glass-admin .cover-image-animated {
-  transition: transform 0.3s ease, background-color 0.3s ease,
+  transition:
+    transform 0.3s ease,
+    background-color 0.3s ease,
     box-shadow 0.3s ease;
 }
 
@@ -878,7 +992,9 @@
 
 /* Actual Tiptap content editor wrapper */
 .glass-admin .article-editor {
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
   border-radius: 14px;
 }
 
@@ -910,7 +1026,9 @@
 
 /* Save draft only */
 .glass-admin .save-draft-animated {
-  transition: transform 0.22s ease, box-shadow 0.22s ease;
+  transition:
+    transform 0.22s ease,
+    box-shadow 0.22s ease;
 }
 
 .glass-admin .save-draft-animated:hover {
@@ -918,14 +1036,14 @@
   box-shadow: 0 8px 18px rgba(0, 0, 0, 0.18);
 }
 
-
-
 /* =========================================
    MAIN ARTICLE EDITOR — WHOLE CARD
 ========================================= */
 
 .glass-admin .article-editor-main-card {
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
   transform-origin: center;
 }
 
@@ -943,7 +1061,9 @@
 .glass-admin .article-editor-card textarea,
 .glass-admin .article-editor-card select,
 .glass-admin .article-editor-card .article-editor {
-  transition: transform 0.22s ease, box-shadow 0.22s ease;
+  transition:
+    transform 0.22s ease,
+    box-shadow 0.22s ease;
   border-radius: 12px;
 }
 
@@ -1009,10 +1129,11 @@
   }
 }
 
-
 /* Main article editor: full-card lift */
 .glass-admin .article-editor-main-card {
-  transition: translate 0.28s ease, box-shadow 0.28s ease;
+  transition:
+    translate 0.28s ease,
+    box-shadow 0.28s ease;
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -1026,7 +1147,9 @@
 .glass-admin .article-editor-main-card input:not([type="file"]),
 .glass-admin .article-editor-main-card textarea,
 .glass-admin .article-editor-main-card select {
-  transition: translate 0.22s ease, box-shadow 0.22s ease;
+  transition:
+    translate 0.22s ease,
+    box-shadow 0.22s ease;
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -1047,7 +1170,9 @@
 
 /* Entire Tiptap content box */
 .glass-admin .article-editor-main-card .article-editor {
-  transition: translate 0.25s ease, box-shadow 0.25s ease;
+  transition:
+    translate 0.25s ease,
+    box-shadow 0.25s ease;
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -1063,7 +1188,9 @@
 
 /* Save draft button */
 .glass-admin .save-draft-animated {
-  transition: translate 0.22s ease, box-shadow 0.22s ease;
+  transition:
+    translate 0.22s ease,
+    box-shadow 0.22s ease;
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -1079,7 +1206,9 @@
 
 /* Close editor button */
 .glass-admin .close-editor-animated {
-  transition: translate 0.22s ease, box-shadow 0.22s ease;
+  transition:
+    translate 0.22s ease,
+    box-shadow 0.22s ease;
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -1092,7 +1221,6 @@
 .glass-admin .close-editor-animated:active {
   translate: 0 0;
 }
-
 
 /* Mobile-friendly article content formatting */
 .article-content,

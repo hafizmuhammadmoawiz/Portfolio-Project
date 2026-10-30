@@ -1,4 +1,3 @@
-
 import { useRef, useState } from "react";
 import { ArrowUpRight, Github, ExternalLink, X } from "lucide-react";
 import { projects, type Project } from "../data/projects";
@@ -102,11 +101,7 @@ export default function Projects() {
 
         <div className="mt-12 grid gap-6 md:grid-cols-2">
           {projects.map((p, i) => (
-            <Reveal
-              key={p.id}
-              delay={(i % 2) * 120}
-              className="h-full"
-            >
+            <Reveal key={p.id} delay={(i % 2) * 120} className="h-full">
               <article className="card card-hover flex h-full flex-col p-6">
                 <Visual p={p} />
 
@@ -212,9 +207,7 @@ export default function Projects() {
               <Visual p={sel} big />
             </div>
 
-            <p className="mt-5 leading-relaxed text-muted">
-              {sel.details}
-            </p>
+            <p className="mt-5 leading-relaxed text-muted">{sel.details}</p>
 
             <h4 className="mt-6 font-mono text-xs uppercase tracking-[.14em] text-accent">
               Highlights

@@ -1,4 +1,3 @@
-
 import { useState, type FormEvent, type MouseEvent } from "react";
 import emailjs from "@emailjs/browser";
 
@@ -30,8 +29,7 @@ type Status = "idle" | "loading" | "success" | "error";
 const emailRegex =
   /^[^\s@<>(),;:"[\]\\]+@[^\s@<>(),;:"[\]\\]+\.[a-zA-Z]{2,63}$/;
 
-const nameRegex =
-  /^[\p{L}\p{M}]+(?:[ '\u2019.-][\p{L}\p{M}]+)*$/u;
+const nameRegex = /^[\p{L}\p{M}]+(?:[ '\u2019.-][\p{L}\p{M}]+)*$/u;
 
 const hasControlChars = (value: string) =>
   /[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/.test(value);
@@ -52,8 +50,7 @@ function validate(values: FormValues): FormErrors {
   } else if (name.length < 2 || name.length > 100) {
     errors.name = "Name must be between 2 and 100 characters.";
   } else if (!nameRegex.test(name)) {
-    errors.name =
-      "Use letters, spaces, hyphens, apostrophes or periods only.";
+    errors.name = "Use letters, spaces, hyphens, apostrophes or periods only.";
   }
 
   if (!email) {
@@ -73,7 +70,7 @@ function validate(values: FormValues): FormErrors {
           !label ||
           label.length > 63 ||
           label.startsWith("-") ||
-          label.endsWith("-")
+          label.endsWith("-"),
       )
     ) {
       errors.email = "Please enter a valid email address.";
@@ -96,10 +93,7 @@ function validate(values: FormValues): FormErrors {
     errors.message = "Please enter a message.";
   } else if (message.length < 10 || message.length > 3000) {
     errors.message = "Message must be between 10 and 3000 characters.";
-  } else if (
-    hasControlChars(message) ||
-    hasUnsafeMarkup(message)
-  ) {
+  } else if (hasControlChars(message) || hasUnsafeMarkup(message)) {
     errors.message = "HTML or executable markup is not allowed.";
   }
 
@@ -148,12 +142,12 @@ export default function ContactForm() {
 
     event.currentTarget.style.setProperty(
       "--form-tilt-x",
-      `${(0.5 - y) * 5}deg`
+      `${(0.5 - y) * 5}deg`,
     );
 
     event.currentTarget.style.setProperty(
       "--form-tilt-y",
-      `${(x - 0.5) * 5}deg`
+      `${(x - 0.5) * 5}deg`,
     );
   };
 
@@ -179,7 +173,7 @@ export default function ContactForm() {
 
     if (Object.keys(validationErrors).length > 0) {
       const firstInvalid = event.currentTarget.querySelector(
-        '[aria-invalid="true"]'
+        '[aria-invalid="true"]',
       ) as HTMLElement | null;
 
       firstInvalid?.focus();
@@ -192,7 +186,7 @@ export default function ContactForm() {
 
     if (!serviceId || !templateId || !publicKey) {
       console.error(
-        "EmailJS configuration is missing. Check your .env.local file."
+        "EmailJS configuration is missing. Check your .env.local file.",
       );
       setStatus("error");
       return;
@@ -212,7 +206,7 @@ export default function ContactForm() {
           time: new Date().toLocaleString(),
           title: values.subject.trim(),
         },
-        { publicKey }
+        { publicKey },
       );
 
       setStatus("success");
@@ -251,16 +245,20 @@ export default function ContactForm() {
       placeholder: string;
       icon: typeof UserRound;
     },
-    area = false
+    area = false,
   ) => {
     const id = `cf-${key}`;
     const error = touched[key] ? errors[key] : undefined;
     const Icon = options.icon;
 
     const maxLength =
-      key === "name" ? 100 :
-      key === "email" ? 254 :
-      key === "subject" ? 150 : 3000;
+      key === "name"
+        ? 100
+        : key === "email"
+          ? 254
+          : key === "subject"
+            ? 150
+            : 3000;
 
     const shared = {
       id,
@@ -349,9 +347,7 @@ export default function ContactForm() {
             Contact form
           </p>
 
-          <h3 className="text-xl font-bold sm:text-2xl">
-            Send me a message
-          </h3>
+          <h3 className="text-xl font-bold sm:text-2xl">Send me a message</h3>
 
           <p className="mt-2 text-sm leading-6 text-muted">
             Have a project, opportunity, or question? Fill in the details below
@@ -387,7 +383,7 @@ export default function ContactForm() {
               "Tell me a little about your idea, project, or question...",
             icon: MessageSquare,
           },
-          true
+          true,
         )}
 
         <div className="flex flex-col items-start gap-4 border-t border-line pt-5 sm:flex-row sm:items-center sm:justify-between">
@@ -466,7 +462,8 @@ export default function ContactForm() {
                   </p>
                   <p className="mt-1 leading-6 text-muted">
                     Please check your connection and try again. If the problem
-                    continues, copy your message and email {site.email} directly.
+                    continues, copy your message and email {site.email}{" "}
+                    directly.
                   </p>
 
                   <button

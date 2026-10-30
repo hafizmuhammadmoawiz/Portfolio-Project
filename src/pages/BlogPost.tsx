@@ -1,4 +1,3 @@
-
 import { useEffect, useMemo, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import {
@@ -135,8 +134,9 @@ function ArticleCodeTools() {
         wrapper.insertBefore(toolbar, pre);
       }
 
-      const button =
-        wrapper.querySelector<HTMLButtonElement>(".article-copy-button");
+      const button = wrapper.querySelector<HTMLButtonElement>(
+        ".article-copy-button",
+      );
 
       if (!button || button.dataset.copyListenerAttached === "true") return;
 
@@ -346,9 +346,7 @@ export default function BlogPost() {
           ) : error ? (
             <div className="card mx-auto max-w-2xl px-6 py-14 text-center">
               <Terminal size={32} className="mx-auto text-accent" />
-              <h1 className="mt-5 text-2xl font-bold">
-                Write-up unavailable
-              </h1>
+              <h1 className="mt-5 text-2xl font-bold">Write-up unavailable</h1>
               <p className="mt-3 text-sm leading-7 text-muted">{error}</p>
               <Link
                 to="/blog"

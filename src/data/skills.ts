@@ -1,4 +1,3 @@
-
 import {
   Radar,
   Bug,
@@ -43,9 +42,21 @@ export const skillCategories: SkillCategory[] = [
     icon: Crosshair,
     skills: [
       { name: "Nmap", desc: "Host and service discovery", icon: Radar },
-      { name: "Burp Suite", desc: "Web traffic interception and testing", icon: Bug },
-      { name: "OWASP ZAP", desc: "Web application security scanning", icon: ScanSearch },
-      { name: "Metasploit Framework", desc: "Security testing in lab environments", icon: Swords },
+      {
+        name: "Burp Suite",
+        desc: "Web traffic interception and testing",
+        icon: Bug,
+      },
+      {
+        name: "OWASP ZAP",
+        desc: "Web application security scanning",
+        icon: ScanSearch,
+      },
+      {
+        name: "Metasploit Framework",
+        desc: "Security testing in lab environments",
+        icon: Swords,
+      },
       { name: "OpenVAS", desc: "Vulnerability scanning", icon: ShieldCheck },
     ],
   },
@@ -54,11 +65,31 @@ export const skillCategories: SkillCategory[] = [
     blurb: "Operating systems and command-line environments.",
     icon: Terminal,
     skills: [
-      { name: "Kali Linux", desc: "Security testing environment", icon: Shield },
-      { name: "Ubuntu", desc: "Linux desktop and system administration", icon: Server },
-      { name: "Windows", desc: "Windows operating system fundamentals", icon: Cpu },
-      { name: "Linux command line", desc: "Shell commands, files and permissions", icon: Terminal },
-      { name: "Kali VM / VMware", desc: "Virtualized security lab environments", icon: Server },
+      {
+        name: "Kali Linux",
+        desc: "Security testing environment",
+        icon: Shield,
+      },
+      {
+        name: "Ubuntu",
+        desc: "Linux desktop and system administration",
+        icon: Server,
+      },
+      {
+        name: "Windows",
+        desc: "Windows operating system fundamentals",
+        icon: Cpu,
+      },
+      {
+        name: "Linux command line",
+        desc: "Shell commands, files and permissions",
+        icon: Terminal,
+      },
+      {
+        name: "Kali VM / VMware",
+        desc: "Virtualized security lab environments",
+        icon: Server,
+      },
     ],
   },
   {
@@ -75,9 +106,21 @@ export const skillCategories: SkillCategory[] = [
     blurb: "Identifying weaknesses and evaluating application security.",
     icon: ShieldCheck,
     skills: [
-      { name: "Vulnerability Assessment", desc: "Identify and prioritise security risks", icon: Search },
-      { name: "OWASP Top 10 Testing", desc: "Testing for common web vulnerabilities", icon: Bug },
-      { name: "Threat Modeling (STRIDE)", desc: "Identifying threats and trust boundaries", icon: ShieldCheck },
+      {
+        name: "Vulnerability Assessment",
+        desc: "Identify and prioritise security risks",
+        icon: Search,
+      },
+      {
+        name: "OWASP Top 10 Testing",
+        desc: "Testing for common web vulnerabilities",
+        icon: Bug,
+      },
+      {
+        name: "Threat Modeling (STRIDE)",
+        desc: "Identifying threats and trust boundaries",
+        icon: ShieldCheck,
+      },
     ],
   },
   {
@@ -85,11 +128,27 @@ export const skillCategories: SkillCategory[] = [
     blurb: "Understanding network protocols, traffic and security controls.",
     icon: Network,
     skills: [
-      { name: "TCP/IP", desc: "Core networking protocol suite", icon: Waypoints },
+      {
+        name: "TCP/IP",
+        desc: "Core networking protocol suite",
+        icon: Waypoints,
+      },
       { name: "DNS", desc: "Domain name resolution", icon: Globe },
-      { name: "Ports and Services", desc: "Understanding exposed network services", icon: Cable },
-      { name: "Wireshark", desc: "Packet capture and traffic inspection", icon: Fish },
-      { name: "Firewalls (UFW)", desc: "Linux firewall rules and traffic filtering", icon: Flame },
+      {
+        name: "Ports and Services",
+        desc: "Understanding exposed network services",
+        icon: Cable,
+      },
+      {
+        name: "Wireshark",
+        desc: "Packet capture and traffic inspection",
+        icon: Fish,
+      },
+      {
+        name: "Firewalls (UFW)",
+        desc: "Linux firewall rules and traffic filtering",
+        icon: Flame,
+      },
     ],
   },
   {
@@ -97,7 +156,11 @@ export const skillCategories: SkillCategory[] = [
     blurb: "Programming fundamentals used in projects and scripting.",
     icon: Code2,
     skills: [
-      { name: "Python (Basic)", desc: "Basic scripting and programming", icon: FileCode },
+      {
+        name: "Python (Basic)",
+        desc: "Basic scripting and programming",
+        icon: FileCode,
+      },
       { name: "C++", desc: "Programming fundamentals", icon: Cpu },
     ],
   },

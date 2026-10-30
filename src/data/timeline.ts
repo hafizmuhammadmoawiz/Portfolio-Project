@@ -1,4 +1,3 @@
-
 import {
   GraduationCap,
   School,
@@ -82,11 +81,7 @@ export const experience: ExperienceEntry[] = [
     icon: ClipboardList,
     description:
       "Handle student-related data entry, maintain records, and coordinate with the Federal Board of Intermediate and Secondary Education (FBISE).",
-    tools: [
-      "Data Entry",
-      "Record Keeping",
-      "FBISE Coordination",
-    ],
+    tools: ["Data Entry", "Record Keeping", "FBISE Coordination"],
   },
   {
     title: "Software Screening Intern",
@@ -96,13 +91,7 @@ export const experience: ExperienceEntry[] = [
     icon: ShieldCheck,
     description:
       "Performed end-to-end vulnerability assessments using Nmap, Burp Suite, OWASP ZAP, MobSF, and OpenVAS. Prepared severity-rated technical reports with proof-of-concept evidence and remediation guidance.",
-    tools: [
-      "Nmap",
-      "Burp Suite",
-      "OWASP ZAP",
-      "MobSF",
-      "OpenVAS",
-    ],
+    tools: ["Nmap", "Burp Suite", "OWASP ZAP", "MobSF", "OpenVAS"],
   },
   {
     title: "Networking Labs Learner",
@@ -127,11 +116,6 @@ export const experience: ExperienceEntry[] = [
     icon: ShieldCheck,
     description:
       "Practicing cybersecurity through hands-on labs and guided learning rooms, strengthening skills in Linux, networking, reconnaissance, vulnerability assessment, and security fundamentals.",
-    tools: [
-      "TryHackMe",
-      "Linux",
-      "Reconnaissance",
-      "Security Labs",
-    ],
+    tools: ["TryHackMe", "Linux", "Reconnaissance", "Security Labs"],
   },
 ];

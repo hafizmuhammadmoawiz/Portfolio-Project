@@ -1,4 +1,3 @@
-
 /**
  * Hero / home section.
  * Uses site details from config/site.ts and visual components such as NetworkCanvas
@@ -116,8 +115,7 @@ export default function Hero({ onStartFlight }: HeroProps) {
           >
             {/* Navigate to the Projects section */}
             <a href="#projects" className="btn btn-primary">
-              Explore My Work{" "}
-              <ArrowRight size={18} aria-hidden="true" />
+              Explore My Work <ArrowRight size={18} aria-hidden="true" />
             </a>
 
             {/* Start the cinematic flight transition to Contact */}
@@ -146,11 +144,7 @@ export default function Hero({ onStartFlight }: HeroProps) {
             className="hero-in mt-8 flex items-center gap-2 text-sm text-muted"
             style={{ ["--d" as string]: "580ms" }}
           >
-            <MapPin
-              size={15}
-              className="text-accent"
-              aria-hidden="true"
-            />
+            <MapPin size={15} className="text-accent" aria-hidden="true" />
             {site.location}
           </p>
         </div>

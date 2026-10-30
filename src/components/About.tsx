@@ -42,7 +42,10 @@ const interests = [
 
 export default function About() {
   return (
-    <section id="about" className="section section-alt relative overflow-hidden !pt-16 !pb-20 sm:!pt-20 sm:!pb-24 lg:!pt-24 lg:!pb-28">
+    <section
+      id="about"
+      className="section section-alt relative overflow-hidden !pt-16 !pb-20 sm:!pt-20 sm:!pb-24 lg:!pt-24 lg:!pb-28"
+    >
       {/* Subtle ambient decoration */}
       <div
         aria-hidden="true"
@@ -73,8 +76,8 @@ export default function About() {
                     web penetration testing
                   </span>
                   . I enjoy hands-on security testing, investigating
-                  vulnerabilities, and discovering how systems can be made
-                  more secure.
+                  vulnerabilities, and discovering how systems can be made more
+                  secure.
                 </p>
               </div>
             </Reveal>
@@ -180,9 +183,7 @@ export default function About() {
 
                     <div>
                       <dt className="text-sm text-muted">Location</dt>
-                      <dd className="mt-1 font-semibold">
-                        {site.location}
-                      </dd>
+                      <dd className="mt-1 font-semibold">{site.location}</dd>
                     </div>
                   </div>
 
@@ -194,9 +195,7 @@ export default function About() {
                       </span>
 
                       <div className="min-w-0">
-                        <dt className="text-sm text-muted">
-                          Primary focus
-                        </dt>
+                        <dt className="text-sm text-muted">Primary focus</dt>
                         <dd className="mt-1 font-semibold leading-6">
                           Web Penetration Testing
                         </dd>

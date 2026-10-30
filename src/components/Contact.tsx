@@ -1,17 +1,10 @@
-
 /**
  * Contact section.
  * Uses site contact details from config/site.ts, ContactForm.tsx for form UI,
  * NetworkCanvas.tsx for the decorative network, and Reveal.tsx for reveal effects.
  */
 
-import {
-  Download,
-  Github,
-  Linkedin,
-  Mail,
-  ArrowUpRight,
-} from "lucide-react";
+import { Download, Github, Linkedin, Mail, ArrowUpRight } from "lucide-react";
 
 import { site } from "../config/site";
 import ContactForm from "./ContactForm";
@@ -59,29 +52,13 @@ function ContactNetworkLines() {
     >
       <defs>
         <linearGradient id="contactLineGradient">
-          <stop
-            offset="0%"
-            stopColor="currentColor"
-            stopOpacity="0.05"
-          />
-          <stop
-            offset="50%"
-            stopColor="currentColor"
-            stopOpacity="0.8"
-          />
-          <stop
-            offset="100%"
-            stopColor="currentColor"
-            stopOpacity="0.1"
-          />
+          <stop offset="0%" stopColor="currentColor" stopOpacity="0.05" />
+          <stop offset="50%" stopColor="currentColor" stopOpacity="0.8" />
+          <stop offset="100%" stopColor="currentColor" stopOpacity="0.1" />
         </linearGradient>
       </defs>
 
-      <g
-        stroke="url(#contactLineGradient)"
-        strokeWidth="1.4"
-        fill="none"
-      >
+      <g stroke="url(#contactLineGradient)" strokeWidth="1.4" fill="none">
         {lines.map(([from, to], index) => (
           <line
             key={index}
@@ -149,15 +126,9 @@ function LinkCard({
           {label}
         </span>
 
-        <span className="block truncate font-semibold text-ink">
-          {value}
-        </span>
+        <span className="block truncate font-semibold text-ink">{value}</span>
 
-        {note && (
-          <span className="mt-1 block text-xs text-muted">
-            {note}
-          </span>
-        )}
+        {note && <span className="mt-1 block text-xs text-muted">{note}</span>}
       </span>
 
       {href && (
@@ -202,10 +173,7 @@ export default function Contact() {
       aria-labelledby="contact-heading"
     >
       {/* Background effects */}
-      <div
-        className="ambient pointer-events-none"
-        aria-hidden="true"
-      />
+      <div className="ambient pointer-events-none" aria-hidden="true" />
       <NetworkCanvas className="pointer-events-none opacity-40" />
 
       <div className="container-x relative z-10">
@@ -308,8 +276,8 @@ export default function Contact() {
               </h3>
 
               <p className="mx-auto mt-3 max-w-lg text-sm leading-6 text-muted sm:text-base">
-                Tell me about your idea, project, or opportunity. Fill out
-                the form below to prepare your message.
+                Tell me about your idea, project, or opportunity. Fill out the
+                form below to prepare your message.
               </p>
             </div>
 

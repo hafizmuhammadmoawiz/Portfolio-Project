@@ -1,4 +1,3 @@
-
 /**
  * Main page composition.
  * Connects the navigation, portfolio sections, theme state, and flight transition.
@@ -39,8 +38,7 @@ function ScrollUI() {
       cancelAnimationFrame(raf);
 
       raf = requestAnimationFrame(() => {
-        const max =
-          document.documentElement.scrollHeight - window.innerHeight;
+        const max = document.documentElement.scrollHeight - window.innerHeight;
 
         setP(max > 0 ? window.scrollY / max : 0);
         setShow(window.scrollY > 700);
@@ -107,9 +105,7 @@ export default function App() {
     setFlightActive(false);
 
     // Briefly highlight the Contact card after the flight
-    const card = document.querySelector<HTMLElement>(
-      "#contact .contact-hero"
-    );
+    const card = document.querySelector<HTMLElement>("#contact .contact-hero");
 
     if (!card) return;
 
@@ -136,11 +132,7 @@ export default function App() {
         <ScrollUI />
 
         {/* Navbar with theme toggle and flight CTA */}
-        <Navbar
-          theme={theme}
-          onToggle={toggle}
-          onStartFlight={startFlight}
-        />
+        <Navbar theme={theme} onToggle={toggle} onStartFlight={startFlight} />
 
         {/* Main website sections in the requested order */}
         <main id="main">
@@ -159,10 +151,7 @@ export default function App() {
       </div>
 
       {/* Keep the flight overlay outside the blurred website wrapper */}
-      <FlightTransition
-        active={flightActive}
-        onComplete={finishFlight}
-      />
+      <FlightTransition active={flightActive} onComplete={finishFlight} />
     </>
   );
 }

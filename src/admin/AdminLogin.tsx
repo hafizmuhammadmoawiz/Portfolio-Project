@@ -1,8 +1,18 @@
 import { FormEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
-  ArrowRight, Eye, EyeOff, Fingerprint, LockKeyhole, Mail, ShieldCheck,
-  KeyRound, LoaderCircle, CheckCircle2, AlertCircle, ArrowLeft,
+  ArrowRight,
+  Eye,
+  EyeOff,
+  Fingerprint,
+  LockKeyhole,
+  Mail,
+  ShieldCheck,
+  KeyRound,
+  LoaderCircle,
+  CheckCircle2,
+  AlertCircle,
+  ArrowLeft,
 } from "lucide-react";
 import { supabase } from "../lib/supabase";
 
@@ -45,14 +55,20 @@ export default function AdminLogin() {
         password,
       });
       if (error) throw error;
-      if (!data.session) throw new Error("Sign-in did not create a session. Please try again.");
+      if (!data.session)
+        throw new Error("Sign-in did not create a session. Please try again.");
 
-      const { data: factorsData, error: factorsError } = await supabase.auth.mfa.listFactors();
+      const { data: factorsData, error: factorsError } =
+        await supabase.auth.mfa.listFactors();
       if (factorsError) throw factorsError;
-      const verifiedTotp = factorsData.totp?.find((factor) => factor.status === "verified");
+      const verifiedTotp = factorsData.totp?.find(
+        (factor) => factor.status === "verified",
+      );
       if (!verifiedTotp) {
         await supabase.auth.signOut();
-        throw new Error("No verified authenticator is enrolled for this account. Contact the site administrator to configure MFA.");
+        throw new Error(
+          "No verified authenticator is enrolled for this account. Contact the site administrator to configure MFA.",
+        );
       }
 
       const { data: assurance, error: assuranceError } =
@@ -69,9 +85,16 @@ export default function AdminLogin() {
       setFactorId(verifiedTotp.id);
       setChallengeId(challenge.id);
       setStage("mfa");
-      setNotice({ type: "success", text: "Password accepted. Enter the current code from your authenticator app." });
+      setNotice({
+        type: "success",
+        text: "Password accepted. Enter the current code from your authenticator app.",
+      });
     } catch (error) {
-      fail(error instanceof Error ? error.message : "Unable to sign in. Please try again.");
+      fail(
+        error instanceof Error
+          ? error.message
+          : "Unable to sign in. Please try again.",
+      );
     } finally {
       setBusy(false);
     }
@@ -83,7 +106,9 @@ export default function AdminLogin() {
     });
     if (error || data?.authorized !== true) {
       await supabase.auth.signOut();
-      throw new Error("This account is not authorized for the admin workspace.");
+      throw new Error(
+        "This account is not authorized for the admin workspace.",
+      );
     }
     navigate("/admin", { replace: true });
   }
@@ -108,43 +133,53 @@ export default function AdminLogin() {
         challengeId,
         code: cleanOtp,
       });
-      if (error) throw new Error("Verification code is invalid or expired. Check your authenticator and try again.");
+      if (error)
+        throw new Error(
+          "Verification code is invalid or expired. Check your authenticator and try again.",
+        );
       const { data: assurance, error: assuranceError } =
         await supabase.auth.mfa.getAuthenticatorAssuranceLevel();
       if (assuranceError) throw assuranceError;
       if (assurance.currentLevel !== "aal2") {
-        throw new Error("Second-factor verification is not complete. Please try a fresh code.");
+        throw new Error(
+          "Second-factor verification is not complete. Please try a fresh code.",
+        );
       }
-      setNotice({ type: "success", text: "Identity verified. Opening your secure workspace…" });
+      setNotice({
+        type: "success",
+        text: "Identity verified. Opening your secure workspace…",
+      });
       await finishAdminAuthorization();
     } catch (error) {
-      fail(error instanceof Error ? error.message : "Verification failed. Please try again.");
+      fail(
+        error instanceof Error
+          ? error.message
+          : "Verification failed. Please try again.",
+      );
     } finally {
       setBusy(false);
     }
   }
 
-
-
   async function backToCredentials() {
-  setNotice(null);
-  setOtp("");
-  setFactorId("");
-  setChallengeId("");
-  setPassword("");
-  setStage("credentials");
+    setNotice(null);
+    setOtp("");
+    setFactorId("");
+    setChallengeId("");
+    setPassword("");
+    setStage("credentials");
 
-  try {
-    await supabase.auth.signOut();
-  } catch (error) {
-    console.error("Sign-out error:", error);
+    try {
+      await supabase.auth.signOut();
+    } catch (error) {
+      console.error("Sign-out error:", error);
+    }
   }
-  }
-
-
 
   return (
-    <main className={`admin-login min-h-screen overflow-hidden text-white ${mounted ? "is-ready" : ""}`}>
+    <main
+      className={`admin-login min-h-screen overflow-hidden text-white ${mounted ? "is-ready" : ""}`}
+    >
       <style>{`
         .admin-login{--base:#101426;min-height:100svh;position:relative;isolation:isolate;display:block;background:radial-gradient(ellipse at 12% 10%,rgba(123,92,255,.23),transparent 36%),radial-gradient(ellipse at 92% 18%,rgba(31,196,220,.15),transparent 34%),linear-gradient(145deg,#171a30 0%,#0d1120 58%,#151126 100%);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
         .admin-login:before{content:"";position:fixed;inset:0;z-index:-2;pointer-events:none;opacity:.15;background-image:radial-gradient(rgba(218,225,255,.38) .65px,transparent .65px);background-size:19px 19px;mask-image:linear-gradient(to bottom,#000,transparent 92%)}
@@ -182,11 +217,15 @@ export default function AdminLogin() {
         <section className="login-reveal mx-auto w-full max-w-[440px]">
           <div className="mb-5 flex items-center justify-center gap-3">
             <div className="login-login-mark flex h-12 w-12 items-center justify-center rounded-2xl border border-white/15 bg-gradient-to-br from-violet-300/25 to-cyan-200/10">
-              <Fingerprint size={25} className="text-cyan-100"/>
+              <Fingerprint size={25} className="text-cyan-100" />
             </div>
             <div>
-              <p className="text-sm font-bold tracking-[.18em]">MOAWIZ<span className="text-cyan-300">.</span></p>
-              <p className="mt-1 text-[9px] uppercase tracking-[.25em] text-white/40">Creative OS · Admin</p>
+              <p className="text-sm font-bold tracking-[.18em]">
+                MOAWIZ<span className="text-cyan-300">.</span>
+              </p>
+              <p className="mt-1 text-[9px] uppercase tracking-[.25em] text-white/40">
+                Creative OS · Admin
+              </p>
             </div>
           </div>
 
@@ -194,72 +233,191 @@ export default function AdminLogin() {
             <div className="mb-7 flex items-start justify-between gap-4">
               <div>
                 <div className="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-white/10 bg-white/[.045] text-cyan-100 shadow-inner">
-                  {stage === "credentials" ? <KeyRound size={20}/> : <ShieldCheck size={21}/>}
+                  {stage === "credentials" ? (
+                    <KeyRound size={20} />
+                  ) : (
+                    <ShieldCheck size={21} />
+                  )}
                 </div>
-                <p className="text-[10px] font-semibold uppercase tracking-[.24em] text-cyan-100/70">Secure access</p>
+                <p className="text-[10px] font-semibold uppercase tracking-[.24em] text-cyan-100/70">
+                  Secure access
+                </p>
                 <h1 className="mt-2 text-2xl font-semibold tracking-[-.035em] sm:text-[28px]">
-                  {stage === "credentials" ? "Welcome back." : "Verify it’s you."}
+                  {stage === "credentials"
+                    ? "Welcome back."
+                    : "Verify it’s you."}
                 </h1>
                 <p className="mt-2 max-w-xs text-xs leading-6 text-white/45">
-                  {stage === "credentials" ? "Sign in to your secure administrator workspace." : "Enter the 6-digit code from your authenticator app."}
+                  {stage === "credentials"
+                    ? "Sign in to your secure administrator workspace."
+                    : "Enter the 6-digit code from your authenticator app."}
                 </p>
               </div>
-              <div className="hidden items-center gap-1.5 rounded-full border border-emerald-200/15 bg-emerald-300/[.06] px-2.5 py-1.5 text-[9px] text-emerald-100 sm:flex"><ShieldCheck size={12}/> Secure</div>
+              <div className="hidden items-center gap-1.5 rounded-full border border-emerald-200/15 bg-emerald-300/[.06] px-2.5 py-1.5 text-[9px] text-emerald-100 sm:flex">
+                <ShieldCheck size={12} /> Secure
+              </div>
             </div>
 
-            {notice && <div role="status" aria-live="polite" className={`mb-5 flex items-start gap-2.5 rounded-2xl border px-3.5 py-3 text-xs leading-5 ${notice.type === "error" ? "border-rose-200/20 bg-rose-300/[.07] text-rose-100" : "border-emerald-200/20 bg-emerald-300/[.07] text-emerald-100"}`}>
-              {notice.type === "error" ? <AlertCircle size={16} className="mt-0.5 shrink-0"/> : <CheckCircle2 size={16} className="mt-0.5 shrink-0"/>}
-              <span>{notice.text}</span>
-            </div>}
+            {notice && (
+              <div
+                role="status"
+                aria-live="polite"
+                className={`mb-5 flex items-start gap-2.5 rounded-2xl border px-3.5 py-3 text-xs leading-5 ${notice.type === "error" ? "border-rose-200/20 bg-rose-300/[.07] text-rose-100" : "border-emerald-200/20 bg-emerald-300/[.07] text-emerald-100"}`}
+              >
+                {notice.type === "error" ? (
+                  <AlertCircle size={16} className="mt-0.5 shrink-0" />
+                ) : (
+                  <CheckCircle2 size={16} className="mt-0.5 shrink-0" />
+                )}
+                <span>{notice.text}</span>
+              </div>
+            )}
 
             {stage === "credentials" ? (
               <form onSubmit={onCredentialsSubmit} className="space-y-5">
                 <label className="block">
-                  <span className="mb-2 block text-xs font-medium text-white/70">Administrator email</span>
+                  <span className="mb-2 block text-xs font-medium text-white/70">
+                    Administrator email
+                  </span>
                   <span className="relative block">
-                    
-                    <input className="login-input pl-12 text-sm" type="email" autoComplete="username" inputMode="email" required value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Enter your email"/>
+                    <input
+                      className="login-input pl-12 text-sm"
+                      type="email"
+                      autoComplete="username"
+                      inputMode="email"
+                      required
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      placeholder="Enter your email"
+                    />
                   </span>
                 </label>
                 <label className="block">
-                  <span className="mb-2 block text-xs font-medium text-white/70">Password</span>
+                  <span className="mb-2 block text-xs font-medium text-white/70">
+                    Password
+                  </span>
                   <span className="relative block">
-                    
-                    <input className="login-input pl-12 pr-12 text-sm" type={showPassword ? "text" : "password"} autoComplete="current-password" required value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Enter your password"/>
-                    <button type="button" onClick={() => setShowPassword((v) => !v)} aria-label={showPassword ? "Hide password" : "Show password"} className="absolute right-3 top-1/2 z-20 -translate-y-1/2 rounded-lg p-2 text-white/40 transition hover:bg-white/[.06] hover:text-white/80">{showPassword ? <EyeOff size={16}/> : <Eye size={16}/>}</button>
+                    <input
+                      className="login-input pl-12 pr-12 text-sm"
+                      type={showPassword ? "text" : "password"}
+                      autoComplete="current-password"
+                      required
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      placeholder="Enter your password"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword((v) => !v)}
+                      aria-label={
+                        showPassword ? "Hide password" : "Show password"
+                      }
+                      className="absolute right-3 top-1/2 z-20 -translate-y-1/2 rounded-lg p-2 text-white/40 transition hover:bg-white/[.06] hover:text-white/80"
+                    >
+                      {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                    </button>
                   </span>
                 </label>
                 <div className="flex items-center justify-between gap-3 text-[10px] text-white/40">
-                  <span className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-emerald-300"/> MFA verification required</span>
+                  <span className="flex items-center gap-2">
+                    <span className="h-1.5 w-1.5 rounded-full bg-emerald-300" />{" "}
+                    MFA verification required
+                  </span>
                   <span>Admin access only</span>
                 </div>
-                <button type="submit" disabled={busy} className="login-primary flex min-h-12 w-full items-center justify-center gap-2 rounded-2xl px-4 py-3 text-sm font-semibold text-white disabled:cursor-wait disabled:opacity-65">
-                  {busy ? <><LoaderCircle size={17} className="animate-spin"/> Verifying credentials…</> : <>Continue securely <ArrowRight size={17}/></>}
+                <button
+                  type="submit"
+                  disabled={busy}
+                  className="login-primary flex min-h-12 w-full items-center justify-center gap-2 rounded-2xl px-4 py-3 text-sm font-semibold text-white disabled:cursor-wait disabled:opacity-65"
+                >
+                  {busy ? (
+                    <>
+                      <LoaderCircle size={17} className="animate-spin" />{" "}
+                      Verifying credentials…
+                    </>
+                  ) : (
+                    <>
+                      Continue securely <ArrowRight size={17} />
+                    </>
+                  )}
                 </button>
               </form>
             ) : (
               <form onSubmit={onMfaSubmit} className="space-y-5">
                 <div className="rounded-2xl border border-cyan-100/10 bg-cyan-200/[.04] p-4">
-                  <div className="flex items-center gap-2 text-cyan-100"><Fingerprint size={18}/><span className="text-xs font-semibold">Authenticator verification</span></div>
-                  <p className="mt-2 text-[11px] leading-5 text-white/45">Open your enrolled authenticator app and enter its current code.</p>
+                  <div className="flex items-center gap-2 text-cyan-100">
+                    <Fingerprint size={18} />
+                    <span className="text-xs font-semibold">
+                      Authenticator verification
+                    </span>
+                  </div>
+                  <p className="mt-2 text-[11px] leading-5 text-white/45">
+                    Open your enrolled authenticator app and enter its current
+                    code.
+                  </p>
                 </div>
                 <label className="block">
-                  <span className="mb-2 block text-xs font-medium text-white/70">6-digit verification code</span>
-                  <input className="login-input login-code py-4 text-center text-xl font-semibold" type="text" inputMode="numeric" autoComplete="one-time-code" pattern="[0-9 ]{6,8}" maxLength={8} autoFocus required value={otp} onChange={(e) => setOtp(e.target.value.replace(/[^0-9 ]/g, "").slice(0, 8))} placeholder="000 000" aria-label="Authenticator verification code"/>
+                  <span className="mb-2 block text-xs font-medium text-white/70">
+                    6-digit verification code
+                  </span>
+                  <input
+                    className="login-input login-code py-4 text-center text-xl font-semibold"
+                    type="text"
+                    inputMode="numeric"
+                    autoComplete="one-time-code"
+                    pattern="[0-9 ]{6,8}"
+                    maxLength={8}
+                    autoFocus
+                    required
+                    value={otp}
+                    onChange={(e) =>
+                      setOtp(e.target.value.replace(/[^0-9 ]/g, "").slice(0, 8))
+                    }
+                    placeholder="000 000"
+                    aria-label="Authenticator verification code"
+                  />
                 </label>
-                <button type="submit" disabled={busy} className="login-primary flex min-h-12 w-full items-center justify-center gap-2 rounded-2xl px-4 py-3 text-sm font-semibold text-white disabled:cursor-wait disabled:opacity-65">
-                  {busy ? <><LoaderCircle size={17} className="animate-spin"/> Verifying code…</> : <><ShieldCheck size={17}/> Verify and open dashboard</>}
+                <button
+                  type="submit"
+                  disabled={busy}
+                  className="login-primary flex min-h-12 w-full items-center justify-center gap-2 rounded-2xl px-4 py-3 text-sm font-semibold text-white disabled:cursor-wait disabled:opacity-65"
+                >
+                  {busy ? (
+                    <>
+                      <LoaderCircle size={17} className="animate-spin" />{" "}
+                      Verifying code…
+                    </>
+                  ) : (
+                    <>
+                      <ShieldCheck size={17} /> Verify and open dashboard
+                    </>
+                  )}
                 </button>
-                <button type="button" disabled={busy} onClick={() => void backToCredentials()} className="flex w-full items-center justify-center gap-2 rounded-xl py-2 text-xs text-white/50 transition hover:text-white/85 disabled:opacity-50"><ArrowLeft size={14}/> Back to sign in</button>
+                <button
+                  type="button"
+                  disabled={busy}
+                  onClick={() => void backToCredentials()}
+                  className="flex w-full items-center justify-center gap-2 rounded-xl py-2 text-xs text-white/50 transition hover:text-white/85 disabled:opacity-50"
+                >
+                  <ArrowLeft size={14} /> Back to sign in
+                </button>
               </form>
             )}
 
             <div className="mt-7 border-t border-white/[.08] pt-5">
-              <div className="flex items-center justify-center gap-2 text-[10px] text-white/35"><LockKeyhole size={12}/> Encrypted session <span className="text-white/15">·</span><ShieldCheck size={12}/> MFA protected</div>
-              <p className="mt-3 text-center text-[9px] leading-5 text-white/25">Authorized administrators only. Access is verified securely.</p>
+              <div className="flex items-center justify-center gap-2 text-[10px] text-white/35">
+                <LockKeyhole size={12} /> Encrypted session{" "}
+                <span className="text-white/15">·</span>
+                <ShieldCheck size={12} /> MFA protected
+              </div>
+              <p className="mt-3 text-center text-[9px] leading-5 text-white/25">
+                Authorized administrators only. Access is verified securely.
+              </p>
             </div>
           </div>
-          <p className="mt-5 text-center text-[10px] text-white/30">© {new Date().getFullYear()} Moawiz Studio · Secure admin portal</p>
+          <p className="mt-5 text-center text-[10px] text-white/30">
+            © {new Date().getFullYear()} Moawiz Studio · Secure admin portal
+          </p>
         </section>
       </div>
     </main>

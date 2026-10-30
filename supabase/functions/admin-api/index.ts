@@ -1,4 +1,3 @@
-
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 const allowedOrigins = new Set([
@@ -10,12 +9,11 @@ const allowedOrigins = new Set([
 ]);
 
 function getCorsHeaders(origin: string | null) {
-  const allowedOrigin =
-    origin && allowedOrigins.has(origin) ? origin : "";
+  const allowedOrigin = origin && allowedOrigins.has(origin) ? origin : "";
 
   return {
     ...(allowedOrigin ? { "Access-Control-Allow-Origin": allowedOrigin } : {}),
-    "Vary": "Origin",
+    Vary: "Origin",
     "Access-Control-Allow-Headers":
       "authorization, apikey, content-type, x-client-info",
     "Access-Control-Allow-Methods": "POST, OPTIONS",
@@ -23,11 +21,7 @@ function getCorsHeaders(origin: string | null) {
   };
 }
 
-function respond(
-  body: unknown,
-  status = 200,
-  origin: string | null = null,
-) {
+function respond(body: unknown, status = 200, origin: string | null = null) {
   return new Response(JSON.stringify(body), {
     status,
     headers: getCorsHeaders(origin),
@@ -105,9 +99,12 @@ Deno.serve(async (req: Request) => {
     return respond({ error: "MFA verification required" }, 403, origin);
   }
 
-  return respond({
-    authorized: true,
-    message: "Admin authentication and MFA verified",
-  }, 200, origin);
+  return respond(
+    {
+      authorized: true,
+      message: "Admin authentication and MFA verified",
+    },
+    200,
+    origin,
+  );
 });
-

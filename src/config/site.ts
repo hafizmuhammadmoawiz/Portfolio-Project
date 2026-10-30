@@ -1,4 +1,3 @@
-
 /**
  * Single place for personal details, contact info and external links.
  * Leave a link as "" if it is not available.
@@ -31,7 +30,6 @@ export const site: Record<string, string> = {
 
 export const emailConfigured = !site.email.endsWith("@example.com");
 
-
 export const navLinks = [
   { id: "home", label: "Home" },
   { id: "about", label: "About" },
@@ -42,4 +40,3 @@ export const navLinks = [
   { id: "certifications", label: "Certification" },
   { id: "contact", label: "Contact" },
 ] as const;
-

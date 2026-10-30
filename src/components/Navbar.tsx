@@ -1,4 +1,3 @@
-
 /**
  * Site navigation.
  * Responsive desktop navigation and mobile menu.
@@ -91,8 +90,7 @@ export default function Navbar({
       }`}
       style={{
         background: scrolled || open ? "var(--nav-bg)" : "transparent",
-        backdropFilter:
-          scrolled || open ? "blur(16px) saturate(1.4)" : "none",
+        backdropFilter: scrolled || open ? "blur(16px) saturate(1.4)" : "none",
       }}
     >
       <nav

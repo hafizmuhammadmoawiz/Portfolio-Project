@@ -1,4 +1,3 @@
-
 /**
  * Education section.
  * Displays entries from data/timeline.ts and shares reveal/heading components
@@ -11,11 +10,7 @@ export default function Education() {
   return (
     <section id="education" className="section relative overflow-hidden">
       <div className="container-x">
-        <SectionHead
-          index="02"
-          label="Education"
-          title="Academic path."
-        />
+        <SectionHead index="02" label="Education" title="Academic path." />
 
         <ol className="relative mt-14 grid gap-8 lg:grid-cols-4 lg:gap-6">
           <span
@@ -32,10 +27,7 @@ export default function Education() {
           />
 
           {education.map((e, i) => (
-            <li
-              key={e.institution}
-              className="relative pl-16 lg:pl-0 lg:pt-16"
-            >
+            <li key={e.institution} className="relative pl-16 lg:pl-0 lg:pt-16">
               <span
                 className={`absolute left-0 top-0 grid h-[2.9rem] w-[2.9rem] place-items-center rounded-full border-2 bg-card ${
                   e.status === "Current"

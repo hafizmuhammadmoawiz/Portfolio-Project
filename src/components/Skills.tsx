@@ -1,4 +1,3 @@
-
 import { ArrowUpRight } from "lucide-react";
 import { skillCategories } from "../data/skills";
 import Reveal, { SectionHead } from "./Reveal";
@@ -7,7 +6,8 @@ export default function Skills() {
   return (
     <section
       id="skills"
-      className="section section-alt relative overflow-hidden">
+      className="section section-alt relative overflow-hidden"
+    >
       {/* Ambient background glow */}
       <div
         aria-hidden="true"
@@ -28,11 +28,7 @@ export default function Skills() {
             const CategoryIcon = c.icon;
 
             return (
-              <Reveal
-                key={c.title}
-                delay={(i % 3) * 100}
-                className="h-full"
-              >
+              <Reveal key={c.title} delay={(i % 3) * 100} className="h-full">
                 <article className="card card-hover group relative h-full overflow-hidden p-7 transition-all duration-300 ease-out hover:-translate-y-1 hover:scale-[1.02] hover:border-[var(--accent-line)] hover:shadow-[0_12px_32px_var(--glow)] motion-reduce:transform-none motion-reduce:transition-none">
                   {/* Animated neon top line */}
                   <div
@@ -89,9 +85,7 @@ export default function Skills() {
                               <span className="font-semibold transition-colors duration-200 group-hover:text-accent">
                                 {s.name}
                               </span>
-                              <span className="text-muted">
-                                {" "}— {s.desc}
-                              </span>
+                              <span className="text-muted"> — {s.desc}</span>
                             </span>
                           </li>
                         );

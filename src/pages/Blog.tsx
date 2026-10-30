@@ -1,4 +1,4 @@
-import {  Home } from "lucide-react";
+import { Home } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
@@ -28,14 +28,7 @@ type Article = {
   published_at: string | null;
 };
 
-
-function BlogHeader({
-  theme,
-  toggle,
-}: {
-  theme: string;
-  toggle: () => void;
-}) {
+function BlogHeader({ theme, toggle }: { theme: string; toggle: () => void }) {
   const isDark = theme === "dark";
 
   return (
@@ -59,24 +52,22 @@ function BlogHeader({
         {/* Center: Write-up centre title */}
         <div className="hidden text-center sm:block">
           <span className="font-mono text-sm tracking-[0.12em] text-muted md:text-base">
-            Here is{" "}
-            <span className="font-semibold text-accent">Moawiz's</span>{" "}
+            Here is <span className="font-semibold text-accent">Moawiz's</span>{" "}
             Write-up Centre
           </span>
         </div>
 
         {/* Right: Home and theme buttons */}
         <div className="flex min-w-0 items-center justify-self-end gap-1.5 sm:gap-3">
-            <Link
+          <Link
             to="/"
             className="btn btn-primary !min-h-0 !rounded-full !px-2 !py-1.5 !text-[10px] !leading-tight sm:!px-5 sm:!py-3 sm:!text-sm"
-            >
+          >
             <ArrowLeft size={16} />
             <Home size={22} strokeWidth={2.8} aria-hidden="true" />
-            </Link>
+          </Link>
 
-
-            <button
+          <button
             type="button"
             onClick={toggle}
             aria-label={`Switch to ${isDark ? "light" : "dark"} theme`}
@@ -94,8 +85,7 @@ function BlogHeader({
         {/* Mobile: centre title below the main row */}
         <div className="col-span-2 pb-3 text-center sm:hidden">
           <span className="font-mono text-[10px] tracking-wider text-muted">
-            Here is{" "}
-            <span className="font-semibold text-accent">Moawiz's</span>{" "}
+            Here is <span className="font-semibold text-accent">Moawiz's</span>{" "}
             Write-up Centre
           </span>
         </div>
@@ -103,7 +93,6 @@ function BlogHeader({
     </header>
   );
 }
-
 
 export default function Blog() {
   const { theme, toggle } = useTheme();
@@ -133,9 +122,7 @@ export default function Blog() {
         if (cancelled) return;
 
         if (queryError) {
-          setError(
-            "Write-ups load nahi ho sake. Please baad mein try karein.",
-          );
+          setError("Write-ups load nahi ho sake. Please baad mein try karein.");
         } else {
           setArticles((data ?? []) as Article[]);
         }
@@ -159,9 +146,7 @@ export default function Blog() {
 
   const categories = [
     "All",
-    ...new Set(
-      articles.map((article) => article.category).filter(Boolean),
-    ),
+    ...new Set(articles.map((article) => article.category).filter(Boolean)),
   ];
 
   const filteredArticles = articles.filter((article) => {
@@ -172,12 +157,9 @@ export default function Blog() {
       article.title.toLowerCase().includes(term) ||
       (article.excerpt ?? "").toLowerCase().includes(term) ||
       (article.category ?? "").toLowerCase().includes(term) ||
-      article.tags?.some((tag) =>
-        tag.toLowerCase().includes(term),
-      );
+      article.tags?.some((tag) => tag.toLowerCase().includes(term));
 
-    const matchesCategory =
-      category === "All" || article.category === category;
+    const matchesCategory = category === "All" || article.category === category;
 
     return matchesSearch && matchesCategory;
   });
@@ -239,13 +221,12 @@ export default function Blog() {
             </div>
 
             <h1 className="mt-6 text-4xl font-bold tracking-tight sm:text-6xl">
-              Cybersecurity{" "}
-              <span className="grad-text">Write-ups</span>
+              Cybersecurity <span className="grad-text">Write-ups</span>
             </h1>
 
             <p className="lead mx-auto">
-              Practical security research, penetration testing
-              walkthroughs, and lessons from the lab.
+              Practical security research, penetration testing walkthroughs, and
+              lessons from the lab.
             </p>
 
             <div className="mx-auto mt-8 flex max-w-xl items-center gap-3 rounded-2xl border border-line bg-card/90 px-4 py-3 shadow-[0_8px_40px_rgba(0,0,0,0.08)] backdrop-blur-md transition focus-within:border-[var(--accent-line)]">
@@ -263,8 +244,6 @@ export default function Blog() {
                 aria-label="Search write-ups"
                 className="w-full min-w-0 !border-0 !bg-transparent text-base text-ink !outline-none !ring-0 !shadow-none focus:!border-0 focus:!outline-none focus:!ring-0 focus:!shadow-none sm:text-lg placeholder:text-muted"
               />
-
-              
             </div>
 
             <p className="mt-4 font-mono text-[10px] tracking-[0.2em] text-muted sm:text-xs">
@@ -331,15 +310,13 @@ export default function Blog() {
           ) : error ? (
             <div className="rounded-2xl border border-line bg-card/90 px-6 py-12 text-center backdrop-blur-md">
               <Terminal size={32} className="mx-auto text-accent" />
-              <h3 className="mt-5 text-xl font-bold">
-                Write-ups unavailable
-              </h3>
+              <h3 className="mt-5 text-xl font-bold">Write-ups unavailable</h3>
               <p className="mx-auto mt-3 max-w-md text-sm leading-7 text-muted">
                 {error}
               </p>
               <p className="mt-2 text-xs text-muted">
-                Supabase connection aur articles table ki public
-                read policy check karein.
+                Supabase connection aur articles table ki public read policy
+                check karein.
               </p>
               <button
                 type="button"
@@ -383,9 +360,7 @@ export default function Blog() {
                 <span className="font-semibold text-ink">
                   {filteredArticles.length}
                 </span>{" "}
-                {filteredArticles.length === 1
-                  ? "write-up"
-                  : "write-ups"}
+                {filteredArticles.length === 1 ? "write-up" : "write-ups"}
               </p>
 
               <div className="grid items-stretch gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -433,9 +408,7 @@ export default function Blog() {
                     <div className="flex flex-1 flex-col p-5 sm:p-6">
                       <div className="flex flex-wrap items-center gap-2">
                         {article.category && (
-                          <span className="chip">
-                            {article.category}
-                          </span>
+                          <span className="chip">{article.category}</span>
                         )}
                         <span className="text-xs text-muted">
                           {formatDate(article.published_at)}
@@ -459,10 +432,7 @@ export default function Blog() {
                       {article.tags?.length > 0 && (
                         <div className="mt-4 flex flex-wrap gap-2">
                           {article.tags.slice(0, 3).map((tag) => (
-                            <span
-                              key={tag}
-                              className="text-xs text-muted"
-                            >
+                            <span key={tag} className="text-xs text-muted">
                               #{tag}
                             </span>
                           ))}

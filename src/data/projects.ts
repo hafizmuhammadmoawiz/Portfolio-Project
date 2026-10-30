@@ -1,4 +1,3 @@
-
 import {
   ScanSearch,
   FolderLock,
@@ -107,6 +106,6 @@ export const projects: Project[] = [
       "Common vulnerability detection research",
       "Future findings and report generation",
     ],
-    tech: ["Python", "Flask", "Web Security", ],
+    tech: ["Python", "Flask", "Web Security"],
   },
 ];

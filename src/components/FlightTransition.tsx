@@ -22,7 +22,7 @@ export default function FlightTransition({
 
     // Respect the user's reduced-motion preference.
     const reduceMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)"
+      "(prefers-reduced-motion: reduce)",
     ).matches;
 
     // Keep this duration synchronized with the CSS plane animation.
@@ -39,9 +39,7 @@ export default function FlightTransition({
     let completed = false;
 
     // Locate the Contact hero card.
-    const card = document.querySelector<HTMLElement>(
-      "#contact .contact-hero"
-    );
+    const card = document.querySelector<HTMLElement>("#contact .contact-hero");
 
     // Capture the destination once to prevent the target from shifting.
     const cardTop = card
@@ -50,33 +48,27 @@ export default function FlightTransition({
 
     const maxScroll = Math.max(
       0,
-      document.documentElement.scrollHeight - window.innerHeight
+      document.documentElement.scrollHeight - window.innerHeight,
     );
 
     // Place the Contact card near the top of the viewport.
     const targetScroll = Math.min(
       maxScroll,
-      Math.max(0, cardTop - window.innerHeight * 0.18)
+      Math.max(0, cardTop - window.innerHeight * 0.18),
     );
 
     // Cinematic acceleration and deceleration.
     const easeInOut = (t: number) =>
-      t < 0.5
-        ? 4 * t * t * t
-        : 1 - Math.pow(-2 * t + 2, 3) / 2;
+      t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
 
     // Animate the page scroll while the plane crosses the screen.
     const animateScroll = (now: number) => {
-      const progress = Math.min(
-        (now - startTime) / duration,
-        1
-      );
+      const progress = Math.min((now - startTime) / duration, 1);
 
       const eased = easeInOut(progress);
 
       // Move the background continuously on every animation frame.
-      const currentScroll =
-        startScroll + (targetScroll - startScroll) * eased;
+      const currentScroll = startScroll + (targetScroll - startScroll) * eased;
 
       window.scrollTo({
         top: currentScroll,

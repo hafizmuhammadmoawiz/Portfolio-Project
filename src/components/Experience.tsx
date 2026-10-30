@@ -3,9 +3,7 @@ import Reveal, { SectionHead } from "./Reveal";
 
 export default function Experience() {
   return (
-    <section
-      id="experience"
-      className="section relative overflow-hidden">
+    <section id="experience" className="section relative overflow-hidden">
       <div className="container-x">
         <SectionHead
           index="04"
@@ -22,10 +20,7 @@ export default function Experience() {
           />
 
           {experience.map((x, i) => (
-            <li
-              key={x.title}
-              className="relative pl-10 sm:pl-14"
-            >
+            <li key={x.title} className="relative pl-10 sm:pl-14">
               {/* Timeline marker */}
               <span
                 className={`absolute left-0 top-6 z-10 grid h-[2.15rem] w-[2.15rem] place-items-center rounded-full border-2 bg-[var(--card)] transition-all duration-300 sm:left-[0.15rem] sm:h-10 sm:w-10 ${
@@ -54,9 +49,7 @@ export default function Experience() {
                           {x.title}
                         </h3>
 
-                        <span className="chip chip-warn">
-                          {x.status}
-                        </span>
+                        <span className="chip chip-warn">{x.status}</span>
                       </div>
 
                       <p className="mt-2 text-sm font-semibold leading-relaxed text-accent sm:text-base">

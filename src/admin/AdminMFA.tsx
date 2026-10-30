@@ -30,17 +30,16 @@ export default function AdminMFA() {
         console.error("MFA challenge error:", challengeError);
         setError(
           challengeError?.message ??
-            "MFA challenge create nahi hua. Dobara try karo."
+            "MFA challenge create nahi hua. Dobara try karo.",
         );
         return;
       }
 
-      const { error: verifyError } =
-        await supabase.auth.mfa.verify({
-          factorId,
-          challengeId: challenge.id,
-          code: code.trim(),
-        });
+      const { error: verifyError } = await supabase.auth.mfa.verify({
+        factorId,
+        challengeId: challenge.id,
+        code: code.trim(),
+      });
 
       if (verifyError) {
         setError("Code incorrect ya expired hai.");
@@ -68,10 +67,7 @@ export default function AdminMFA() {
           body: { action: "authorize" },
         });
 
-      if (
-        functionError ||
-        functionData?.authorized !== true
-      ) {
+      if (functionError || functionData?.authorized !== true) {
         setError(
           functionData?.error ??
             "Admin authorization failed. Is account ko access nahi hai.",
@@ -117,7 +113,10 @@ export default function AdminMFA() {
         </label>
 
         {error && (
-          <p role="alert" className="rounded-lg bg-red-950 p-3 text-sm text-red-300">
+          <p
+            role="alert"
+            className="rounded-lg bg-red-950 p-3 text-sm text-red-300"
+          >
             {error}
           </p>
         )}

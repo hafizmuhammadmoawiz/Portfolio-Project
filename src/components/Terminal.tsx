@@ -1,4 +1,3 @@
-
 import { useCallback, useEffect, useState } from "react";
 import { RotateCcw } from "lucide-react";
 
@@ -28,14 +27,17 @@ export default function Terminal() {
     if (reduce || step >= script.length) return;
 
     const cmd = script[step].cmd;
-    const timer = window.setTimeout(() => {
-      if (chars < cmd.length) {
-        setChars((current) => current + 1);
-      } else {
-        setStep((current) => current + 1);
-        setChars(0);
-      }
-    }, chars === 0 ? 500 : chars < cmd.length ? 55 : 400);
+    const timer = window.setTimeout(
+      () => {
+        if (chars < cmd.length) {
+          setChars((current) => current + 1);
+        } else {
+          setStep((current) => current + 1);
+          setChars(0);
+        }
+      },
+      chars === 0 ? 500 : chars < cmd.length ? 55 : 400,
+    );
 
     return () => window.clearTimeout(timer);
   }, [step, chars, reduce, run]);
@@ -124,9 +126,7 @@ export default function Terminal() {
                       {partIndex > 0 && (
                         <span style={{ color: "var(--term-dim)" }}> | </span>
                       )}
-                      <span style={{ color: "var(--term-green)" }}>
-                        {part}
-                      </span>
+                      <span style={{ color: "var(--term-green)" }}>{part}</span>
                     </span>
                   ))}
                 </div>
